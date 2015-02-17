@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Time Slices</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Year</th>
+      <th>Population</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @time_slices.each do |time_slice| %>
+      <tr>
+        <td><%= time_slice.year %></td>
+        <td><%= time_slice.population %></td>
+        <td><%= link_to 'Show', time_slice %></td>
+        <td><%= link_to 'Edit', edit_time_slice_path(time_slice) %></td>
+        <td><%= link_to 'Destroy', time_slice, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Time slice', new_time_slice_path %>

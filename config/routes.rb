@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :time_slices
+
   resources :states
 
   resources :posts
