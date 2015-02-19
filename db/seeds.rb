@@ -7,12 +7,12 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 TimeSlice.delete_all
-File.open('USPopByYear.txt', 'r') do |f|
+File.open(File.join(Rails.root, 'db', 'USPopByYear.txt')) do |f|
 	f.each_line do |l| 
 		line = l.split(' ')		
 		year = line[2]
 		pop = (line[3].to_f*1000000).to_i
-		puts year + ' ' + pop.to_s
-		#TimeSlice.create(:year => year, :population => pop)
+		#puts year + ' ' + pop.to_s
+		TimeSlice.create(:year => year, :population => pop)
 	end
 end
