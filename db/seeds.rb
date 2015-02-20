@@ -16,3 +16,6 @@ File.open(File.join(Rails.root, 'db', 'USPopByYear.txt')) do |f|
 		TimeSlice.create(:year => year, :population => pop)
 	end
 end
+
+Event.delete_all
+Event.create(name: 'Christmas', description: "Merry Christmas!", time_slice: TimeSlice.where(year: 2006).first)
