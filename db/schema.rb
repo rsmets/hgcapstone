@@ -40,9 +40,10 @@ ActiveRecord::Schema.define(version: 20150220212956) do
 
   create_table "time_slices", force: true do |t|
     t.integer  "year"
-    t.integer  "population"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "population", limit: 8
+    t.integer  "gdp",        limit: 8
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
 end
