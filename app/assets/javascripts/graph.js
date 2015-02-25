@@ -12,27 +12,21 @@ $.ajax({
                 debugger;
                var parsed_data = parse(data)
 
-               //hardcoded for the bar chart prototype
-               //parse_xy is still a work in progess so that
-               //we can use the data in our db for the prototype line chart
                var lineData = [{
-  x: 1,
-  y: 5
+  x: parsed_data[0],
+  y: parsed_data[1]
 }, {
-  x: 20,
-  y: 20
+  x: parsed_data[2],
+  y: parsed_data[3]
 }, {
-  x: 40,
-  y: 10
+  x: parsed_data[4],
+  y: parsed_data[5]
 }, {
-  x: 60,
-  y: 40
+  x: parsed_data[6],
+  y: parsed_data[7]
 }, {
-  x: 80,
-  y: 5
-}, {
-  x: 100,
-  y: 60
+  x: parsed_data[8],
+  y: parsed_data[9]
 }];
                debugger;
                //draw(parsed_data);
@@ -48,6 +42,7 @@ function parse(data){
   var out = [];
   var i = 0;
   for(i = 0; i < 5;i++){
+    out.push(data.graph[i].year);
     out.push(data.graph[i].population);
   }
   alert(out);
@@ -84,7 +79,7 @@ function drawLineChart(lineData){
       top: 20,
       right: 20,
       bottom: 20,
-      left: 50
+      left: 100
     },
     xRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([d3.min(lineData, function(d) {
       return d.x;
@@ -105,6 +100,8 @@ function drawLineChart(lineData){
       .tickSize(5)
       .orient('left')
       .tickSubdivide(true);
+
+      debugger;
  
 vis.append('svg:g')
   .attr('class', 'x axis')
