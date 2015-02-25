@@ -14,6 +14,9 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+#active model serializer
+gem 'active_model_serializers', '~> 0.9.3'
+
 # Use jQuery as the JavaScript library
 gem 'jquery-rails', '~> 4.0.0.beta2'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
