@@ -3,7 +3,6 @@ class CreateTimeSlices < ActiveRecord::Migration
     create_table :time_slices do |t|
       t.integer :year
       t.bigint :population
-      t.bigint :gdp
 
       t.timestamps null: false
     end

@@ -5,7 +5,7 @@ $.ajax({
            type: "GET",
            contentType: "application/json; charset=utf-8",
            //params: {limit:10},
-           data: {limit:10},
+           data: {limit:10, year:1980},
            url: 'data',
            dataType: 'json',
            success: function (data) {

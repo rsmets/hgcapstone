@@ -7,6 +7,7 @@
     <tr>
       <th>Year</th>
       <th>Population</th>
+      <th>GDP</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,6 +17,7 @@
       <tr>
         <td><%= time_slice.year %></td>
         <td><%= time_slice.population %></td>
+        <td><%= time_slice.gdp %></td>
         <td><%= link_to 'Show', time_slice %></td>
         <td><%= link_to 'Edit', edit_time_slice_path(time_slice) %></td>
         <td><%= link_to 'Destroy', time_slice, method: :delete, data: { confirm: 'Are you sure?' } %></td>
