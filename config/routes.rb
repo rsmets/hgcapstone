@@ -21,7 +21,8 @@ Rails.application.routes.draw do
   get 'graph/index' => 'graph#index'
   get 'graph/' => 'graph#index'
   get 'graph/data' => 'graph#data'
-  get 'graph/graph' => 'graph#graph'
+
+  #resources :graph
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products

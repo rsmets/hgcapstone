@@ -1,15 +1,32 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 
+
+
+$( document ).ready(function() {
+  $("#graphForm").submit(function(){
+    debugger; 
+    var year1 = $("#graphForm input[name=num]").val();
+    var year2 = $("#graphForm input[name=num2]").val();
+    getData(year1, year2)
+    return false;});
+    console.log( "ready!" );
+
+
+});
+
+var getData = function(year, year2){
+
+
 $.ajax({
            type: "GET",
            contentType: "application/json; charset=utf-8",
            //params: {limit:10},
-           data: {limit:10, year:1980},
+           data: {year:year, year2:year2},
            url: 'data',
            dataType: 'json',
            success: function (data) {
-                debugger;
+                
                var parsed_data = parse(data)
 
                var lineData = [{
@@ -37,6 +54,9 @@ $.ajax({
                error();
            }
        });
+}
+
+getData(10, 1980);
 
 function parse(data){
   var out = [];
@@ -44,6 +64,7 @@ function parse(data){
   for(i = 0; i < 5;i++){
     out.push(data.graph[i].year);
     out.push(data.graph[i].population);
+    //out.push(data.graph[i].gdp);
   }
   alert(out);
   //data
@@ -79,7 +100,7 @@ function drawLineChart(lineData){
       top: 20,
       right: 20,
       bottom: 20,
-      left: 100
+      left: 20
     },
     xRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([d3.min(lineData, function(d) {
       return d.x;
@@ -101,7 +122,7 @@ function drawLineChart(lineData){
       .orient('left')
       .tickSubdivide(true);
 
-      debugger;
+      //debugger;
  
 vis.append('svg:g')
   .attr('class', 'x axis')
@@ -169,6 +190,7 @@ function draw(data) {
               });
         console.log("made it!")
 }
+
  
 function error() {
     console.log("error")

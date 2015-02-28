@@ -1,8 +1,9 @@
 class GraphController < ApplicationController
-  
+ 
   def data
-
-  	 render :json => TimeSlice.limit(params[:limit]).where("year > ?", params[:year])
+    
+  	 render :json => TimeSlice.where("year > ? AND year < ?", params[:year], params[:year2])
+  	 #render :json => TimeSlice.limit($limit).where("year > ?", params[:year])
   	#render :json => TimeSlice.all
   end
 
@@ -13,7 +14,4 @@ class GraphController < ApplicationController
     	
   end
 
-  def graph
-  	render :data
-  end
 end
