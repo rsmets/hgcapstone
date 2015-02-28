@@ -7,8 +7,23 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
-
+    <div id="main-container" class="container">
+      <div class="row">
+        <div id="sidebar" class="col-xs-3">
+          <!-- sidebar content -->
+            <img src="http://images5.fanpop.com/image/photos/31200000/scrat-scrat-31220015-500-453.png" alt="Scrat" height="42" width="42">
+          Data Dwarf
+          <hr>
+          <button type="button">Browse Data</button><br>
+          <button type="button">Upload Data</button><br>
+          <button type="button">Sign In</button><br>
+          <hr>
+        </div>
+        <div id="column1" class="col-xs-9">
+          <!--  main content -->
+          <%= yield %>
+        </div>
+      </div>
+    </div>
 </body>
 </html>
