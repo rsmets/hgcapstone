@@ -1,0 +1,25 @@
+<%= form_for(@time_slice) do |f| %>
+  <% if @time_slice.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@time_slice.errors.count, "error") %> prohibited this time_slice from being saved:</h2>
+
+      <ul>
+      <% @time_slice.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :year %><br>
+    <%= f.number_field :year %>
+  </div>
+  <div class="field">
+    <%= f.label :population %><br>
+    <%= f.number_field :population %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
