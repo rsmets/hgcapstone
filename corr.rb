@@ -55,33 +55,35 @@ end
 
 if __FILE__ == $0
 
-	a1 = [1,1,1,1,1,1,1,1]
-	a2 = [2,2,2,2,2,2,2,2]	# directly correlated with a1
-	a3 = [1,1,1,1,2,2,2,2]	# 2 modes
-	a4 = [1,1,2,2,3,3,4,4]	# 4 modes
+	tests = 0 	# set tests on or off
+	if (tests == 1)
+		a1 = [1,1,1,1,1,1,1,1]
+		a2 = [2,2,2,2,2,2,2,2]	# directly correlated with a1
+		a3 = [1,1,1,1,2,2,2,2]	# 2 modes
+		a4 = [1,1,2,2,3,3,4,4]	# 4 modes
 
-	test(1,2,a1,a2)
-	test(1,3,a1,a3)
-	test(1,4,a1,a4)
+		test(1,2,a1,a2)
+		test(1,3,a1,a3)
+		test(1,4,a1,a4)
 
-	a5 = [1,2,3,4,5,6,7,8]
-	a6 = [8,7,6,5,4,3,2,1]	# inversely correlated with a5
-	a7 = [9,1,9,1,9,1,9,1]
+		a5 = [1,2,3,4,5,6,7,8]
+		a6 = [8,7,6,5,4,3,2,1]	# inversely correlated with a5
+		a7 = [9,1,9,1,9,1,9,1]
 
-	test(5,6,a5,a6)
-	test(1,7,a1,a7)
-	test(5,7,a5,a7)
+		test(5,6,a5,a6)
+		test(1,7,a1,a7)
+		test(5,7,a5,a7)
 
-	a8 = [1,2,3,4,5,6,7,8]
-	a9 = [1,99,1,99,1,99,1,99]	#not correlated with a8
+		a8 = [1,2,3,4,5,6,7,8]
+		a9 = [1,99,1,99,1,99,1,99]	#not correlated with a8
 
-	test(8,9,a8,a9)
+		test(8,9,a8,a9)
 
-	a10 = [nil,nil,3,4,5,6,7,8]
-	a11 = [1,2,3,4,5,6,nil,nil]
-	a12 = [1,2,nil,nil,nil,nil,nil,nil]
+		a10 = [nil,nil,3,4,5,6,7,8]
+		a11 = [1,2,3,4,5,6,nil,nil]
+		a12 = [1,2,nil,nil,nil,nil,nil,nil]
 
-	test(8,10,a8,a10)
-	test(10,8,a10,a8)
-
+		test(8,10,a8,a10)
+		test(10,8,a10,a8)
+	end
 end
