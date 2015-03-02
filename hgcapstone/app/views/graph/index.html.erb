@@ -1,0 +1,11 @@
+
+<%= javascript_include_tag params[:controller] %>
+
+<%= form_tag("/graph", method: "get", id: "graphForm") do %>
+  <%= label_tag(:q, "Enter year range:") %>
+  <%= number_field_tag(:num) %>
+  <%= number_field_tag(:num2) %>
+  <%= submit_tag("Search") %>
+<% end %>
+
+<svg id="line_chart" width="1000" height="500"></svg>
