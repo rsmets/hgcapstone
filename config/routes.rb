@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'range_menu/index'
+
   get 'data_menu/index'
 
   resources :time_slices

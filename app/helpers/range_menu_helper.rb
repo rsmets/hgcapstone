@@ -1,0 +1,2 @@
+module RangeMenuHelper
+end
