@@ -1,4 +1,4 @@
 class Event < ActiveRecord::Base
-	belongs_to :even_type
+	belongs_to :event_type
 end
 		

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>P coeff:</strong>
+  <%= @data_correlation.p_coeff %>
+</p>
+
+<p>
+  <strong>Event1:</strong>
+  <%= @data_correlation.event1_id %>
+</p>
+
+<p>
+  <strong>Event2:</strong>
+  <%= @data_correlation.event2_id %>
+</p>
+
+<%= link_to 'Edit', edit_data_correlation_path(@data_correlation) %> |
+<%= link_to 'Back', data_correlations_path %>
