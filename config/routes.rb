@@ -2,6 +2,12 @@ Rails.application.routes.draw do
 
   get 'range_menu/index'
 
+  resources :data_correlations
+
+  resources :data_types
+
+  resources :data_points
+
   get 'data_menu/index'
 
   resources :time_slices

@@ -1,4 +1,4 @@
 class Event < ActiveRecord::Base
-	belongs_to :even_type
-end
+	belongs_to :time_slice
+
 		

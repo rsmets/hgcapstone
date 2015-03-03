@@ -1,0 +1,29 @@
+<%= form_for(@data_correlation) do |f| %>
+  <% if @data_correlation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@data_correlation.errors.count, "error") %> prohibited this data_correlation from being saved:</h2>
+
+      <ul>
+      <% @data_correlation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :p_coeff %><br>
+    <%= f.text_field :p_coeff %>
+  </div>
+  <div class="field">
+    <%= f.label :event1_id %><br>
+    <%= f.number_field :event1_id %>
+  </div>
+  <div class="field">
+    <%= f.label :event2_id %><br>
+    <%= f.number_field :event2_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

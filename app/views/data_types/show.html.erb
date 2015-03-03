@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @data_type.name %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @data_type.url %>
+</p>
+
+<%= link_to 'Edit', edit_data_type_path(@data_type) %> |
+<%= link_to 'Back', data_types_path %>
