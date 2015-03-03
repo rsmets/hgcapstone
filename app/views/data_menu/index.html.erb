@@ -12,7 +12,7 @@
 		<%= radio_button_tag(:age, "most recent") %>
 		<%= label_tag(:sort_by_most_recent, "Most recent") %>
 		<br>
-
+		<!--
 		<%= select_tag(:data_id, options_for_select([
 			['US Beer Consumption', 1],
 			['US Death Rate', 2],
@@ -22,5 +22,6 @@
 			['US TV Hours Watched', 6]],
 			
 			)) %> 
-		<% end %>
+		<% end %>-->
+		<%= select_tag(:data_id, options_from_collection_for_select(@ts, 'id','year')) %> 
 <% end %>
