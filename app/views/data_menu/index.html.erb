@@ -1,27 +1,18 @@
-<% content_for(:data_menu) do %>
-	<h2>Pick a data set</h2>
-	<p>Sort by</p>
-	<%= form_tag do %>
-		<%= radio_button_tag(:age,"name") %>
-		<%= label_tag(:sort_by_name, "Name") %>
-		<br>
-		
-		<%= radio_button_tag(:age, "range") %>
-		<%= label_tag(:sort_by_largest_range, "Largest range") %>
-		<br>
-		<%= radio_button_tag(:age, "most recent") %>
-		<%= label_tag(:sort_by_most_recent, "Most recent") %>
-		<br>
-		<!--
-		<%= select_tag(:data_id, options_for_select([
-			['US Beer Consumption', 1],
-			['US Death Rate', 2],
-			['US GDP', 3],
-			['US Population',4],
-			['US Rainfall', 5],
-			['US TV Hours Watched', 6]],
-			
-			)) %> 
-		<% end %>-->
-		<%= select_tag(:data_id, options_from_collection_for_select(@ts, 'id','year')) %> 
+
+<h2>Pick a data set</h2>
+<p>Sort by</p>
+<%= form_tag do %>
+	<%= radio_button_tag(:age,"name") %>
+	<%= label_tag(:sort_by_name, "Name") %>
+	<br>
+	
+	<%= radio_button_tag(:age, "range") %>
+	<%= label_tag(:sort_by_largest_range, "Largest range") %>
+	<br>
+	<%= radio_button_tag(:age, "most recent") %>
+	<%= label_tag(:sort_by_most_recent, "Most recent") %>
+	<br>
+	<%= select_tag(:data_id, options_from_collection_for_select(@dt, 'id','name')) %> 
 <% end %>
+
+

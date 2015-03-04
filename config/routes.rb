@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
+  get 'range_menu' => 'range_menu#index'
   get 'data_menu' => 'data_menu#index'
   get 'data_menu/index' => 'data_menu#index'
   get 'graph/index' => 'graph#index'

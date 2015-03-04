@@ -1,5 +1,5 @@
 class DataMenuController < ApplicationController
   def index
-  	@ts = TimeSlice.all
+  	@dt = DataType.all
   end
 end

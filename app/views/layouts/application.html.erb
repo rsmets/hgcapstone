@@ -19,16 +19,10 @@
           		<button type="button">Sign In</button><br>
           		<hr>
         	</div>
- 			<% if content_for?(:data_menu) %>
- 				<div class="col-xs-3">
-        			<%= yield(:data_menu) %>
-   		     	</div>
- 			<% else %>
-	         	<div id="column1" class="col-xs-9">
-    	      	<!--  main content -->
-        	  	<%= yield %>
-          		</div>
- 			<% end %>
+ 			<div id="column1" class="col-xs-9">
+	   	      	<!--  main content -->
+    	   	  	<%= yield %>
+      		</div>
         
       	</div>
     </div>
