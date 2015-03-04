@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'range_menu/index'
+
   resources :data_correlations
 
   resources :data_types
