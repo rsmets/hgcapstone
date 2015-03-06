@@ -11,12 +11,22 @@
   	<div class="row">
     	<div id="sidebar" class="col-xs-3">
     		<!-- sidebar content -->
-      	<img src="http://images5.fanpop.com/image/photos/31200000/scrat-scrat-31220015-500-453.png" alt="Scrat" height="42" width="42">
-      	Data Dwarf
+    		<%= link_to("/") do %>
+      			<img src="http://images5.fanpop.com/image/photos/31200000/scrat-scrat-31220015-500-453.png" alt="Scrat" height="42" width="42">
+      			Data Dwarf
+      		<% end %>
 	    	<hr>
-    		<button type="button">Browse Data</button><br>
-    		<button type="button">Upload Data</button><br>
-    		<button type="button">Sign In</button><br>
+	    	<%= link_to ("/data_menu") do %> 
+    			Browse Data
+    		<% end %>
+    		<br>
+    		<%= link_to ("/data_menu") do %> 
+    			Upload Data
+    		<% end %>
+    		<br>
+    		<%= link_to ("/") do %> 
+    			Sign In
+    		<% end %>
     		<hr>
     	</div>
 		  <div id="column1" class="col-xs-9">
