@@ -1,7 +1,6 @@
-
 <h2>Pick a data set</h2>
 <p>Sort by</p>
-<%= form_tag do %>
+<%= form_tag('/data_menu/pick_range', method: 'get') do %>
 	<%= radio_button_tag(:age,"name") %>
 	<%= label_tag(:sort_by_name, "Name") %>
 	<br>
@@ -12,7 +11,9 @@
 	<%= radio_button_tag(:age, "most recent") %>
 	<%= label_tag(:sort_by_most_recent, "Most recent") %>
 	<br>
-	<%= select_tag(:data_id, options_from_collection_for_select(@dt, 'id','name')) %> 
-<% end %>
+	<%= select_tag(:data_id, options_from_collection_for_select(@dt, 'id','name')) %>
+	<br>
+	<%= submit_tag("Submit") %>
+<% end %>	
 
 
