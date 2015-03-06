@@ -1,0 +1,13 @@
+<h2>Pick a data set</h2>
+<p>Sort by</p>
+<%= form_tag('/data_menu/pick_range', method: 'get') do %>
+	<ul>
+		<%= @dt.each do |c| %>
+			<li>
+			<%= check_box_tag("") %>
+			<%= c.name %>
+			</li>
+		<% end %>
+	</ul>
+	<%= submit_tag("Graph it!") %>
+<% end %>	

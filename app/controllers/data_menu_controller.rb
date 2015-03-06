@@ -8,6 +8,7 @@ class DataMenuController < ApplicationController
   end
 
   def pick_range
+    pick_data
   	data_type = DataType.find(params[:data_id]).name
   	@data_type = data_type[0..-5] # Remove '.txt'
   	data_points = DataPoint.where("event_type_id = ?", params[:data_id].to_i)
@@ -17,7 +18,9 @@ class DataMenuController < ApplicationController
   	@end_year = [year1, year2].max
   end
 
-  def pick_correlations 
-
+  def pick_correlation
+    
+    @dt = DataType.all
+    @corrs = DataCorrelation.all
   end
 end
