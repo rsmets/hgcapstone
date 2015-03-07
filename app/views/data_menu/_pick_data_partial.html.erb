@@ -11,8 +11,8 @@
 	<%= radio_button_tag(:age, "most recent") %>
 	<%= label_tag(:sort_by_most_recent, "Most recent") %>
 	<br>
-	<%= select_tag(:data_id, options_from_collection_for_select(@dt, 'id','name', params[:data_id])) %>
+	<%= select_tag(:data_id, options_from_collection_for_select(@dt, 'id','name', @selected_dt)) %>
 	<br>
-	<%= submit_tag("Submit") %>
+	<%= submit_tag("Pick it!") %>
 
 <% end %>

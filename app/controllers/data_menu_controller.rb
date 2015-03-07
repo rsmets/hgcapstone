@@ -5,6 +5,7 @@ class DataMenuController < ApplicationController
 
   def pick_data
   	@dt = DataType.all
+    @selected_dt = params[:data_id]
   end
   
   def pick_data_submit
