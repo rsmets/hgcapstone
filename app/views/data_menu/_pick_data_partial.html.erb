@@ -1,6 +1,6 @@
 <h2>Pick a data set</h2>
 <p>Sort by</p>
-<%= form_tag('/data_menu/pick_range', method: 'get') do %>
+<%= form_tag(data_menu_pick_data_submit_path(:data_id), method: 'get') do %>
 	<%= radio_button_tag(:age,"name") %>
 	<%= label_tag(:sort_by_name, "Name") %>
 	<br>

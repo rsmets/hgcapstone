@@ -1,12 +1,11 @@
 <h2><%= @data_type %></h2>
-<p>Data available from</p>
-<p>Range: <%= @start_year %> - <%= @end_year %></p>
-<%= form_tag("/data_menu/pick_correlation", method: "get", id: "pick-range") do %>
+<p>Available range: <%= @start_year %> - <%= @end_year %></p>
+<%= form_tag(pick_range_submit_path(params[:data_id]), method: "get", id: "pick-range") do %>
 		<%= label_tag(:q, "Enter year range:") %>
 		<br>
-		<%= number_field_tag(:num, @start_year, {min: @start_year, max: @end_year}) %>
+		<%= number_field_tag(:num, @num, {min: @start_year, max: @end_year}) %>
 		<br>
-		<%= number_field_tag(:num2, @end_year, {min: @start_year, max: @end_year}) %>
+		<%= number_field_tag(:num2, @num2, {min: @start_year, max: @end_year}) %>
 		<br>
 		<%= submit_tag("Search") %>
 <% end %>
