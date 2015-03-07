@@ -17,6 +17,7 @@ $( document ).ready(function() {
 
 var getData = function(year, year2){
 
+var year_range = year2-year -2;
 
 $.ajax({
            type: "GET",
@@ -27,7 +28,7 @@ $.ajax({
            dataType: 'json',
            success: function (data) {
                 
-               var parsed_data = parse(data)
+               var parsed_data = parse(data, year_range)
 
                var lineData = [{
   x: parsed_data[0],
@@ -44,9 +45,19 @@ $.ajax({
 }, {
   x: parsed_data[8],
   y: parsed_data[9]
+}, {
+  x: parsed_data[10],
+  y: parsed_data[11]
+}, {
+  x: parsed_data[12],
+  y: parsed_data[13]
+}, {
+  x: parsed_data[14],
+  y: parsed_data[15]
 }];
                debugger;
                //draw(parsed_data);
+               //drawLineChart(data);
                drawLineChart(lineData);
            },
            error: function (result) {
@@ -56,17 +67,17 @@ $.ajax({
        });
 }
 
-getData(10, 1980);
-
-function parse(data){
+function parse(data, year_range){
   var out = [];
+  alert(year_range);
   var i = 0;
-  for(i = 0; i < 5;i++){
+  for(i = 0; i < year_range;i++){
     out.push(data.graph[i].year);
     out.push(data.graph[i].population);
     //out.push(data.graph[i].gdp);
   }
-  alert(out);
+  
+  debugger;
   //data
 
   return out;
@@ -100,11 +111,13 @@ function drawLineChart(lineData){
       top: 20,
       right: 20,
       bottom: 20,
-      left: 20
+      left: 100
     },
     xRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([d3.min(lineData, function(d) {
+      debugger;
       return d.x;
     }), d3.max(lineData, function(d) {
+      debugger;
       return d.x;
     })]),
     yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([d3.min(lineData, function(d) {
