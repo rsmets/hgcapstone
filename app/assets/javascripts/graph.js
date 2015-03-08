@@ -5,7 +5,7 @@
 
 $( document ).ready(function() {
   $("#graphForm").submit(function(){
-    debugger; 
+    //debugger; 
     var year1 = $("#graphForm input[name=num]").val();
     var year2 = $("#graphForm input[name=num2]").val();
     getData(year1, year2)
@@ -28,37 +28,13 @@ $.ajax({
            dataType: 'json',
            success: function (data) {
                 
-               var parsed_data = parse(data, year_range)
+               //var parsed_data = parse(data, year_range)
+               var parsed_data = parse_xy(data)
 
-               var lineData = [{
-  x: parsed_data[0],
-  y: parsed_data[1]
-}, {
-  x: parsed_data[2],
-  y: parsed_data[3]
-}, {
-  x: parsed_data[4],
-  y: parsed_data[5]
-}, {
-  x: parsed_data[6],
-  y: parsed_data[7]
-}, {
-  x: parsed_data[8],
-  y: parsed_data[9]
-}, {
-  x: parsed_data[10],
-  y: parsed_data[11]
-}, {
-  x: parsed_data[12],
-  y: parsed_data[13]
-}, {
-  x: parsed_data[14],
-  y: parsed_data[15]
-}];
-               debugger;
+               //debugger;
                //draw(parsed_data);
-               //drawLineChart(data);
-               drawLineChart(lineData);
+               //debugger;
+               drawLineChart(parsed_data);
            },
            error: function (result) {
                alert("error");
@@ -85,20 +61,12 @@ function parse(data, year_range){
 
 function parse_xy(data){
 
-  var nameAndAgeList = data.graph[0].map(function(item) {
+  var nameAndAgeList = data.graph.map(function(item) {
     return {
-      year: item.year,
-      population: item.population
+      x: item.year,
+      y: item.population
     };
   });
-
-  //var out = [{:x, :y}];
-  //var i = 0;
-  //for(i = 0; i < 5;i++){
-  //  out.push({x: data.graph[i].year, y: data.graph[i].population});
-  //}
-  alert(nameAndAgeList);
-  //data
 
   return nameAndAgeList;
 }
@@ -114,10 +82,8 @@ function drawLineChart(lineData){
       left: 100
     },
     xRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([d3.min(lineData, function(d) {
-      debugger;
       return d.x;
     }), d3.max(lineData, function(d) {
-      debugger;
       return d.x;
     })]),
     yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([d3.min(lineData, function(d) {
