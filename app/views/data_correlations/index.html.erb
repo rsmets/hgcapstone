@@ -5,6 +5,7 @@
   <thead>
     <tr>
       <th>Pearson's Coefficient</th>
+      <th>Spearman's Coefficient</th>
       <th>Input Dataset</th>
       <th>Comparison Dataset</th>
       <th colspan="3"></th>
@@ -15,6 +16,7 @@
     <% @data_correlations.each do |data_correlation| %>
       <tr>
         <td><%= data_correlation.p_coeff %></td>
+        <td><%= data_correlation.s_coeff %></td>
         <td><%= DataType.find(data_correlation.event1_id)[:name] %></td>
         <td><%= DataType.find(data_correlation.event2_id)[:name] %></td>
         <td><%= link_to 'Show', data_correlation %></td>

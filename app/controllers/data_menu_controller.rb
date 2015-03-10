@@ -1,4 +1,5 @@
 load Rails.root.join('pearson.rb')
+load Rails.root.join('spearman.rb')
 
 class DataMenuController < ApplicationController
   def index
@@ -70,6 +71,7 @@ class DataMenuController < ApplicationController
         DataCorrelation.create(
         # Performing Pearsons' coefficient on arrays 'input' and 'against'
         p_coeff: pearson(input,against),
+        s_coeff: spearman(input,against),
         event1_id: input_set_id,
         event2_id: set.id)
       end

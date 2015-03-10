@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
+gem 'statsample'
 
 gem 'arel', '6.0.0.beta2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
