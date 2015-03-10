@@ -1,13 +1,12 @@
 <p id="notice"><%= notice %></p>
-
 <h1>Listing Data Correlations</h1>
 
 <table>
   <thead>
     <tr>
-      <th>P coeff</th>
-      <th>Event1</th>
-      <th>Event2</th>
+      <th>Pearson's Coefficient</th>
+      <th>Input Dataset</th>
+      <th>Comparison Dataset</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,8 +15,8 @@
     <% @data_correlations.each do |data_correlation| %>
       <tr>
         <td><%= data_correlation.p_coeff %></td>
-        <td><%= data_correlation.event1_id %></td>
-        <td><%= data_correlation.event2_id %></td>
+        <td><%= DataType.find(data_correlation.event1_id)[:name] %></td>
+        <td><%= DataType.find(data_correlation.event2_id)[:name] %></td>
         <td><%= link_to 'Show', data_correlation %></td>
         <td><%= link_to 'Edit', edit_data_correlation_path(data_correlation) %></td>
         <td><%= link_to 'Destroy', data_correlation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
