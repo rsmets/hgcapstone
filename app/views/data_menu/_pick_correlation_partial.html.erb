@@ -1,6 +1,8 @@
 <h2>Pick a data set</h2>
 
-<p>View Correlation Results</p>
+<%= link_to "/data_correlations",:target => "_blank" do %> 
+   <%= label_tag(:q, "View Correlation Results") %>
+   <% end %>
 
 <%= form_tag('/data_menu/pick_range', method: 'get') do %>
 	
