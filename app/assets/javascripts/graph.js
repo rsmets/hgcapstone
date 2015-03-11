@@ -34,7 +34,8 @@ $.ajax({
                clearDrawing();
                drawLineChart(parsed_data, '#line_chart');
                drawLineChart(parsed_data, '#line_chart2');
-               drawLineChart(parsed_data, '#line_chart3');
+               //drawLineChart(parsed_data, '#line_chart3');
+               drawNormalizedChart(parsed_data, '#line_chart3');
            },
            error: function (result) {
                alert("error");
@@ -92,6 +93,126 @@ function calculateMagDiff(lineData){
   return order;
 }
 
+function normalizeVal(lineData, num){
+  var i = 0;
+  var total = 0;
+  //console.log(lineData[0].y_val);
+  while(lineData[i] != null){
+    if(num == 1)
+      total = total + lineData[i].y;
+    else
+      total += lineData[i].y2;
+    //console.log(total);
+    i++;
+  }
+  //debugger;
+  console.log(total/i);
+  return total;
+}
+
+function drawNormalizedChart(lineData, graph_name){
+  var num = 0;
+  var y_total = 0;
+  var y2_total = 0;
+  if(graph_name == '#line_chart') num = 1;
+  else if(graph_name == '#line_chart2') num = 2;
+  else{
+    y_total = normalizeVal(lineData, 1);
+    y2_total = normalizeVal(lineData, 2);
+    debugger;
+  }
+
+  var vis = d3.select(graph_name),
+    WIDTH = 1000,
+    HEIGHT = 500,
+    MARGINS = {
+      top: 30,
+      right: 20,
+      bottom: 30,
+      left: 150
+    },
+    xRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([d3.min(lineData, function(d) {
+      return d.x;
+    }), d3.max(lineData, function(d) {
+      return d.x;
+    })]),
+    //yRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([.2, 0]);
+    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([d3.min(lineData, function(d) {
+      if(num == 1)return d.y;
+      else if(num == 2) return d.y2;
+      else return Math.min(d.y /y_total, d.y2 / y2_total);
+    }), d3.max(lineData, function(d) {
+      if(num == 1)return d.y;
+      else if(num ==2) return d.y2;
+      else return Math.max(d.y / y_total, d.y2 / y2_total);
+    })]);
+
+    var xAxis = d3.svg.axis()
+      .scale(xRange)
+      .tickSize(5)
+      .tickSubdivide(true),
+    yAxis = d3.svg.axis()
+      .scale(yRange)
+      .tickSize(5)
+      .orient('left')
+      .tickSubdivide(true);
+
+      //debugger;
+ 
+vis.append('svg:g')
+  .attr('class', 'x axis')
+  .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+  .call(xAxis);
+ 
+vis.append('svg:g')
+  .attr('class', 'y axis')
+  .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+  .call(yAxis);
+
+  var lineFunc = d3.svg.line()
+  .x(function(d) {
+    return xRange(d.x);
+  })
+  .y(function(d) {
+    if (num == 1)return yRange(d.y);
+    else return yRange(d.y / y_total);
+  })
+  .interpolate('linear');
+
+  if (num != 2) {
+    vis.append('svg:path')
+    .attr('d', lineFunc(lineData))
+    .attr('stroke', 'blue')
+    .attr('stroke-width', 2)
+    .attr('fill', 'none');
+  };
+
+  var lineFunc2 = d3.svg.line()
+  .x(function(d) {
+    return xRange(d.x);
+  })
+  .y(function(d) {
+    //debugger;
+    return yRange(d.y2 / y2_total);
+  })
+  .interpolate('linear');
+
+  if (num != 1) {
+    vis.append('svg:path')
+    .attr('d', lineFunc2(lineData))
+    .attr('stroke', 'red')
+    .attr('stroke-width', 2)
+    .attr('fill', 'none');
+  };
+
+  vis.append("text")
+        .attr("x", (WIDTH / 2))             
+        .attr("y", (MARGINS.top))
+        .attr("text-anchor", "middle")  
+        .style("font-size", "16px") 
+        .text("Normalize Data vs Time");
+}
+
 function drawLineChart(lineData, graph_name){
   var num = 0;
   var mag_diff = 0;
@@ -106,9 +227,9 @@ function drawLineChart(lineData, graph_name){
     WIDTH = 1000,
     HEIGHT = 500,
     MARGINS = {
-      top: 20,
+      top: 30,
       right: 20,
-      bottom: 20,
+      bottom: 30,
       left: 150
     },
     xRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([d3.min(lineData, function(d) {
@@ -163,6 +284,13 @@ vis.append('svg:g')
     .attr('stroke', 'blue')
     .attr('stroke-width', 2)
     .attr('fill', 'none');
+
+    vis.append("text")
+        .attr("x", (WIDTH / 2))             
+        .attr("y", (MARGINS.top))
+        .attr("text-anchor", "middle")  
+        .style("font-size", "16px") 
+        .text("US Population vs Time");
   };
 
   var lineFunc2 = d3.svg.line()
@@ -180,7 +308,16 @@ vis.append('svg:g')
     .attr('stroke', 'red')
     .attr('stroke-width', 2)
     .attr('fill', 'none');
+
+    vis.append("text")
+        .attr("x", (WIDTH / 2))             
+        .attr("y", (MARGINS.top))
+        .attr("text-anchor", "middle")  
+        .style("font-size", "16px") 
+        .text("US GDP vs Time");
   };
+
+  
 }
  
 function draw(data) {
