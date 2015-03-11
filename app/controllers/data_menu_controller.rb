@@ -1,3 +1,6 @@
+load Rails.root.join('pearson.rb')
+load Rails.root.join('spearman.rb')
+
 class DataMenuController < ApplicationController
   def index
   	
@@ -29,7 +32,52 @@ class DataMenuController < ApplicationController
   def pick_range_submit
     #redirect_to '/data_menu/'+params[:data_id].to_s+'/pick_range/'+params[:num].to_s+'&'+params[:num2].to_s+'/pick_correlation'
     #redirect_to(pick_correlation_path(:data_id, :num, :num2))
-    redirect_to(action: 'pick_correlation', data_id: params[:data_id], num: params[:num], num2: params[:num2])
+
+    # Populate Correlation Table 'DataCorrelation'
+
+    # Clear existing entries in the correlation table
+    DataCorrelation.delete_all
+
+    year_param = Array.new
+
+    # USER INPUT: CHANGEABLE PARAMETERS
+    input_set_id= params[:data_id].to_i # specifies what input dataset is
+    year_param[0] = params[:num] # specifies range of years to perform correlation upon
+    year_param[1] = params[:num2]
+
+    # Creating array for input data set with values corresponding to each year in a specified year-range
+    # ([] placed in array if no value for a year)
+    input = Array.new
+    (year_param[0].to_i..year_param[1].to_i).each do |year|
+      event= DataPoint.where(event_type_id:input_set_id,year:year).take
+      input.push(event[:value])
+    end
+
+    # Creating arrays for all other data sets corresponding to each year in a specified year-range
+    # ([] placed in array if no value for a year)
+    DataType.find_each do |set|
+      if set.id != input_set_id
+        against = Array.new
+        (year_param[0].to_i..year_param[1].to_i).each do |year|
+          event = DataPoint.where(event_type_id:set.id,year:year).take
+          puts event
+          if event == nil
+            against.push(nil)
+          else
+            against.push(event[:value])
+          end
+
+        end
+        DataCorrelation.create(
+        # Performing Pearsons' coefficient on arrays 'input' and 'against'
+        p_coeff: pearson(input,against),
+        s_coeff: spearman(input,against),
+        event1_id: input_set_id,
+        event2_id: set.id)
+      end
+    end
+
+      redirect_to(action: 'pick_correlation', data_id: params[:data_id], num: params[:num], num2: params[:num2])
 
   end
 
@@ -39,4 +87,5 @@ class DataMenuController < ApplicationController
   #    @dt = DataType.where("", params[:data_id].to_i)
     @corrs = DataCorrelation.all
   end
+
 end

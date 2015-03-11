@@ -1,7 +1,7 @@
 #/fs/student/wcb/cs/cs189a
 
 # the following ruby_pearson was altered and copied from http://blog.chrislowis.co.uk/2008/11/24/ruby-gsl-pearson.html
-def ruby_pearson(a,b)
+def pearson(a,b)
 
   # sift out empty values
   x = [0.0]
