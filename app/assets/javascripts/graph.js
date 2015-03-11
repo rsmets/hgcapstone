@@ -49,8 +49,8 @@ function clearDrawing(){
 }
 
 function parse_xy(data){
-
-  var nameAndAgeList = data.graph.map(function(item) {
+ 
+  var nameAndAgeList = data.data_menu.map(function(item) {
     return {
       x: item.year,
       y: item.population,
