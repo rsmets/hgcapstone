@@ -31,10 +31,10 @@ $.ajax({
                //var parsed_data = parse(data, year_range)
                var parsed_data = parse_xy(data)
 
-               //debugger;
-               //draw(parsed_data);
-               //debugger;
-               drawLineChart(parsed_data);
+               clearDrawing();
+               drawLineChart(parsed_data, '#line_chart');
+               drawLineChart(parsed_data, '#line_chart2');
+               drawLineChart(parsed_data, '#line_chart3');
            },
            error: function (result) {
                alert("error");
@@ -43,20 +43,8 @@ $.ajax({
        });
 }
 
-function parse(data, year_range){
-  var out = [];
-  alert(year_range);
-  var i = 0;
-  for(i = 0; i < year_range;i++){
-    out.push(data.graph[i].year);
-    out.push(data.graph[i].population);
-    //out.push(data.graph[i].gdp);
-  }
-  
-  debugger;
-  //data
-
-  return out;
+function clearDrawing(){
+  d3.selectAll("svg > *").remove();
 }
 
 function parse_xy(data){
@@ -64,22 +52,64 @@ function parse_xy(data){
   var nameAndAgeList = data.graph.map(function(item) {
     return {
       x: item.year,
-      y: item.population
+      y: item.population,
+      y2: item.gdp
     };
   });
 
   return nameAndAgeList;
 }
 
-function drawLineChart(lineData){
-  var vis = d3.select('#line_chart'),
+function calcAvg(lineData, num){
+  var i = 0;
+  var total = 0;
+  //console.log(lineData[0].y_val);
+  while(lineData[i] != null){
+    if(num == 1)
+      total = total + lineData[i].y;
+    else
+      total += lineData[i].y2;
+    //console.log(total);
+    i++;
+  }
+  //debugger;
+  console.log(total/i);
+  return total/i;
+}
+
+function calculateMagDiff(lineData){
+  var y1_avg = calcAvg(lineData, 1);
+  var y2_avg = calcAvg(lineData, 2);
+  var order = 0;
+
+  var min = Math.min(y1_avg,y2_avg);
+  while(min < Math.max(y1_avg,y2_avg)){
+    order++;
+    //debugger;
+    min = min * 10;
+  }
+  console.log(order);
+  return order;
+}
+
+function drawLineChart(lineData, graph_name){
+  var num = 0;
+  var mag_diff = 0;
+  if(graph_name == '#line_chart') num = 1;
+  else if(graph_name == '#line_chart2') num = 2;
+  else{
+    mag_diff = calculateMagDiff(lineData);
+    debugger;
+  }
+
+  var vis = d3.select(graph_name),
     WIDTH = 1000,
     HEIGHT = 500,
     MARGINS = {
       top: 20,
       right: 20,
       bottom: 20,
-      left: 100
+      left: 150
     },
     xRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([d3.min(lineData, function(d) {
       return d.x;
@@ -87,9 +117,13 @@ function drawLineChart(lineData){
       return d.x;
     })]),
     yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([d3.min(lineData, function(d) {
-      return d.y;
+      if(num == 1)return d.y;
+      else if(num == 2) return d.y2;
+      else return Math.min(d.y * Math.pow(10,mag_diff-1), d.y2);
     }), d3.max(lineData, function(d) {
-      return d.y;
+      if(num == 1)return d.y;
+      else if(num ==2) return d.y2;
+      else return Math.max(d.y * Math.pow(10,mag_diff), d.y2);
     })]),
     xAxis = d3.svg.axis()
       .scale(xRange)
@@ -118,15 +152,35 @@ vis.append('svg:g')
     return xRange(d.x);
   })
   .y(function(d) {
-    return yRange(d.y);
+    if (num == 1)return yRange(d.y);
+    else return yRange(d.y * Math.pow(10,mag_diff));
   })
   .interpolate('linear');
 
-  vis.append('svg:path')
-  .attr('d', lineFunc(lineData))
-  .attr('stroke', 'blue')
-  .attr('stroke-width', 2)
-  .attr('fill', 'none');
+  if (num != 2) {
+    vis.append('svg:path')
+    .attr('d', lineFunc(lineData))
+    .attr('stroke', 'blue')
+    .attr('stroke-width', 2)
+    .attr('fill', 'none');
+  };
+
+  var lineFunc2 = d3.svg.line()
+  .x(function(d) {
+    return xRange(d.x);
+  })
+  .y(function(d) {
+    return yRange(d.y2);
+  })
+  .interpolate('linear');
+
+  if (num != 1) {
+    vis.append('svg:path')
+    .attr('d', lineFunc2(lineData))
+    .attr('stroke', 'red')
+    .attr('stroke-width', 2)
+    .attr('fill', 'none');
+  };
 }
  
 function draw(data) {
