@@ -4,14 +4,16 @@
    <%= label_tag(:q, "View Correlation Results") %>
    <% end %>
 
-<%= form_tag('/data_menu/pick_range', method: 'get') do %>
-	<ol>
+<%= form_tag(pick_correlation_submit_path(@selected_dt, @num, @num2), method: "get") do %>
+	<!--<ol>
 	<%= @dt.each do |c| %>
 		<li>
 		<%= check_box_tag(" ") %>
 		<%= c.name %>
 		</li>
 	<% end %>
-	</ol>
+	</ol>-->
+	<%= select_tag(:data_id2, options_from_collection_for_select(@dt2, 'id','name', @selected_dt2)) %>
+	<br>
 	<%= submit_tag("Graph it!") %>
 <% end %>	

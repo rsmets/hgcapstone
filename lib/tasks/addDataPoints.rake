@@ -5,7 +5,7 @@ task :adddatapoints => :environment do
 
   # A. Populate Data Sets and Data Points Tables 'DataType' and 'DataPoint'
   
-  new_type= DataType.create(name:"USPopByYear", url:"url.com")
+  new_type= DataType.create(name:"US_Pop_by_Year", url:"url.com")
   File.open(File.join(Rails.root, 'db', 'USPopByYear.txt')) do |f|
     f.each_line do |l| 
       line = l.split(' ')   
@@ -18,7 +18,7 @@ task :adddatapoints => :environment do
     end
   end
 
-  new_type= DataType.create(name:"USGDPByYear", url:"url.com")
+  new_type= DataType.create(name:"US_GDP_by_Year", url:"url.com")
   File.open(File.join(Rails.root, 'db', 'USGDPByYear.txt')) do |f|
     f.each_line do |l| 
       line = l.split(' ')   

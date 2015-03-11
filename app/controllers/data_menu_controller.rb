@@ -18,8 +18,8 @@ class DataMenuController < ApplicationController
 
   def pick_range
     pick_data
-    data_type = DataType.find(params[:data_id]).name
-    @data_type = data_type[0..-5] # Remove '.txt'
+    @data_type = DataType.find(params[:data_id]).name.gsub("_", " ")
+    #@data_type = data_type[0..-5] # Remove '.txt'
     data_points = DataPoint.where("event_type_id = ?", params[:data_id].to_i)
     year1 = data_points.first.year
     year2 = data_points.last.year
@@ -27,7 +27,6 @@ class DataMenuController < ApplicationController
     @end_year = [year1, year2].max
     @num = params[:num] || @start_year
     @num2 = params[:num2] || @end_year
-    do_correlations
   end
 
   def do_correlations
@@ -80,8 +79,6 @@ class DataMenuController < ApplicationController
   end
 
   def pick_range_submit
-    #redirect_to '/data_menu/'+params[:data_id].to_s+'/pick_range/'+params[:num].to_s+'&'+params[:num2].to_s+'/pick_correlation'
-    #redirect_to(pick_correlation_path(:data_id, :num, :num2))  
     redirect_to(action: 'pick_correlation', data_id: params[:data_id], num: params[:num], num2: params[:num2])
   end
 
@@ -91,6 +88,9 @@ class DataMenuController < ApplicationController
 
   def pick_correlation
     pick_range
+    do_correlations
+    @dt2 = DataType.all
+    @selected_dt2 = params[:data_id2]
 
   #    @dt = DataType.where("", params[:data_id].to_i)
     @corrs = DataCorrelation.all
