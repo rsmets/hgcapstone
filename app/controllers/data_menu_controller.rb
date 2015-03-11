@@ -27,12 +27,10 @@ class DataMenuController < ApplicationController
     @end_year = [year1, year2].max
     @num = params[:num] || @start_year
     @num2 = params[:num2] || @end_year
+    do_correlations
   end
 
-  def pick_range_submit
-    #redirect_to '/data_menu/'+params[:data_id].to_s+'/pick_range/'+params[:num].to_s+'&'+params[:num2].to_s+'/pick_correlation'
-    #redirect_to(pick_correlation_path(:data_id, :num, :num2))
-
+  def do_correlations
     # Populate Correlation Table 'DataCorrelation'
 
     # Clear existing entries in the correlation table
@@ -50,7 +48,11 @@ class DataMenuController < ApplicationController
     input = Array.new
     (year_param[0].to_i..year_param[1].to_i).each do |year|
       event= DataPoint.where(event_type_id:input_set_id,year:year).take
-      input.push(event[:value])
+      if event == nil
+        input.push(nil)
+      else  
+        input.push(event[:value])
+      end
     end
 
     # Creating arrays for all other data sets corresponding to each year in a specified year-range
@@ -60,7 +62,6 @@ class DataMenuController < ApplicationController
         against = Array.new
         (year_param[0].to_i..year_param[1].to_i).each do |year|
           event = DataPoint.where(event_type_id:set.id,year:year).take
-          puts event
           if event == nil
             against.push(nil)
           else
@@ -76,9 +77,16 @@ class DataMenuController < ApplicationController
         event2_id: set.id)
       end
     end
+  end
 
-      redirect_to(action: 'pick_correlation', data_id: params[:data_id], num: params[:num], num2: params[:num2])
+  def pick_range_submit
+    #redirect_to '/data_menu/'+params[:data_id].to_s+'/pick_range/'+params[:num].to_s+'&'+params[:num2].to_s+'/pick_correlation'
+    #redirect_to(pick_correlation_path(:data_id, :num, :num2))  
+    redirect_to(action: 'pick_correlation', data_id: params[:data_id], num: params[:num], num2: params[:num2])
+  end
 
+  def pick_correlation_submit
+    redirect_to(action: 'draw_graph', data_id: params[:data_id], num: params[:num], num2: params[:num2], data_id2: params[:data_id2])
   end
 
   def pick_correlation
@@ -86,6 +94,14 @@ class DataMenuController < ApplicationController
 
   #    @dt = DataType.where("", params[:data_id].to_i)
     @corrs = DataCorrelation.all
+  end
+
+  def draw_graph
+    pick_correlation
+  end
+
+  def data
+    render :json => TimeSlice.where("year > ? AND year < ?", params[:year], params[:year2])
   end
 
 end

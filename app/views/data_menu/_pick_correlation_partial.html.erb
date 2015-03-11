@@ -5,13 +5,13 @@
    <% end %>
 
 <%= form_tag('/data_menu/pick_range', method: 'get') do %>
-	
-		<%= @dt.each do |c| %>
-			<li>
-			<%= check_box_tag(" ") %>
-			<%= c.name %>
-			</li>
-		<% end %>
-	
+	<ol>
+	<%= @dt.each do |c| %>
+		<li>
+		<%= check_box_tag(" ") %>
+		<%= c.name %>
+		</li>
+	<% end %>
+	</ol>
 	<%= submit_tag("Graph it!") %>
 <% end %>	
