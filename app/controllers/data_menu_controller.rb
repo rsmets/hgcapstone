@@ -18,7 +18,7 @@ class DataMenuController < ApplicationController
 
   def pick_range
     pick_data
-    @data_type = DataType.find(params[:data_id]).name.gsub("_", " ")
+    @data_type = DataType.find(params[:data_id]).name
     #@data_type = data_type[0..-5] # Remove '.txt'
     data_points = DataPoint.where("event_type_id = ?", params[:data_id].to_i)
     year1 = data_points.first.year
@@ -89,6 +89,7 @@ class DataMenuController < ApplicationController
   def pick_correlation
     pick_range
     do_correlations
+    #@dt2 = DataType.find(:all, :conditions => ["event_type_id != ?", @selected_dt.to_i])
     @dt2 = DataType.all
     @selected_dt2 = params[:data_id2]
 
@@ -101,7 +102,8 @@ class DataMenuController < ApplicationController
   end
 
   def data
-    render :json => TimeSlice.where("year > ? AND year < ?", params[:year], params[:year2])
+    #render :json => TimeSlice.where("year > ? AND year < ?", params[:year], params[:year2])
+    render :json => DataPoint.where("(event_type_id = ? OR event_type_id = ?) AND (year >= ? AND year <= ?)", @dt.to_i, @dt2.to_i, @num, @num2)
   end
 
 end

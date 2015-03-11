@@ -27,7 +27,7 @@ $.ajax({
            url: 'data',
            dataType: 'json',
            success: function (data) {
-                
+                debugger;
                //var parsed_data = parse(data, year_range)
                var parsed_data = parse_xy(data)
 
