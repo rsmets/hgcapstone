@@ -1,11 +1,14 @@
-<h2>Pick a correlated data set</h2>
+<h2>Pick a data set</h2>
 
 <%= link_to "/data_correlations",:target => "_blank" do %> 
    <%= label_tag(:q, "View Correlation Results") %>
 <% end %>
 
 <%= form_tag(pick_correlation_submit_path(@selected_dt, @num, @num2), method: "get") do %>
-	<%= select_tag(:data_id2, options_for_select(@dt2_corrs.map{ |dt2_c| ["#{dt2_c[0].name} (#{dt2_c[1].s_coeff.round(4)})", dt2_c[0].id] })) %>
+	<%= select_tag(:data_id2, options_for_select(
+		@dt2_corrs.map{ |dt2_c| ["#{dt2_c[0].name} (#{dt2_c[1].s_coeff.round(4)})", dt2_c[0].id] }, 
+		@selected_dt2
+		)) %>
 	<br>
 	<%= submit_tag("Graph it!") %>
-<% end %>	
+<% end %>
