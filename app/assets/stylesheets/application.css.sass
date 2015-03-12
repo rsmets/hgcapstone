@@ -16,3 +16,46 @@
 
 @import "bootstrap-sprockets"
 @import "bootstrap"
+@import url(http://fonts.googleapis.com/css?family=Fugaz+One|Roboto)
+
+$light-gray: #666
+$dark-gray: #444
+
+body
+	font-family: 'Roboto', sans-serif
+
+.center 
+	text-align: center
+
+h1, h2
+	font-family: 'Fugaz One', cursive
+	letter-spacing: -1px
+
+h1
+	font-size: 3em
+
+h2
+	font-size: 2.5em
+
+a
+	&:link, &:visited
+		text-decoration: none
+		background-color: transparent
+		color: $light-gray
+	&:hover, &:active
+		text-decoration: none
+		background-color: transparent
+		color: $dark-gray
+
+#welcome
+	margin-top: 8%
+
+#logo
+	display: block
+	background-image: url(image_path('rs_dwarf.png'))
+	background-size: 70px
+	background-repeat: no-repeat
+	background-position: center
+	height: 85px
+	padding-top: 90px
+	margin-bottom: 30px

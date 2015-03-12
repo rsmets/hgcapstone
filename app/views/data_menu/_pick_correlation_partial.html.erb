@@ -1,8 +1,11 @@
 <h2>Pick a data set</h2>
 
+<!--
 <%= link_to "/data_correlations",:target => "_blank" do %> 
    <%= label_tag(:q, "View Correlation Results") %>
 <% end %>
+-->
+<%= link_to "View Correlation Results", data_correlations_path, target: "_blank" %>
 
 <%= form_tag(pick_correlation_submit_path(@selected_dt, @num, @num2), method: "get") do %>
 	<%= select_tag(:data_id2, options_for_select(

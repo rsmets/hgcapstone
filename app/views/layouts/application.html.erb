@@ -9,24 +9,19 @@
 <body>
   <div id="main-container" class="container">
   	<div class="row">
-    	<div id="sidebar" class="col-xs-2">
+    	<div class="col-xs-2">
     		<!-- sidebar content -->
-    		<%= link_to("/") do %>
-      			<img src="http://images5.fanpop.com/image/photos/31200000/scrat-scrat-31220015-500-453.png" alt="Scrat" height="42" width="42">
-      			Data Dwarf
-      		<% end %>
+        <header class="center">
+          <%= link_to "Data Dwarf", "/", id: "logo" %>
+        </header>
 	    	<hr>
-	    	<%= link_to ("/data_menu") do %> 
-    			Browse Data
-    		<% end %>
-    		<br>
-    		<%= link_to ("/data_menu") do %> 
-    			Upload Data
-    		<% end %>
-    		<br>
-    		<%= link_to ("/") do %> 
-    			Sign In
-    		<% end %>
+        <nav>
+          <ul class="nav">
+            <li><%= link_to "Browse Data", "/data_menu" %></li>
+            <li><%= link_to "Upload Data", "#" %></li>
+            <li><%= link_to "Sign In", "#" %></li>
+          </ul>
+        </nav>
     		<hr>
     	</div>
       <%= yield %>
