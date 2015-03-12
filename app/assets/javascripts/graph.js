@@ -2,11 +2,6 @@
 // All this logic will automatically be available in application.js.
 
 $( document ).ready(function() {
-  
-    //debugger; 
-    
-    //var year1 = $("#graphForm input[name=num]").val();
-    //var year2 = $("#graphForm input[name=num2]").val();
 
     var dt = $("#test").data("dt");
     var dt2 = $("#test").data("dt2");
@@ -16,7 +11,6 @@ $( document ).ready(function() {
     var dtid2 = $("#test").data("id2");
     debugger;
 
-    //getData(year1, year2)
     getData(dt, dt2, year_1, year_2, dtid, dtid2)
     return false;});
     console.log( "ready!" );
@@ -46,7 +40,6 @@ $.ajax({
                clearDrawing();
                drawLineChart(parsed_data1, '#line_chart', dt, 'blue');
                drawLineChart(parsed_data2, '#line_chart2', dt2, 'red');
-               //drawLineChart(parsed_data, '#line_chart3');
                drawNormalizedChart(parsed_data1, parsed_data2, '#line_chart3', dt, dt2);
            },
            error: function (result) {
@@ -59,8 +52,7 @@ $.ajax({
 function format(data, dt_id){
   var out = [];
   var i = 0;
-  while( i < data.length -1){
-    //console.log(data[i]);
+  while( i < data.length){
     if(data[i].event_type_id == dt_id){
       out.push(data[i]);
     }i++;
@@ -88,16 +80,13 @@ function parse_xy(data){
 function calcAvg(lineData, num){
   var i = 0;
   var total = 0;
-  //console.log(lineData[0].y_val);
   while(lineData[i] != null){
     if(num == 1)
       total = total + lineData[i].y;
     else
       total += lineData[i].y2;
-    //console.log(total);
     i++;
   }
-  //debugger;
   console.log(total/i);
   return total/i;
 }
@@ -110,7 +99,6 @@ function calculateMagDiff(lineData){
   var min = Math.min(y1_avg,y2_avg);
   while(min < Math.max(y1_avg,y2_avg)){
     order++;
-    //debugger;
     min = min * 10;
   }
   console.log(order);
@@ -120,12 +108,10 @@ function calculateMagDiff(lineData){
 function normalizeVal(lineData){
   var i = 0;
   var total = 0;
-  //console.log(lineData[0].y_val);
   while(lineData[i] != null){
     total = total + lineData[i].y;
     i++;
   }
-  //debugger;
   console.log(total/i);
   return total;
 }
@@ -148,12 +134,24 @@ function drawNormalizedChart(lineData, lineData2, graph_name, dt, dt2){
       bottom: 30,
       left: 150
     },
-    xRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([d3.min(lineData, function(d) {
-      return d.x;
-    }), d3.max(lineData, function(d) {
-      return d.x;
-    })]),
-    //yRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([0.1, 0]);
+    xRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([
+      Math.min(
+        d3.min(lineData, function(d) {
+          return d.x;
+        }), 
+        d3.min(lineData2, function(d) {
+            return d.x;
+        })
+      ), 
+      Math.max(
+        d3.max(lineData, function(d) {
+          return d.x;
+        }),
+        d3.max(lineData2, function(d) {
+          return d.x;
+        })
+      )
+    ]),
     yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([
       Math.min(
         d3.min(lineData, function(d) {
@@ -172,12 +170,6 @@ function drawNormalizedChart(lineData, lineData2, graph_name, dt, dt2){
         })
       )
       ]);
-    /*
-    yRange2 = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([d3.min(lineData2, function(d) {
-      return d.y /y_total;
-    }), d3.max(lineData, function(d) {
-      return d.y / y_total;
-    })]);*/
 
     var xAxis = d3.svg.axis()
       .scale(xRange)
@@ -348,110 +340,3 @@ function draw(data) {
 function error() {
     console.log("error")
 }
-
-/*function drawLineChart(lineData, graph_name, dt, dt2){
-  var num = 0;
-  var mag_diff = 0;
-  if(graph_name == '#line_chart') num = 1;
-  else if(graph_name == '#line_chart2') num = 2;
-  else{
-    mag_diff = calculateMagDiff(lineData);
-    debugger;
-  }
-
-  var vis = d3.select(graph_name),
-    WIDTH = 1000,
-    HEIGHT = 500,
-    MARGINS = {
-      top: 30,
-      right: 20,
-      bottom: 30,
-      left: 150
-    },
-    xRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([d3.min(lineData, function(d) {
-      return d.x;
-    }), d3.max(lineData, function(d) {
-      return d.x;
-    })]),
-    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([d3.min(lineData, function(d) {
-      if(num == 1)return d.y;
-      else if(num == 2) return d.y2;
-      else return Math.min(d.y * Math.pow(10,mag_diff-1), d.y2);
-    }), d3.max(lineData, function(d) {
-      if(num == 1)return d.y;
-      else if(num ==2) return d.y2;
-      else return Math.max(d.y * Math.pow(10,mag_diff), d.y2);
-    })]),
-    xAxis = d3.svg.axis()
-      .scale(xRange)
-      .tickSize(5)
-      .tickSubdivide(true),
-    yAxis = d3.svg.axis()
-      .scale(yRange)
-      .tickSize(5)
-      .orient('left')
-      .tickSubdivide(true);
-
-      //debugger;
- 
-vis.append('svg:g')
-  .attr('class', 'x axis')
-  .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
-  .call(xAxis);
- 
-vis.append('svg:g')
-  .attr('class', 'y axis')
-  .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
-  .call(yAxis);
-
-  var lineFunc = d3.svg.line()
-  .x(function(d) {
-    return xRange(d.x);
-  })
-  .y(function(d) {
-    if (num == 1)return yRange(d.y);
-    else return yRange(d.y * Math.pow(10,mag_diff));
-  })
-  .interpolate('linear');
-
-  if (num != 2) {
-    vis.append('svg:path')
-    .attr('d', lineFunc(lineData))
-    .attr('stroke', 'blue')
-    .attr('stroke-width', 2)
-    .attr('fill', 'none');
-
-    vis.append("text")
-        .attr("x", (WIDTH / 2))             
-        .attr("y", (MARGINS.top))
-        .attr("text-anchor", "middle")  
-        .style("font-size", "16px") 
-        .text(dt);
-  };
-
-  var lineFunc2 = d3.svg.line()
-  .x(function(d) {
-    return xRange(d.x);
-  })
-  .y(function(d) {
-    return yRange(d.y2);
-  })
-  .interpolate('linear');
-
-  if (num != 1) {
-    vis.append('svg:path')
-    .attr('d', lineFunc2(lineData))
-    .attr('stroke', 'red')
-    .attr('stroke-width', 2)
-    .attr('fill', 'none');
-
-    vis.append("text")
-        .attr("x", (WIDTH / 2))             
-        .attr("y", (MARGINS.top))
-        .attr("text-anchor", "middle")  
-        .style("font-size", "16px") 
-        .text(dt2);
-  };
-
-  
-}*/
