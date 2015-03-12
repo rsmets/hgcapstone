@@ -97,13 +97,24 @@ class DataMenuController < ApplicationController
     @corrs = DataCorrelation.all
   end
 
+  def event_id
+    render :json => DataType.find(params[:event_id])
+  end
+
   def draw_graph
     pick_correlation
+    @data_type2 = DataType.find(params[:data_id2]).name
+    #redirect_to(action: 'data')
+    #render :json => DataPoint.where("(event_type_id = ? OR event_type_id = ?) AND (year >= ? AND year <= ?)", @selected_dt , @selected_dt2 , @num , @num2 )
+    
   end
 
   def data
+    pick_correlation
     #render :json => TimeSlice.where("year > ? AND year < ?", params[:year], params[:year2])
-    render :json => DataPoint.where("(event_type_id = ? OR event_type_id = ?) AND (year >= ? AND year <= ?)", @dt.to_i, @dt2.to_i, @num, @num2)
+    #put @dt.to_1
+    render :json => DataPoint.where("(event_type_id = ? OR event_type_id = ?) AND (year >= ? AND year <= ?)", @selected_dt , @selected_dt2 , @num , @num2 )
+    #render :json => DataPoint.where("(event_type_id = ? OR event_type_id = ?) AND (year >= ? AND year <= ?)", params[:selected_dt], params[:selected_dt2], params[:num], params[:num2])
   end
 
 end
