@@ -89,9 +89,10 @@ class DataMenuController < ApplicationController
   def pick_correlation
     pick_range
     do_correlations
-    @dt2 = DataType.where.not(id: @selected_dt)
-    @selected_dt2 = params[:data_id2]
     @corrs = DataCorrelation.all
+    @dt2 = DataType.where.not(id: @selected_dt)
+    @dt2_corrs = @dt2.zip(@corrs) # => [[@dt2[0], @corrs[0]], [@dt2[1], @corrs[1]], ...]
+    @selected_dt2 = params[:data_id2]
   end
 
   def event_id
