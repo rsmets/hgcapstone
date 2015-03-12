@@ -12,17 +12,19 @@ $( document ).ready(function() {
     var dt2 = $("#test").data("dt2");
     var year_1 = $("#test").data("year");
     var year_2 = $("#test").data("year2");
+    var dtid = $("#test").data("id");
+    var dtid2 = $("#test").data("id2");
     debugger;
 
     //getData(year1, year2)
-    getData(dt, dt2, year_1, year_2)
+    getData(dt, dt2, year_1, year_2, dtid, dtid2)
     return false;});
     console.log( "ready!" );
 
 
 
 
-var getData = function(dt, dt2, year, year2){
+var getData = function(dt, dt2, year, year2, dt_id, dt_id2){
 
 $.ajax({
            type: "GET",
@@ -33,9 +35,10 @@ $.ajax({
            dataType: 'json',
            success: function (data) {
                 
-               //var parsed_data = parse(data, year_range)
-               var data1 = data.data_menu.slice(0, year2-year+1)
-               var data2 = data.data_menu.slice(year2-year+1, data.data_menu.length);
+               var data1 = format(data.data_menu, dt_id);
+               var data2 = format(data.data_menu, dt_id2);
+               //var data1 = data.data_menu.slice(0, year2-year+1)
+               //var data2 = data.data_menu.slice(year2-year+1, data.data_menu.length);
                debugger;
                var parsed_data1 = parse_xy(data1);
                var parsed_data2 = parse_xy(data2);
@@ -52,19 +55,18 @@ $.ajax({
            }
        });
 }
-/*
-$.get( "data", function( data ) {
-   var parsed_data = parse_xy(data);
-   //var data_type = "#{@num}";
-   debugger;
-   clearDrawing();
-   drawLineChart(parsed_data, '#line_chart');
-   drawLineChart(parsed_data, '#line_chart2');
-   //drawLineChart(parsed_data, '#line_chart3');
-   drawNormalizedChart(parsed_data, '#line_chart3');
-});*/
 
-//queue().defer(d3.json, "data_menu/data").await(ready); function ready(error, places) { console.log(error); }
+function format(data, dt_id){
+  var out = [];
+  var i = 0;
+  while( i < data.length -1){
+    //console.log(data[i]);
+    if(data[i].event_type_id == dt_id){
+      out.push(data[i]);
+    }i++;
+  }
+  return out;
+}
 
 function clearDrawing(){
   d3.selectAll("svg > *").remove();
@@ -139,7 +141,7 @@ function drawNormalizedChart(lineData, lineData2, graph_name, dt, dt2){
 
   var vis = d3.select(graph_name),
     WIDTH = 1000,
-    HEIGHT = 1000,
+    HEIGHT = 500,
     MARGINS = {
       top: 30,
       right: 20,
@@ -151,13 +153,26 @@ function drawNormalizedChart(lineData, lineData2, graph_name, dt, dt2){
     }), d3.max(lineData, function(d) {
       return d.x;
     })]),
-    yRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([0.1, 0]);
-    /*yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([d3.min(lineData, function(d) {
-      return d.y /y_total;
-    }), d3.max(lineData, function(d) {
-      return d.y / y_total;
-    })]);
-
+    //yRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([0.1, 0]);
+    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([
+      Math.min(
+        d3.min(lineData, function(d) {
+          return d.y /y_total;
+        }), 
+        d3.min(lineData2, function(d) {
+            return d.y /y2_total;
+        })
+      ), 
+      Math.max(
+        d3.max(lineData, function(d) {
+          return d.y / y_total;
+        }),
+        d3.max(lineData2, function(d) {
+          return d.y / y2_total;
+        })
+      )
+      ]);
+    /*
     yRange2 = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([d3.min(lineData2, function(d) {
       return d.y /y_total;
     }), d3.max(lineData, function(d) {
@@ -173,57 +188,53 @@ function drawNormalizedChart(lineData, lineData2, graph_name, dt, dt2){
       .tickSize(5)
       .orient('left')
       .tickSubdivide(true);
-
-      //debugger;
  
-vis.append('svg:g')
-  .attr('class', 'x axis')
-  .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
-  .call(xAxis);
- 
-vis.append('svg:g')
-  .attr('class', 'y axis')
-  .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
-  .call(yAxis);
+    vis.append('svg:g')
+      .attr('class', 'x axis')
+      .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+      .call(xAxis);
+     
+    vis.append('svg:g')
+      .attr('class', 'y axis')
+      .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+      .call(yAxis);
 
-  var lineFunc = d3.svg.line()
-  .x(function(d) {
-    return xRange(d.x);
-  })
-  .y(function(d) {
-    if (num == 1)return yRange(d.y);
-    else return yRange(d.y / y_total);
-  })
-  .interpolate('linear');
+    var lineFunc = d3.svg.line()
+    .x(function(d) {
+      return xRange(d.x);
+    })
+    .y(function(d) {
+      return yRange(d.y / y_total);
+    })
+    .interpolate('linear');
 
-  vis.append('svg:path')
-    .attr('d', lineFunc(lineData))
-    .attr('stroke', 'blue')
-    .attr('stroke-width', 2)
-    .attr('fill', 'none');
+    vis.append('svg:path')
+      .attr('d', lineFunc(lineData))
+      .attr('stroke', 'blue')
+      .attr('stroke-width', 2)
+      .attr('fill', 'none');
 
-  var lineFunc2 = d3.svg.line()
-  .x(function(d) {
-    return xRange(d.x);
-  })
-  .y(function(d) {
-    //debugger;
-    return yRange(d.y / y2_total);
-  })
-  .interpolate('linear');
+    var lineFunc2 = d3.svg.line()
+    .x(function(d) {
+      return xRange(d.x);
+    })
+    .y(function(d) {
+      return yRange(d.y / y2_total);
+    })
+    .interpolate('linear');
 
-  vis.append('svg:path')
-    .attr('d', lineFunc2(lineData2))
-    .attr('stroke', 'red')
-    .attr('stroke-width', 2)
-    .attr('fill', 'none');
+    vis.append('svg:path')
+      .attr('d', lineFunc2(lineData2))
+      .attr('stroke', 'red')
+      .attr('stroke-width', 2)
+      .attr('fill', 'none');
 
-  vis.append("text")
-        .attr("x", (WIDTH / 2))             
-        .attr("y", 100)
-        .attr("text-anchor", "middle")  
-        .style("font-size", "16px") 
-        .text("Normalize Data vs Time");
+    vis.append("text")
+          .attr("x", (WIDTH / 2))             
+          .attr("y", (MARGINS.top))
+          .attr("text-anchor", "middle")  
+          .style("font-size", "16px") 
+          .text("Normalize Data vs Time");
 }
 
 function drawLineChart(lineData, graph_name, dt, color){
@@ -256,8 +267,6 @@ function drawLineChart(lineData, graph_name, dt, color){
       .tickSize(5)
       .orient('left')
       .tickSubdivide(true);
-
-      //debugger;
  
 vis.append('svg:g')
   .attr('class', 'x axis')

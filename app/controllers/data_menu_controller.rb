@@ -101,6 +101,9 @@ class DataMenuController < ApplicationController
   def draw_graph
     pick_correlation
     @data_type2 = DataType.find(params[:data_id2]).name
+
+    @selected_dt2 = params[:data_id2]
+    @selected_dt = params[:data_id]
     #redirect_to(action: 'data')
     #render :json => DataPoint.where("(event_type_id = ? OR event_type_id = ?) AND (year >= ? AND year <= ?)", @selected_dt , @selected_dt2 , @num , @num2 )
     

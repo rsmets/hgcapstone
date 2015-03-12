@@ -1,4 +1,4 @@
-<%= content_tag "div", id: "test", data:{dt: @data_type, dt2: @data_type2, year: @num, year2: @num2} do %>
+<%= content_tag "div", id: "test", data:{dt: @data_type, id: @selected_dt, dt2: @data_type2, id2: @selected_dt2, year: @num, year2: @num2} do %>
 
 <%end%>
 
@@ -8,4 +8,4 @@
 
 <svg id="line_chart2" width="1000" height="500"></svg>
 
-<svg id="line_chart3" width="1000" height="1000"></svg>
+<svg id="line_chart3" width="1000" height="500"></svg>
