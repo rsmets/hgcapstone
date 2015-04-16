@@ -38,7 +38,10 @@ $.ajax({
                var parsed_data2 = parse_xy(data2);
 
                clearDrawing();
-               drawLineChart(parsed_data1, '#line_chart', dt, 'blue');
+               drawScatter(parsed_data1, '#line_chart0', dt);
+               //drawMultiBarChart(parsed_data1, '#line_chart', dt)
+               drawNVline(parsed_data1, '#line_chart', dt);
+               //drawLineChart(parsed_data1, '#line_chart', dt, 'blue');
                drawLineChart(parsed_data2, '#line_chart2', dt2, 'red');
                drawNormalizedChart(parsed_data1, parsed_data2, '#line_chart3', dt, dt2);
            },
@@ -49,6 +52,182 @@ $.ajax({
        });
 }
 
+function drawNVline(data, graph_name, dt) {
+  var chart = nv.models.lineChart()
+                .margin({left: 100})  //Adjust chart margins to give the x-axis some breathing room.
+                .useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
+                //.transitionDuration(350)  //how fast do you want the lines to transition?
+                .showLegend(true)       //Show the legend, allowing users to turn on/off line series.
+                .showYAxis(true)        //Show the y-axis
+                .showXAxis(true)        //Show the x-axis
+  ;
+
+  chart.xAxis     //Chart x-axis settings
+      .axisLabel('Time (ms)')
+      .tickFormat(d3.format(',r'));
+
+  chart.yAxis     //Chart y-axis settings
+      .axisLabel('Voltage (v)')
+      .tickFormat(d3.format('.02f'));
+
+  /* Done setting the chart up? Time to render it!*/
+  
+  var myData = format_data(data, dt, '#ff7f0e');   //You need data...
+  //var myData = sinAndCos()
+  debugger;
+  d3.select(graph_name)    //Select the <svg> element you want to render the chart in.   
+      .datum(myData)         //Populate the <svg> element with chart data...
+      .call(chart);          //Finally, render the chart!
+
+  //Update the chart when window resizes.
+  nv.utils.windowResize(function() { chart.update() });
+  return chart;
+}
+
+/*used to format the data in proper form for NVD3
+  values: 
+  key: 
+  color:
+*/
+function format_data(data, dt, colr){
+  var x_y = [];
+  //var i = 0;
+  //while( i < data.length){
+   //   x_y.push({x: data[i].x, y: data[i].y});
+    //i++;
+  //}
+
+  
+  data.map(function(item){
+    x_y.push({x: item.x, y: item.y})
+  })
+debugger;
+  return [
+    {
+      values: x_y,
+      key: dt,
+      color: colr
+    }
+  ];
+
+}
+
+/**************************************
+ * Simple test data generator
+ */
+function sinAndCos() {
+  var sin = [],sin2 = [],
+      cos = [];
+
+  //Data is represented as an array of {x,y} pairs.
+  for (var i = 0; i < 100; i++) {
+    sin.push({x: i, y: Math.sin(i/10)});
+    sin2.push({x: i, y: Math.sin(i/10) *0.25 + 0.5});
+    cos.push({x: i, y: .5 * Math.cos(i/10)});
+  }
+
+  //Line chart data should be sent as an array of series objects.
+  return [
+    {
+      values: sin,      //values - represents the array of {x,y} data points
+      key: 'Sine Wave', //key  - the name of the series.
+      color: '#ff7f0e'  //color - optional: choose your own line color.
+    },
+    
+  ];
+}
+
+function drawScatter(data, graph_name, dt){
+  var chart = nv.models.scatterChart()
+                .showDistX(true)    //showDist, when true, will display those little distribution lines on the axis.
+                .showDistY(true)
+                //.transitionDuration(350)
+                .color(d3.scale.category10().range());
+
+  //Configure how the tooltip looks.
+  chart.tooltipContent(function(key) {
+      return '<h3>' + key + '</h3>';
+  });
+
+  //Axis settings
+  chart.xAxis.tickFormat(d3.format('.02f'));
+  chart.yAxis.tickFormat(d3.format('.02f'));
+
+  //We want to show shapes other than circles.
+  //chart.scatter.onlyCircles(false);
+
+  var myData = randomData(4,40);
+  d3.select(graph_name)
+      .datum(myData)
+      .call(chart);
+
+  nv.utils.windowResize(chart.update);
+
+  return chart;
+}
+
+/**************************************
+ * Simple test data generator
+ */
+function randomData(groups, points) { //# groups,# points per group
+  var data = [],
+      shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
+      random = d3.random.normal();
+
+  for (i = 0; i < groups; i++) {
+    data.push({
+      key: 'Group ' + i,
+      values: []
+    });
+
+    for (j = 0; j < points; j++) {
+      data[i].values.push({
+        x: random()
+      , y: random()
+      , size: Math.random()   //Configure the size of each scatter point
+      , shape: (Math.random() > 0.95) ? shapes[j % 6] : "circle"  //Configure the shape of each scatter point.
+      });
+    }
+  }
+
+  return data;
+}
+
+function drawMultiBarChart(data, graph_name, dt) {
+    var chart = nv.models.multiBarChart()
+      .transitionDuration(350)
+      .reduceXTicks(true)   //If 'false', every single x-axis tick label will be rendered.
+      .rotateLabels(0)      //Angle to rotate x-axis labels.
+      .showControls(true)   //Allow user to switch between 'Grouped' and 'Stacked' mode.
+      .groupSpacing(0.1)    //Distance between each group of bars.
+    ;
+
+    chart.xAxis
+        .tickFormat(d3.format(',f'));
+
+    chart.yAxis
+        .tickFormat(d3.format(',.1f'));
+
+    d3.select(graph_name)
+        .datum(exampleData())
+        .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+}
+
+//Generate some nice data.
+function exampleData() {
+  return stream_layers(3,10+Math.random()*100,.1).map(function(data, i) {
+    return {
+      key: 'Stream #' + i,
+      values: data
+    };
+  });
+}
+
+//used to grab the proper data types from the overall data table
 function format(data, dt_id){
   var out = [];
   var i = 0;
@@ -66,7 +245,7 @@ function clearDrawing(){
 
 function parse_xy(data){
   
-  var nameAndAgeList = data.map(function(item) {
+  var xymap = data.map(function(item) {
     return {
       x: item.year,
       y: item.value,
@@ -74,7 +253,7 @@ function parse_xy(data){
     };
   });
   debugger;
-  return nameAndAgeList;
+  return xymap;
 }
 
 function calcAvg(lineData, num){
