@@ -36,14 +36,20 @@ $.ajax({
                debugger;
                var parsed_data1 = parse_xy(data1);
                var parsed_data2 = parse_xy(data2);
+               var formatted_data1 = format_data(parsed_data1, dt, '#ff7f0e');
+               var formatted_data2 = format_data(parsed_data2, dt2, '#2ca02c');
+               var combined_data = format_combined_data(parsed_data1, parsed_data2, dt, dt2, '#ff7f0e', '#2ca02c')
 
                clearDrawing();
-               drawScatter(parsed_data1, '#line_chart0', dt);
+               //drawScatter(parsed_data1, '#line_chart3', dt);
                //drawMultiBarChart(parsed_data1, '#line_chart', dt)
-               drawNVline(parsed_data1, '#line_chart', dt);
+               drawNVline(formatted_data1, '#line_chart0', dt);
+               drawNVline(formatted_data2, '#line_chart', dt2);
+               drawNVline(combined_data, '#line_chart2', dt, dt2)
+
                //drawLineChart(parsed_data1, '#line_chart', dt, 'blue');
-               drawLineChart(parsed_data2, '#line_chart2', dt2, 'red');
-               drawNormalizedChart(parsed_data1, parsed_data2, '#line_chart3', dt, dt2);
+               //drawLineChart(parsed_data2, '#line_chart2', dt2, 'red');
+               //drawNormalizedChart(parsed_data1, parsed_data2, '#line_chart3', dt, dt2);
            },
            error: function (result) {
                alert("error");
@@ -63,20 +69,21 @@ function drawNVline(data, graph_name, dt) {
   ;
 
   chart.xAxis     //Chart x-axis settings
-      .axisLabel('Time (ms)')
+      .axisLabel('Time (Years)')
       .tickFormat(d3.format(',r'));
 
   chart.yAxis     //Chart y-axis settings
-      .axisLabel('Voltage (v)')
+      .axisLabel('Amount')
       .tickFormat(d3.format('.02f'));
 
   /* Done setting the chart up? Time to render it!*/
   
-  var myData = format_data(data, dt, '#ff7f0e');   //You need data...
+  //var myData = format_data(data, dt, '#ff7f0e');   //You need data...
   //var myData = sinAndCos()
+  
   debugger;
   d3.select(graph_name)    //Select the <svg> element you want to render the chart in.   
-      .datum(myData)         //Populate the <svg> element with chart data...
+      .datum(data)         //Populate the <svg> element with chart data...
       .call(chart);          //Finally, render the chart!
 
   //Update the chart when window resizes.
@@ -107,6 +114,34 @@ debugger;
       values: x_y,
       key: dt,
       color: colr
+    }
+  ];
+
+}
+
+function format_combined_data(data, data2, dt, dt2, colr, colr2){
+  var x_y = [];
+  var x_y2 = [];
+
+  
+  data.map(function(item){
+    x_y.push({x: item.x, y: item.y})
+  })
+
+  data2.map(function(item){
+    x_y2.push({x: item.x, y: item.y})
+  })
+debugger;
+  return [
+    {
+      values: x_y,
+      key: dt,
+      color: colr
+    },
+    {
+      values: x_y2,
+      key: dt2,
+      color: colr2
     }
   ];
 
