@@ -41,7 +41,7 @@ $.ajax({
                var combined_data = format_combined_data(parsed_data1, parsed_data2, dt, dt2, '#ff7f0e', '#2ca02c')
 
                clearDrawing();
-               //drawScatter(parsed_data1, '#line_chart3', dt);
+               drawScatter(formatted_data1, '#line_chart3', dt);
                //drawMultiBarChart(parsed_data1, '#line_chart', dt)
                drawNVline(formatted_data1, '#line_chart0', dt);
                drawNVline(formatted_data2, '#line_chart', dt2);
@@ -191,9 +191,9 @@ function drawScatter(data, graph_name, dt){
   //We want to show shapes other than circles.
   //chart.scatter.onlyCircles(false);
 
-  var myData = randomData(4,40);
+  //var myData = randomData(4,40);
   d3.select(graph_name)
-      .datum(myData)
+      .datum(data)
       .call(chart);
 
   nv.utils.windowResize(chart.update);
