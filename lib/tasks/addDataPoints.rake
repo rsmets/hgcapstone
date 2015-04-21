@@ -69,4 +69,27 @@ task :adddatapoints => :environment do
     event_type_id:new_type.id)
   end
 
+  new_type = DataType.create(name:"Nintendo Dividends", url:"http://real-chart.finance.yahoo.com/table.csv?s=NTDOY&a=11&b=31&c=1994&d=11&e=31&f=2015&g=v&ignore=.csv")
+  CSV.foreach(File.join(Rails.root, 'db', 'ntdoy_dividends.csv'), headers: true) do |line|
+    date = line[0]
+    year = date[0..3]
+    dividend = line[1]
+    DataPoint.create(
+      year: year,
+      value: dividend.to_f,
+      event_type_id: new_type.id
+    )
+  end
+
+  new_type = DataType.create(name:"Sony Dividends", url:"http://real-chart.finance.yahoo.com/table.csv?s=SNE&a=06&b=26&c=1974&d=03&e=21&f=2015&g=v&ignore=.csv")
+  CSV.foreach(File.join(Rails.root, 'db', 'sne_dividends.csv'), headers: true) do |line|
+    date = line[0]
+    year = date[0..3]
+    dividend = line[1]
+    DataPoint.create(
+      year: year,
+      value: dividend.to_f,
+      event_type_id: new_type.id
+    )
+  end
 end

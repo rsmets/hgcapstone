@@ -5,7 +5,7 @@ gem 'autoprefixer-rails'
 gem 'statsample'
 
 #visualization gem
-gem "nvd3-rails", :git => "git@github.com:adeven/nvd3-rails.git", :submodules => true
+gem "nvd3-rails", :git => "http://github.com/adeven/nvd3-rails.git", :submodules => true
 gem 'novus-nvd3-rails'
 
 gem 'arel', '6.0.0.beta2'
