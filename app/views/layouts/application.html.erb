@@ -7,10 +7,32 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">
+            Data Dwarf
+          </a>
+        </div>
+        <ul class="nav navbar-nav navbar-right"> 
+          <li><a href="/data_menu" class="navbar-link navbar-text">Browse Data</a></li>
+          <li><a href="/data_menu" class="navbar-link navbar-text">Upload Data</a></li>
+          <li><a href="/data_menu" class="navbar-link navbar-text">Sign in</a></li>
+        </ul>  
+    </div>
+    <!--<ul class="nav navbar-nav navbar-right">
+      <li>
+        <a href="/data_menu" class="navbar-link">Browse Data</a>  
+      </li>
+    </ul>
+  }
+}
+-->
+  </nav>
   <div id="main-container" class="container">
   	<div class="row">
-    	<div class="col-xs-2">
-    		<!-- sidebar content -->
+    	<!--<div class="col-xs-2">
+    		<!-- sidebar content 
         <header class="center">
           <%= link_to "Data Dwarf", "/", id: "logo" %>
         </header>
@@ -23,7 +45,7 @@
           </ul>
         </nav>
     		<hr>
-    	</div>
+    	</div>-->
       <%= yield %>
   	</div>
   </div>
