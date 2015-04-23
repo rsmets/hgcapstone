@@ -38,14 +38,18 @@ $.ajax({
                var parsed_data2 = parse_xy(data2);
                var formatted_data1 = format_data(parsed_data1, dt, '#ff7f0e');
                var formatted_data2 = format_data(parsed_data2, dt2, '#2ca02c');
-               var combined_data = format_combined_data(parsed_data1, parsed_data2, dt, dt2, '#ff7f0e', '#2ca02c')
+               var combined_data = format_combined_data(parsed_data1, parsed_data2, dt, dt2, '#ff7f0e', '#2ca02c', 0);
+               var combined_data_norm = format_combined_data(parsed_data1, parsed_data2, dt, dt2, '#ff7f0e', '#2ca02c', 1);
 
                clearDrawing();
-               drawScatter(formatted_data1, '#line_chart3', dt);
-               //drawMultiBarChart(parsed_data1, '#line_chart', dt)
-               drawNVline(formatted_data1, '#line_chart0', dt);
-               drawNVline(formatted_data2, '#line_chart', dt2);
-               drawNVline(combined_data, '#line_chart2', dt, dt2)
+               
+               drawNVline(formatted_data1, '#line_chart1', dt);
+               drawNVline(formatted_data2, '#line_chart2', dt2);
+               drawNVline(combined_data, '#line_chart3', dt, dt2)
+               drawNVline(combined_data_norm, '#line_chart4', dt, dt2)
+               drawScatter(formatted_data1, '#line_chart5', dt);
+               //drawMultiBarChart(formatted_data1, '#line_chart6', dt);
+               drawLineViewFinder(formatted_data1, '#line_chart6', dt);
 
                //drawLineChart(parsed_data1, '#line_chart', dt, 'blue');
                //drawLineChart(parsed_data2, '#line_chart2', dt2, 'red');
@@ -98,12 +102,6 @@ function drawNVline(data, graph_name, dt) {
 */
 function format_data(data, dt, colr){
   var x_y = [];
-  //var i = 0;
-  //while( i < data.length){
-   //   x_y.push({x: data[i].x, y: data[i].y});
-    //i++;
-  //}
-
   
   data.map(function(item){
     x_y.push({x: item.x, y: item.y})
@@ -119,17 +117,24 @@ debugger;
 
 }
 
-function format_combined_data(data, data2, dt, dt2, colr, colr2){
+function format_combined_data(data, data2, dt, dt2, colr, colr2, norm_flag){
   var x_y = [];
   var x_y2 = [];
 
+  data1_total = 1;
+  data2_total = 1;
+
+  if(norm_flag == 1){
+    data1_total = normalizeVal(data);
+    data2_total = normalizeVal(data2);
+  }
   
   data.map(function(item){
-    x_y.push({x: item.x, y: item.y})
+    x_y.push({x: item.x, y: (item.y / data1_total)})
   })
 
   data2.map(function(item){
-    x_y2.push({x: item.x, y: item.y})
+    x_y2.push({x: item.x, y: (item.y / data2_total)})
   })
 debugger;
   return [
@@ -228,9 +233,43 @@ function randomData(groups, points) { //# groups,# points per group
   return data;
 }
 
+function drawLineViewFinder(data, graph_name, dt) {
+  var chart = nv.models.lineWithFocusChart();
+
+  chart.xAxis
+      .tickFormat(d3.format(',f'));
+
+  chart.yAxis
+      .tickFormat(d3.format(',.2f'));
+
+  chart.y2Axis
+      .tickFormat(d3.format(',.2f'));
+
+  d3.select('#chart svg')
+      .datum(data)
+      .transition().duration(500)
+      .call(chart);
+
+  nv.utils.windowResize(chart.update);
+
+  return chart;
+}
+/**************************************
+ * Simple test data generator
+ */
+
+function testData() {
+  return stream_layers(3,128,.1).map(function(data, i) {
+    return { 
+      key: 'Stream' + i,
+      values: data
+    };
+  });
+}
+
 function drawMultiBarChart(data, graph_name, dt) {
     var chart = nv.models.multiBarChart()
-      .transitionDuration(350)
+      //.transitionDuration(350)
       .reduceXTicks(true)   //If 'false', every single x-axis tick label will be rendered.
       .rotateLabels(0)      //Angle to rotate x-axis labels.
       .showControls(true)   //Allow user to switch between 'Grouped' and 'Stacked' mode.
