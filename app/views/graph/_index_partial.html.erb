@@ -2,7 +2,11 @@
 
 <%end%>
 
-<%= javascript_include_tag "graph.js" %>
+<div class="btn-group" role="group" aria-label="...">
+  <button id="graph-line" type="button" class="btn btn-default">Line</button>
+  <button id="graph-bar" type="button" class="btn btn-default">Bar</button>
+  <button id="graph-scatter" type="button" class="btn btn-default">Scatter</button>
+</div>
 
 <svg id="line_chart0" width="1000" height="500"></svg>
 
@@ -11,3 +15,5 @@
 <svg id="line_chart2" width="1000" height="500"></svg>
 
 <svg id="line_chart3" width="1000" height="500"></svg>
+
+<%= javascript_include_tag "graph.js" %>

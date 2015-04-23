@@ -16,8 +16,6 @@ $( document ).ready(function() {
     console.log( "ready!" );
 
 
-
-
 var getData = function(dt, dt2, year, year2, dt_id, dt_id2){
 
 $.ajax({
@@ -40,15 +38,27 @@ $.ajax({
                var formatted_data2 = format_data(parsed_data2, dt2, '#2ca02c');
                var combined_data = format_combined_data(parsed_data1, parsed_data2, dt, dt2, '#ff7f0e', '#2ca02c')
                var multiData = format_data2(parsed_data1, parsed_data2, dt, dt2)
-               clearDrawing();
 
-               drawMultiBarChart(formatted_data1,'#line_chart0', dt);
-               drawMultiBarChart(formatted_data2, '#line_chart', dt);
-               drawMultiBarChart(multiData, '#line_chart2', dt)
+               $('#graph-line').on('click',function(){
+                  clearDrawing();
+                  drawNVline(combined_data, '#line_chart0', dt, dt2);
+                  drawNVline(formatted_data1, '#line_chart', dt);
+                  drawNVline(formatted_data2, '#line_chart2', dt2);
+                });
 
-               //drawNVline(formatted_data1, '#line_chart2', dt);
-               //drawNVline(formatted_data2, '#line_chart', dt2);
-               //drawNVline(combined_data, '#line_chart2', dt, dt2)
+               $('#graph-bar').on('click',function(){
+                  clearDrawing();
+                  drawMultiBarChart(multiData, '#line_chart0', dt);
+                  drawMultiBarChart(formatted_data1,'#line_chart', dt);
+                  drawMultiBarChart(formatted_data2, '#line_chart2', dt);
+               });
+
+               $('#graph-scatter').on('click',function(){
+                  clearDrawing();
+                  drawScatter(combined_data, '#line_chart0', dt);
+                  drawScatter(formatted_data1, '#line_chart', dt);
+                  drawScatter(formatted_data1, '#line_chart2', dt);
+               });
 
                //drawLineChart(parsed_data1, '#line_chart', dt, 'blue');
                //drawLineChart(parsed_data2, '#line_chart2', dt2, 'red');
