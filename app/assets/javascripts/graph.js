@@ -1,4 +1,4 @@
-// Place all the behaviors and hooks related to the matching controller here.
+  // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 
 $( document ).ready(function() {
@@ -14,8 +14,6 @@ $( document ).ready(function() {
     getData(dt, dt2, year_1, year_2, dtid, dtid2)
     return false;});
     console.log( "ready!" );
-
-
 
 
 var getData = function(dt, dt2, year, year2, dt_id, dt_id2){
@@ -36,20 +34,36 @@ $.ajax({
                debugger;
                var parsed_data1 = parse_xy(data1);
                var parsed_data2 = parse_xy(data2);
-               var formatted_data1 = format_data(parsed_data1, dt, '#ff7f0e');
+               var formatted_data1 = format_data(parsed_data1, dt, '#ff7f0e', dt_id);
                var formatted_data2 = format_data(parsed_data2, dt2, '#2ca02c');
                var combined_data = format_combined_data(parsed_data1, parsed_data2, dt, dt2, '#ff7f0e', '#2ca02c', 0);
                var combined_data_norm = format_combined_data(parsed_data1, parsed_data2, dt, dt2, '#ff7f0e', '#2ca02c', 1);
 
                clearDrawing();
-               
-               drawNVline(formatted_data1, '#line_chart1', dt);
-               drawNVline(formatted_data2, '#line_chart2', dt2);
-               drawNVline(combined_data, '#line_chart3', dt, dt2)
-               drawNVline(combined_data_norm, '#line_chart4', dt, dt2)
-               drawScatter(formatted_data1, '#line_chart5', dt);
-               //drawMultiBarChart(formatted_data1, '#line_chart6', dt);
-               drawLineViewFinder(formatted_data1, '#line_chart6', dt);
+
+               $('#graph-line').on('click',function(){
+                  clearDrawing();
+                  drawNVline(combined_data, '#line_chart1', dt, dt2);
+                  drawNVline(combined_data_norm, '#line_chart2', dt, dt2);
+                  drawNVline(formatted_data1, '#line_chart3', dt);
+                  drawNVline(formatted_data2, '#line_chart4', dt2);
+                });
+
+               $('#graph-bar').on('click',function(){
+                  clearDrawing();
+                  drawMultiBarChart(combined_data, '#line_chart1', dt, dt2);
+                  drawMultiBarChart(combined_data_norm, '#line_chart2', dt, dt2);
+                  drawMultiBarChart(formatted_data1,'#line_chart3', dt);
+                  drawMultiBarChart(formatted_data2, '#line_chart4', dt);
+               });
+
+               $('#graph-scatter').on('click',function(){
+                  clearDrawing();
+                  drawScatter(combined_data, '#line_chart1', dt);
+                  drawScatter(combined_data_norm, '#line_chart2', dt);
+                  drawScatter(formatted_data1, '#line_chart3', dt);
+                  drawScatter(formatted_data2, '#line_chart4', dt);
+               });
 
                //drawLineChart(parsed_data1, '#line_chart', dt, 'blue');
                //drawLineChart(parsed_data2, '#line_chart2', dt2, 'red');
@@ -62,6 +76,30 @@ $.ajax({
        });
 }
 
+function drawMultiBarChart(data, graph_name, dt) {
+    var chart = nv.models.multiBarChart()
+      .margin({left: 100})
+      .reduceXTicks(true)   //If 'false', every single x-axis tick label will be rendered.
+      .rotateLabels(0)      //Angle to rotate x-axis labels.
+      .showControls(true)   //Allow user to switch between 'Grouped' and 'Stacked' mode.
+      .groupSpacing(0.1)    //Distance between each group of bars.
+    ;
+
+    chart.xAxis
+        .tickFormat(d3.format('f'));
+
+    chart.yAxis
+        .tickFormat(d3.format(',1000000000f'));
+
+    d3.select(graph_name)
+        .datum(data)
+        .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+}
+
 function drawNVline(data, graph_name, dt) {
   var chart = nv.models.lineChart()
                 .margin({left: 100})  //Adjust chart margins to give the x-axis some breathing room.
@@ -71,21 +109,23 @@ function drawNVline(data, graph_name, dt) {
                 .showYAxis(true)        //Show the y-axis
                 .showXAxis(true)        //Show the x-axis
   ;
+  
+
 
   chart.xAxis     //Chart x-axis settings
       .axisLabel('Time (Years)')
-      .tickFormat(d3.format(',r'));
+      .tickFormat(d3.format('r'));
 
   chart.yAxis     //Chart y-axis settings
       .axisLabel('Amount')
-      .tickFormat(d3.format('.02f'));
+      .tickFormat(d3.format(',1000fM'));
 
   /* Done setting the chart up? Time to render it!*/
   
   //var myData = format_data(data, dt, '#ff7f0e');   //You need data...
   //var myData = sinAndCos()
   
-  debugger;
+  //debugger;
   d3.select(graph_name)    //Select the <svg> element you want to render the chart in.   
       .datum(data)         //Populate the <svg> element with chart data...
       .call(chart);          //Finally, render the chart!
@@ -106,7 +146,7 @@ function format_data(data, dt, colr){
   data.map(function(item){
     x_y.push({x: item.x, y: item.y})
   })
-debugger;
+//debugger;
   return [
     {
       values: x_y,
@@ -136,7 +176,7 @@ function format_combined_data(data, data2, dt, dt2, colr, colr2, norm_flag){
   data2.map(function(item){
     x_y2.push({x: item.x, y: (item.y / data2_total)})
   })
-debugger;
+//debugger;
   return [
     {
       values: x_y,
@@ -267,30 +307,6 @@ function testData() {
   });
 }
 
-function drawMultiBarChart(data, graph_name, dt) {
-    var chart = nv.models.multiBarChart()
-      //.transitionDuration(350)
-      .reduceXTicks(true)   //If 'false', every single x-axis tick label will be rendered.
-      .rotateLabels(0)      //Angle to rotate x-axis labels.
-      .showControls(true)   //Allow user to switch between 'Grouped' and 'Stacked' mode.
-      .groupSpacing(0.1)    //Distance between each group of bars.
-    ;
-
-    chart.xAxis
-        .tickFormat(d3.format(',f'));
-
-    chart.yAxis
-        .tickFormat(d3.format(',.1f'));
-
-    d3.select(graph_name)
-        .datum(exampleData())
-        .call(chart);
-
-    nv.utils.windowResize(chart.update);
-
-    return chart;
-}
-
 //Generate some nice data.
 function exampleData() {
   return stream_layers(3,10+Math.random()*100,.1).map(function(data, i) {
@@ -326,7 +342,7 @@ function parse_xy(data){
       event_type: item.event_type_id
     };
   });
-  debugger;
+  //debugger;
   return xymap;
 }
 
@@ -376,7 +392,7 @@ function drawNormalizedChart(lineData, lineData2, graph_name, dt, dt2){
 
   y_total = normalizeVal(lineData);
   y2_total = normalizeVal(lineData2);
-  debugger;
+  //debugger;
 
   var vis = d3.select(graph_name),
     WIDTH = 1000,
