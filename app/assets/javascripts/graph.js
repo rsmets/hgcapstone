@@ -34,10 +34,9 @@ $.ajax({
                debugger;
                var parsed_data1 = parse_xy(data1);
                var parsed_data2 = parse_xy(data2);
-               var formatted_data1 = format_data(parsed_data1, dt, '#ff7f0e', dt_id);
+               var formatted_data1 = format_data(parsed_data1, dt, '#a02ca0', dt_id);
                var formatted_data2 = format_data(parsed_data2, dt2, '#2ca02c');
-               var combined_data = format_combined_data(parsed_data1, parsed_data2, dt, dt2, '#ff7f0e', '#2ca02c')
-               var multiData = format_data2(parsed_data1, parsed_data2, dt, dt2)
+               var combined_data = format_combined_data(parsed_data1, parsed_data2, dt, dt2, '#a02ca0', '#2ca02c')
 
                $('#graph-line').on('click',function(){
                   clearDrawing();
@@ -48,7 +47,7 @@ $.ajax({
 
                $('#graph-bar').on('click',function(){
                   clearDrawing();
-                  drawMultiBarChart(multiData, '#line_chart0', dt, true);
+                  drawMultiBarChart(combined_data, '#line_chart0', dt, true);
                   drawMultiBarChart(formatted_data1,'#line_chart', dt, false);
                   drawMultiBarChart(formatted_data2, '#line_chart2', dt, false);
                });
@@ -170,28 +169,7 @@ function drawNVline(data, graph_name, dt) {
   return chart;
 }
 
-function format_data2(data0, data1, dt0, dt1, colr0, colr1){
-  var x_y0 = [];
-  var x_y1 = [];
-  data0.map(function(item){
-    x_y0.push({x: item.x, y: item.y})
-  })
 
-  data1.map(function(item){
-    x_y1.push({x: item.x, y: item.y})
-  })
-
-  return [{
-      values: x_y0,
-      key: dt0,
-      },
-      {
-        values: x_y1,
-        key: dt1,
-      }
-    ];
-
-}
 
 /*used to format the data in proper form for NVD3
   values: 
