@@ -41,9 +41,12 @@ $.ajax({
                var combined_data = format_combined_data(parsed_data1, parsed_data2, dt, dt2, '#ff7f0e', '#2ca02c')
                var multiData = format_data2(parsed_data1, parsed_data2, dt, dt2)
                clearDrawing();
-               drawBarChart(formatted_data1,'#line_chart0', dt, dt);
-               drawMultiBarChart(multiData, '#line_chart', dt)
-               drawNVline(formatted_data1, '#line_chart2', dt);
+
+               drawMultiBarChart(formatted_data1,'#line_chart0', dt);
+               drawMultiBarChart(formatted_data2, '#line_chart', dt);
+               drawMultiBarChart(multiData, '#line_chart2', dt)
+
+               //drawNVline(formatted_data1, '#line_chart2', dt);
                //drawNVline(formatted_data2, '#line_chart', dt2);
                //drawNVline(combined_data, '#line_chart2', dt, dt2)
 
@@ -83,7 +86,7 @@ function drawMultiBarChart(data, graph_name, dt) {
 }
 
 
-function drawBarChart(data, graph_name, dt, dt_id){
+function drawBarChart(data, graph_name, dt){
   debugger;
   var chart = nv.models.discreteBarChart()
       .margin({bottom: 100, left: 100})
@@ -91,7 +94,7 @@ function drawBarChart(data, graph_name, dt, dt_id){
       .tooltips(true)        //Don't show tooltips
       //.showValues(true)       //...instead, show the bar value right on top of each bar.
       //.transitionDuration(350)
-      .showXAxis(false)
+      .showXAxis(true)
       .showYAxis(true)
       .color(['#8b94b5']);
       ;
