@@ -76,15 +76,21 @@ $.ajax({
        });
 }
 
-function drawMultiBarChart(data, graph_name, dt) {
+function drawMultiBarChart(data, graph_name, dt, multi) {
     var chart = nv.models.multiBarChart()
       .margin({left: 100})
       .reduceXTicks(true)   //If 'false', every single x-axis tick label will be rendered.
       .rotateLabels(0)      //Angle to rotate x-axis labels.
-      .showControls(true)   //Allow user to switch between 'Grouped' and 'Stacked' mode.
+      //.showControls(true)   //Allow user to switch between 'Grouped' and 'Stacked' mode.
       .groupSpacing(0.1)    //Distance between each group of bars.
     ;
 
+    if(multi){ // Multi
+      chart.showControls(true);
+    }
+    else{ // Single
+      chart.showControls(false);
+    }
     chart.xAxis
         .tickFormat(d3.format('f'));
 
