@@ -34,29 +34,35 @@ $.ajax({
                debugger;
                var parsed_data1 = parse_xy(data1);
                var parsed_data2 = parse_xy(data2);
-               var formatted_data1 = format_data(parsed_data1, dt, '#a02ca0', dt_id);
+               var formatted_data1 = format_data(parsed_data1, dt, '#ff7f0e', dt_id);
                var formatted_data2 = format_data(parsed_data2, dt2, '#2ca02c');
-               var combined_data = format_combined_data(parsed_data1, parsed_data2, dt, dt2, '#a02ca0', '#2ca02c')
+               var combined_data = format_combined_data(parsed_data1, parsed_data2, dt, dt2, '#ff7f0e', '#2ca02c', 0);
+               var combined_data_norm = format_combined_data(parsed_data1, parsed_data2, dt, dt2, '#ff7f0e', '#2ca02c', 1);
+
+               clearDrawing();
 
                $('#graph-line').on('click',function(){
                   clearDrawing();
-                  drawNVline(combined_data, '#line_chart0', dt, dt2);
-                  drawNVline(formatted_data1, '#line_chart', dt);
-                  drawNVline(formatted_data2, '#line_chart2', dt2);
+                  drawNVline(combined_data, '#line_chart1', dt, dt2);
+                  drawNVline(combined_data_norm, '#line_chart2', dt, dt2);
+                  drawNVline(formatted_data1, '#line_chart3', dt);
+                  drawNVline(formatted_data2, '#line_chart4', dt2);
                 });
 
                $('#graph-bar').on('click',function(){
                   clearDrawing();
-                  drawMultiBarChart(combined_data, '#line_chart0', dt, true);
-                  drawMultiBarChart(formatted_data1,'#line_chart', dt, false);
-                  drawMultiBarChart(formatted_data2, '#line_chart2', dt, false);
+                  drawMultiBarChart(combined_data, '#line_chart1', dt, dt2);
+                  drawMultiBarChart(combined_data_norm, '#line_chart2', dt, dt2);
+                  drawMultiBarChart(formatted_data1,'#line_chart3', dt);
+                  drawMultiBarChart(formatted_data2, '#line_chart4', dt);
                });
 
                $('#graph-scatter').on('click',function(){
                   clearDrawing();
-                  drawScatter(combined_data, '#line_chart0', dt);
-                  drawScatter(formatted_data1, '#line_chart', dt);
-                  drawScatter(formatted_data1, '#line_chart2', dt);
+                  drawScatter(combined_data, '#line_chart1', dt);
+                  drawScatter(combined_data_norm, '#line_chart2', dt);
+                  drawScatter(formatted_data1, '#line_chart3', dt);
+                  drawScatter(formatted_data2, '#line_chart4', dt);
                });
 
                //drawLineChart(parsed_data1, '#line_chart', dt, 'blue');
@@ -100,40 +106,6 @@ function drawMultiBarChart(data, graph_name, dt, multi) {
     return chart;
 }
 
-
-function drawBarChart(data, graph_name, dt){
-  debugger;
-  var chart = nv.models.discreteBarChart()
-      .margin({bottom: 100, left: 100})
-      .staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
-      .tooltips(true)        //Don't show tooltips
-      //.showValues(true)       //...instead, show the bar value right on top of each bar.
-      //.transitionDuration(350)
-      .showXAxis(true)
-      .showYAxis(true)
-      .color(['#8b94b5']);
-      ;
-
-  chart.xAxis     //Chart x-axis settings
-      .axisLabel('Time (Years)')
-      .tickFormat(d3.format(',r'));
-
-  chart.yAxis
-    .axisLabel(dt)
-    .tickFormat(d3.format(',1000000000000'));
-
-  d3.select(graph_name)
-      .datum(data)
-      .transition(350)
-      .call(chart);
-
-
-  nv.utils.windowResize(chart.update);
-
-  return chart;
-}
-
-
 function drawNVline(data, graph_name, dt) {
   var chart = nv.models.lineChart()
                 .margin({left: 100})  //Adjust chart margins to give the x-axis some breathing room.
@@ -169,8 +141,6 @@ function drawNVline(data, graph_name, dt) {
   return chart;
 }
 
-
-
 /*used to format the data in proper form for NVD3
   values: 
   key: 
@@ -178,12 +148,6 @@ function drawNVline(data, graph_name, dt) {
 */
 function format_data(data, dt, colr){
   var x_y = [];
-  //var i = 0;
-  //while( i < data.length){
-   //   x_y.push({x: data[i].x, y: data[i].y});
-    //i++;
-  //}
-
   
   data.map(function(item){
     x_y.push({x: item.x, y: item.y})
@@ -199,17 +163,24 @@ function format_data(data, dt, colr){
 
 }
 
-function format_combined_data(data, data2, dt, dt2, colr, colr2){
+function format_combined_data(data, data2, dt, dt2, colr, colr2, norm_flag){
   var x_y = [];
   var x_y2 = [];
 
+  data1_total = 1;
+  data2_total = 1;
+
+  if(norm_flag == 1){
+    data1_total = normalizeVal(data);
+    data2_total = normalizeVal(data2);
+  }
   
   data.map(function(item){
-    x_y.push({x: item.x, y: item.y})
+    x_y.push({x: item.x, y: (item.y / data1_total)})
   })
 
   data2.map(function(item){
-    x_y2.push({x: item.x, y: item.y})
+    x_y2.push({x: item.x, y: (item.y / data2_total)})
   })
 //debugger;
   return [
@@ -306,6 +277,40 @@ function randomData(groups, points) { //# groups,# points per group
   }
 
   return data;
+}
+
+function drawLineViewFinder(data, graph_name, dt) {
+  var chart = nv.models.lineWithFocusChart();
+
+  chart.xAxis
+      .tickFormat(d3.format(',f'));
+
+  chart.yAxis
+      .tickFormat(d3.format(',.2f'));
+
+  chart.y2Axis
+      .tickFormat(d3.format(',.2f'));
+
+  d3.select('#chart svg')
+      .datum(data)
+      .transition().duration(500)
+      .call(chart);
+
+  nv.utils.windowResize(chart.update);
+
+  return chart;
+}
+/**************************************
+ * Simple test data generator
+ */
+
+function testData() {
+  return stream_layers(3,128,.1).map(function(data, i) {
+    return { 
+      key: 'Stream' + i,
+      values: data
+    };
+  });
 }
 
 //Generate some nice data.
