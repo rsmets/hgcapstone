@@ -1,0 +1,61 @@
+load Rails.root.join('pearson.rb')
+load Rails.root.join('spearman.rb')
+
+class DataTypesCorrelationsController < ActionController::Base
+  def create
+    do_correlations(params[:id])
+    render json: DataCorrelation.where(event1_id: params[:id])
+  end
+
+  private
+
+  # Params:
+  # input_set_id - specifies what input dataset is
+  def do_correlations(input_set_id)
+    # Populate Correlation Table 'DataCorrelation'
+
+    # Clear existing entries in the correlation table
+    DataCorrelation.delete_all
+
+    year_param = Array.new
+
+    # USER INPUT: CHANGEABLE PARAMETERS
+    year_param[0] = DataPoint.where(event_type_id: input_set_id).last.year # specifies range of years to perform correlation upon
+    year_param[1] = DataPoint.where(event_type_id: input_set_id).first.year
+
+    # Creating array for input data set with values corresponding to each year in a specified year-range
+    # ([] placed in array if no value for a year)
+    input = Array.new
+    (year_param[0].to_i..year_param[1].to_i).each do |year|
+      event= DataPoint.where(event_type_id:input_set_id,year:year).take
+      if event == nil
+        input.push(nil)
+      else
+        input.push(event[:value])
+      end
+    end
+
+    # Creating arrays for all other data sets corresponding to each year in a specified year-range
+    # ([] placed in array if no value for a year)
+    DataType.find_each do |set|
+      if set.id != input_set_id
+        against = Array.new
+        (year_param[0].to_i..year_param[1].to_i).each do |year|
+          event = DataPoint.where(event_type_id:set.id,year:year).take
+          if event == nil
+            against.push(nil)
+          else
+            against.push(event[:value])
+          end
+
+        end
+        DataCorrelation.create(
+        # Performing Pearsons' coefficient on arrays 'input' and 'against'
+        p_coeff: pearson(input,against),
+        s_coeff: spearman(input,against),
+        event1_id: input_set_id,
+        event2_id: set.id)
+      end
+    end
+  end
+end

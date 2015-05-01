@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+
   get 'range_menu/index'
 
   resources :data_correlations
@@ -20,7 +21,12 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-   root 'welcome#index'
+  root 'welcome#index'
+  get 'dig' => 'dig#index'
+  get 'explore' => 'explore#index'
+  get 'analyze' => 'analyze#index'
+  post 'data_types/:id/correlations/' => 'data_types_correlations#create'
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
