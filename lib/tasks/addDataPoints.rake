@@ -2,9 +2,10 @@ require 'csv'
 
 task :adddatapoints => :environment do
 
+  #creating currenlty (5/1) only datatype for the x-axis which is years
+  years_type = DataType.create(name:"Years")
 
   # A. Populate Data Sets and Data Points Tables 'DataType' and 'DataPoint'
-  
   new_type= DataType.create(name:"US Pop by Year", url:"url.com")
   File.open(File.join(Rails.root, 'db', 'USPopByYear.txt')) do |f|
     f.each_line do |l| 
@@ -12,9 +13,10 @@ task :adddatapoints => :environment do
       year = line[2]
       pop = (line[3].to_f*1000000).to_i
       DataPoint.create(
-      year:year,
-      value:pop,
-      event_type_id:new_type.id)
+      value_1:year,
+      value_1_id:years_type.id,
+      value_2:pop,
+      value_2_id:new_type.id)
     end
   end
 
@@ -25,9 +27,10 @@ task :adddatapoints => :environment do
       year = line[2]
       gdp = (line[3].to_f*1000000000000).to_i
       DataPoint.create(
-      year:year,
-      value:gdp,
-      event_type_id:new_type.id)
+      value_1:year,
+      value_1_id:years_type.id,
+      value_2:gdp,
+      value_2_id:new_type.id)
     end
   end
 
@@ -41,19 +44,22 @@ task :adddatapoints => :environment do
       percent.delete! '%'
     if num%3 == 1
       DataPoint.create(
-      year:year,
-      value:percent,
-      event_type_id:new_type.id)
+      value_1:year,
+      value_1_id:years_type.id,
+      value_2:percent,
+      value_2_id:new_type.id)
     elsif num%3 == 2
       DataPoint.create(
-      year:year,
-      value:percent,
-      event_type_id:new_type2.id)
+      value_1:year,
+      value_1_id:years_type.id,
+      value_2:percent,
+      value_2_id:new_type2.id)
     else
       DataPoint.create(
-      year:year,
-      value:percent,
-      event_type_id:new_type3.id)
+      value_1:year,
+      value_1_id:years_type.id,
+      value_2:percent,
+      value_2_id:new_type3.id)
     end
     num = num+1
   end
@@ -64,9 +70,10 @@ task :adddatapoints => :environment do
     percent = line[2].to_s
     percent.delete! '%'
     DataPoint.create(
-    year:year,
-    value:percent.to_f,
-    event_type_id:new_type.id)
+    value_1:year,
+    value_1_id:years_type.id,
+    value_2:percent.to_f,
+    value_2_id:new_type.id)
   end
 
   new_type = DataType.create(name:"Nintendo Dividends", url:"http://real-chart.finance.yahoo.com/table.csv?s=NTDOY&a=11&b=31&c=1994&d=11&e=31&f=2015&g=v&ignore=.csv")
@@ -75,9 +82,10 @@ task :adddatapoints => :environment do
     year = date[0..3]
     dividend = line[1]
     DataPoint.create(
-      year: year,
-      value: dividend.to_f,
-      event_type_id: new_type.id
+      value_1: year,
+      value_1_id:years_type.id,
+      value_2: dividend.to_f,
+      value_2_id: new_type.id
     )
   end
 
@@ -87,9 +95,10 @@ task :adddatapoints => :environment do
     year = date[0..3]
     dividend = line[1]
     DataPoint.create(
-      year: year,
-      value: dividend.to_f,
-      event_type_id: new_type.id
+      value_1: year,
+      value_1_id:years_type.id,
+      value_2: dividend.to_f,
+      value_2_id: new_type.id
     )
   end
 end

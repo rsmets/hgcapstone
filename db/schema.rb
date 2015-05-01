@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150310182636) do
+ActiveRecord::Schema.define(version: 20150430221803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,11 +24,12 @@ ActiveRecord::Schema.define(version: 20150310182636) do
   end
 
   create_table "data_points", force: true do |t|
-    t.integer  "year"
-    t.float    "value"
-    t.integer  "event_type_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.integer  "value_1"
+    t.float    "value_2"
+    t.integer  "value_2_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "value_1_id"
   end
 
   create_table "data_types", force: true do |t|

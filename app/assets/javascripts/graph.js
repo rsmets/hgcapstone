@@ -148,7 +148,7 @@ function drawNVline(data, graph_name, dt) {
 */
 function format_data(data, dt, colr){
   var x_y = [];
-  
+  debugger;
   data.map(function(item){
     x_y.push({x: item.x, y: item.y})
   })
@@ -328,7 +328,7 @@ function format(data, dt_id){
   var out = [];
   var i = 0;
   while( i < data.length){
-    if(data[i].event_type_id == dt_id){
+    if(data[i].value_2_id == dt_id){
       out.push(data[i]);
     }i++;
   }
@@ -343,9 +343,9 @@ function parse_xy(data){
   
   var xymap = data.map(function(item) {
     return {
-      x: item.year,
-      y: item.value,
-      event_type: item.event_type_id
+      x: item.value_1,
+      y: item.value_2,
+      value_2_id: item.value_2_id
     };
   });
   //debugger;

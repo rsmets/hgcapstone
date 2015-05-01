@@ -18,7 +18,7 @@ class DataPointsControllerTest < ActionController::TestCase
 
   test "should create data_point" do
     assert_difference('DataPoint.count') do
-      post :create, data_point: { event_type_id: @data_point.event_type_id, value: @data_point.value, year: @data_point.year }
+      post :create, data_point: { value_2_id: @data_point.value_2_id, value_2: @data_point.value_2, value_1: @data_point.value_1 }
     end
 
     assert_redirected_to data_point_path(assigns(:data_point))
@@ -35,7 +35,7 @@ class DataPointsControllerTest < ActionController::TestCase
   end
 
   test "should update data_point" do
-    patch :update, id: @data_point, data_point: { event_type_id: @data_point.event_type_id, value: @data_point.value, year: @data_point.year }
+    patch :update, id: @data_point, data_point: { value_2_id: @data_point.value_2_id, value_2: @data_point.value_2, value_1: @data_point.value_1 }
     assert_redirected_to data_point_path(assigns(:data_point))
   end
 
