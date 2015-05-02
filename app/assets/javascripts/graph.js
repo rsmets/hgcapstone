@@ -328,7 +328,7 @@ function format(data, dt_id){
   var out = [];
   var i = 0;
   while( i < data.length){
-    if(data[i].value_2_id == dt_id){
+    if(data[i].data_type_id == dt_id){
       out.push(data[i]);
     }i++;
   }
@@ -345,7 +345,7 @@ function parse_xy(data){
     return {
       x: item.value_1,
       y: item.value_2,
-      value_2_id: item.value_2_id
+      data_type_id: item.data_type_id
     };
   });
   //debugger;

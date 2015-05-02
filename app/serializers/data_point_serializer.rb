@@ -1,3 +1,3 @@
 class DataPointSerializer < ActiveModel::Serializer
-  attributes :id, :value_1, :value_2, :value_2_id, :value_1_id
+  attributes :id, :value_1, :value_2, :value_2_id, :value_1_id, :data_type_id
 end

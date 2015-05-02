@@ -20,7 +20,7 @@ class DataMenuController < ApplicationController
     pick_data
     @data_type = DataType.find(params[:data_id]).name
     #@data_type = data_type[0..-5] # Remove '.txt'
-    data_points = DataPoint.where("value_2_id = ?", params[:data_id].to_i)
+    data_points = DataPoint.where("data_type_id = ?", params[:data_id].to_i)
     year1 = data_points.first.value_1
     year2 = data_points.last.value_1
     @start_year = [year1, year2].min
@@ -46,7 +46,7 @@ class DataMenuController < ApplicationController
     # ([] placed in array if no value for a year)
     input = Array.new
     (year_param[0].to_i..year_param[1].to_i).each do |year|
-      event= DataPoint.where(value_2_id:input_set_id,value_1:year).take
+      event= DataPoint.where(data_type_id:input_set_id,value_1:year).take
       if event == nil
         input.push(nil)
       else  
@@ -60,7 +60,7 @@ class DataMenuController < ApplicationController
       if set.id != input_set_id
         against = Array.new
         (year_param[0].to_i..year_param[1].to_i).each do |year|
-          event = DataPoint.where(value_2_id:set.id,value_1:year).take
+          event = DataPoint.where(data_type_id:set.id,value_1:year).take
           if event == nil
             against.push(nil)
           else
@@ -96,7 +96,7 @@ class DataMenuController < ApplicationController
   end
 
   def event_id
-    render :json => DataType.find(params[:value_2_id])
+    render :json => DataType.find(params[:data_type_id])
   end
 
   def draw_graph
@@ -110,7 +110,7 @@ class DataMenuController < ApplicationController
 
   def data
     pick_correlation
-    render :json => DataPoint.where("(value_2_id = ? OR value_2_id = ?) AND (value_1 >= ? AND value_1 <= ?)", @selected_dt , @selected_dt2 , @num , @num2 )
+    render :json => DataPoint.where("(data_type_id = ? OR data_type_id = ?) AND (value_1 >= ? AND value_1 <= ?)", @selected_dt , @selected_dt2 , @num , @num2 )
     
   end
 
