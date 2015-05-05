@@ -13,10 +13,12 @@
     <% end %>
   </ul>
 </div> -->
+<h2>Pick a data set</h2>
 <%= select_tag(:data_type_id, options_from_collection_for_select(@data_types, 'id','name', @selected_data_type), id: 'analyze-data-type') %>
-<svg id="heatmap-chart"></svg>
 
+<svg id="heatmap-chart" width="1000" height="500"></svg>
 
+<!--
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
   Launch demo modal
 </button>
@@ -38,3 +40,4 @@
     </div>
   </div>
 </div>
+-->

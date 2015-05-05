@@ -5,187 +5,55 @@ $( document ).ready(function() {
 
 
   var margin = { top: 50, right: 0, bottom: 100, left: 30 },
-       width = 960 - margin.left - margin.right,
-       height = 430 - margin.top - margin.bottom,
+       width = 960- margin.left - margin.right,
+       height = 500 - margin.top - margin.bottom,
        gridSize = Math.floor(width / 24),
        legendElementWidth = gridSize*2,
-       buckets = 9,
-       colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"], // alternatively colorbrewer.YlGnBu[9]
-       days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
-       times = ["1a", "2a", "3a", "4a", "5a", "6a", "7a", "8a", "9a", "10a", "11a", "12a", "1p", "2p", "3p", "4p", "5p", "6p", "7p", "8p", "9p", "10p", "11p", "12p"];
+       buckets = 10,
+       colors = ["#660000", "#8B0000", "#9e1a1a", "#9e2b2b", "#ffffff","#9595cf","#5a6890","#314374", "#081d58", "2100DD"], // alternatively colorbrewer.YlGnBu[9]
+       coeffs = ["S_coeff", "P_coeff"],
+       setIds = [];
 
-  var dataTransformation = function(oldFormattedData){
-    oldFormattedData
-    newFormattedData = [
-      {day: 1, hour: 1, value: 16},
-      {day: 1, hour: 2, value: 20},
-      {day: 1, hour: 3, value: 0},
-      {day: 1, hour: 4, value: 0},
-      {day: 1, hour: 5, value: 0},
-      {day: 1, hour: 6, value: 2},
-      {day: 1, hour: 7, value: 0},
-      {day: 1, hour: 8, value: 9},
-      {day: 1, hour: 9, value: 25},
-      {day: 1, hour: 10, value: 49},
-      {day: 1, hour: 11, value: 57},
-      {day: 1, hour: 12, value: 61},
-      {day: 1, hour: 13, value: 37},
-      {day: 1, hour: 14, value: 66},
-      {day: 1, hour: 15, value: 70},
-      {day: 1, hour: 16, value: 55},
-      {day: 1, hour: 17, value: 51},
-      {day: 1, hour: 18, value: 55},
-      {day: 1, hour: 19, value: 17},
-      {day: 1, hour: 20, value: 20},
-      {day: 1, hour: 21, value: 9},
-      {day: 1, hour: 22, value: 4},
-      {day: 1, hour: 23, value: 0},
-      {day: 1, hour: 24, value: 12},
-      {day: 2, hour: 1, value: 6},
-      {day: 2, hour: 2, value: 2},
-      {day: 2, hour: 3, value: 0},
-      {day: 2, hour: 4, value: 0},
-      {day: 2, hour: 5, value: 0},
-      {day: 2, hour: 6, value: 2},
-      {day: 2, hour: 7, value: 4},
-      {day: 2, hour: 8, value: 11},
-      {day: 2, hour: 9, value: 28},
-      {day: 2, hour: 10, value: 49},
-      {day: 2, hour: 11, value: 51},
-      {day: 2, hour: 12, value: 47},
-      {day: 2, hour: 13, value: 38},
-      {day: 2, hour: 14, value: 65},
-      {day: 2, hour: 15, value: 60},
-      {day: 2, hour: 16, value: 50},
-      {day: 2, hour: 17, value: 65},
-      {day: 2, hour: 18, value: 50},
-      {day: 2, hour: 19, value: 22},
-      {day: 2, hour: 20, value: 11},
-      {day: 2, hour: 21, value: 12},
-      {day: 2, hour: 22, value: 9},
-      {day: 2, hour: 23, value: 0},
-      {day: 2, hour: 24, value: 13},
-      {day: 3, hour: 1, value: 5},
-      {day: 3, hour: 2, value: 8},
-      {day: 3, hour: 3, value: 8},
-      {day: 3, hour: 4, value: 0},
-      {day: 3, hour: 5, value: 0},
-      {day: 3, hour: 6, value: 2},
-      {day: 3, hour: 7, value: 5},
-      {day: 3, hour: 8, value: 12},
-      {day: 3, hour: 9, value: 34},
-      {day: 3, hour: 10, value: 43},
-      {day: 3, hour: 11, value: 54},
-      {day: 3, hour: 12, value: 44},
-      {day: 3, hour: 13, value: 40},
-      {day: 3, hour: 14, value: 48},
-      {day: 3, hour: 15, value: 54},
-      {day: 3, hour: 16, value: 59},
-      {day: 3, hour: 17, value: 60},
-      {day: 3, hour: 18, value: 51},
-      {day: 3, hour: 19, value: 21},
-      {day: 3, hour: 20, value: 16},
-      {day: 3, hour: 21, value: 9},
-      {day: 3, hour: 22, value: 5},
-      {day: 3, hour: 23, value: 4},
-      {day: 3, hour: 24, value: 7},
-      {day: 4, hour: 1, value: 0},
-      {day: 4, hour: 2, value: 0},
-      {day: 4, hour: 3, value: 0},
-      {day: 4, hour: 4, value: 0},
-      {day: 4, hour: 5, value: 0},
-      {day: 4, hour: 6, value: 2},
-      {day: 4, hour: 7, value: 4},
-      {day: 4, hour: 8, value: 13},
-      {day: 4, hour: 9, value: 26},
-      {day: 4, hour: 10, value: 58},
-      {day: 4, hour: 11, value: 61},
-      {day: 4, hour: 12, value: 59},
-      {day: 4, hour: 13, value: 53},
-      {day: 4, hour: 14, value: 54},
-      {day: 4, hour: 15, value: 64},
-      {day: 4, hour: 16, value: 55},
-      {day: 4, hour: 17, value: 52},
-      {day: 4, hour: 18, value: 53},
-      {day: 4, hour: 19, value: 18},
-      {day: 4, hour: 20, value: 3},
-      {day: 4, hour: 21, value: 9},
-      {day: 4, hour: 22, value: 12},
-      {day: 4, hour: 23, value: 2},
-      {day: 4, hour: 24, value: 8},
-      {day: 5, hour: 1, value: 2},
-      {day: 5, hour: 2, value: 0},
-      {day: 5, hour: 3, value: 8},
-      {day: 5, hour: 4, value: 2},
-      {day: 5, hour: 5, value: 0},
-      {day: 5, hour: 6, value: 2},
-      {day: 5, hour: 7, value: 4},
-      {day: 5, hour: 8, value: 14},
-      {day: 5, hour: 9, value: 31},
-      {day: 5, hour: 10, value: 48},
-      {day: 5, hour: 11, value: 46},
-      {day: 5, hour: 12, value: 50},
-      {day: 5, hour: 13, value: 66},
-      {day: 5, hour: 14, value: 54},
-      {day: 5, hour: 15, value: 56},
-      {day: 5, hour: 16, value: 67},
-      {day: 5, hour: 17, value: 54},
-      {day: 5, hour: 18, value: 23},
-      {day: 5, hour: 19, value: 14},
-      {day: 5, hour: 20, value: 6},
-      {day: 5, hour: 21, value: 8},
-      {day: 5, hour: 22, value: 7},
-      {day: 5, hour: 23, value: 0},
-      {day: 5, hour: 24, value: 8},
-      {day: 6, hour: 1, value: 2},
-      {day: 6, hour: 2, value: 0},
-      {day: 6, hour: 3, value: 2},
-      {day: 6, hour: 4, value: 0},
-      {day: 6, hour: 5, value: 0},
-      {day: 6, hour: 6, value: 0},
-      {day: 6, hour: 7, value: 4},
-      {day: 6, hour: 8, value: 8},
-      {day: 6, hour: 9, value: 8},
-      {day: 6, hour: 10, value: 6},
-      {day: 6, hour: 11, value: 14},
-      {day: 6, hour: 12, value: 12},
-      {day: 6, hour: 13, value: 9},
-      {day: 6, hour: 14, value: 14},
-      {day: 6, hour: 15, value: 0},
-      {day: 6, hour: 16, value: 4},
-      {day: 6, hour: 17, value: 7},
-      {day: 6, hour: 18, value: 6},
-      {day: 6, hour: 19, value: 0},
-      {day: 6, hour: 20, value: 0},
-      {day: 6, hour: 21, value: 0},
-      {day: 6, hour: 22, value: 0},
-      {day: 6, hour: 23, value: 0},
-      {day: 6, hour: 24, value: 0},
-      {day: 7, hour: 1, value: 7},
-      {day: 7, hour: 2, value: 6},
-      {day: 7, hour: 3, value: 0},
-      {day: 7, hour: 4, value: 0},
-      {day: 7, hour: 5, value: 0},
-      {day: 7, hour: 6, value: 0},
-      {day: 7, hour: 7, value: 0},
-      {day: 7, hour: 8, value: 0},
-      {day: 7, hour: 9, value: 0},
-      {day: 7, hour: 10, value: 0},
-      {day: 7, hour: 11, value: 2},
-      {day: 7, hour: 12, value: 2},
-      {day: 7, hour: 13, value: 5},
-      {day: 7, hour: 14, value: 6},
-      {day: 7, hour: 15, value: 0},
-      {day: 7, hour: 16, value: 4},
-      {day: 7, hour: 17, value: 0},
-      {day: 7, hour: 18, value: 2},
-      {day: 7, hour: 19, value: 10},
-      {day: 7, hour: 20, value: 7},
-      {day: 7, hour: 21, value: 0},
-      {day: 7, hour: 22, value: 19},
-      {day: 7, hour: 23, value: 9},
-      {day: 7, hour: 24, value: 4}
-    ]
+
+  var dataTransformation = function(oldData){
+    
+    console.log(legendElementWidth);
+    var i = 0;
+    var dataToCompare = []; // Event ID's to be compared against
+    var dataTCName = []; 
+    var pcoeffVal = []; // Pearson's coefficients
+    var scoeffVal = []; // Spearman's coefficients
+    var newFormattedData = []; 
+    setIds = [];
+
+    while(i < oldData.length){
+      console.log(oldData[i].data_type2.name);
+      dataToCompare.push(oldData[i].event2_id);
+      setIds.push(oldData[i].data_type2.name.substring(0,5));
+      pcoeffVal.push(oldData[i].p_coeff);
+      scoeffVal.push(oldData[i].s_coeff);
+      //console.log(oldData[i].data_type2.name);
+      i++;
+    }
+
+    for(i = 0; i < 2; i++){
+      for(j = 0; j < dataToCompare.length; j++){
+        var set = { coeff: "", Id: "", value: "" };
+        set.Id = dataToCompare[j];
+        if(i == 0){
+          set.coeff = 1;
+          set.value = pcoeffVal[j];
+        }
+        if(i == 1){
+          set.coeff = 2;
+          set.value = scoeffVal[j];
+        }
+
+        newFormattedData.push(set);
+      }
+    }
+    
+    debugger
     return newFormattedData
   }
   //  How to make that nasty map
@@ -196,47 +64,48 @@ $( document ).ready(function() {
        .domain([0, buckets - 1, d3.max(transformed, function (d) { return d.value; })])
        .range(colors);
 
-    var svg = d3.select("#chart").append("svg")
+    var svg = d3.select("#heatmap-chart").append("svg")
        .attr("width", width + margin.left + margin.right)
        .attr("height", height + margin.top + margin.bottom)
        .append("g")
        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var dayLabels = svg.selectAll(".dayLabel")
-       .data(days)
+    var coeffLabels = svg.selectAll(".coeffLabel")
+       .data(coeffs)
        .enter().append("text")
          .text(function (d) { return d; })
          .attr("x", 0)
          .attr("y", function (d, i) { return i * gridSize; })
          .style("text-anchor", "end")
-         .attr("transform", "translate(-6," + gridSize / 1.5 + ")")
-         .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "dayLabel mono axis axis-workweek" : "dayLabel mono axis"); });
+         .attr("transform", "translate(+10," + gridSize / 1.5 + ")")
+         .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "coeffLabel mono axis axis-workweek" : "coeffLabel mono axis"); });
 
-    var timeLabels = svg.selectAll(".timeLabel")
-       .data(times)
+    var timeLabels = svg.selectAll(".timeLabel") // data set label
+       .data(setIds)
        .enter().append("text")
          .text(function(d) { return d; })
          .attr("x", function(d, i) { return i * gridSize; })
          .attr("y", 0)
-         .style("text-anchor", "middle")
-         .attr("transform", "translate(" + gridSize / 2 + ", -6)")
+         .style("text-anchor", "end")
+         .attr("transform", "translate(+75, -6)")
          .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
 
-    var heatMap = svg.selectAll(".hour")
+    var heatMap = svg.selectAll(".Id")
        .data(transformed)
        .enter()
       //  .append('a')
       //  .attr('href', "your_custom_link_based/off/this/data")
        .append("rect")
-       .attr("x", function(d) { return (d.hour - 1) * gridSize; })
-       .attr("y", function(d) { return (d.day - 1) * gridSize; })
+       .attr("x", function(d) { return (d.Id - 1) * gridSize; })
+       .attr("y", function(d) { return (d.coeff - 1) * gridSize; })
        .attr("rx", 4)
        .attr("ry", 4)
       //  .attr("mr-link", "your_custom_link_based/off/this/data")
-       .attr("class", "hour bordered")
+       .attr("class", "Id bordered")
        .attr("width", gridSize)
        .attr("height", gridSize)
-       .style("fill", colors[0]);
+       .style("fill", colors[0])
+       .style({'stroke': 'black', 'stroke-width': 0.5});
 
     heatMap.transition().duration(1000)
        .style("fill", function(d) { return colorScale(d.value); });
@@ -253,11 +122,12 @@ $( document ).ready(function() {
      .attr("y", height)
      .attr("width", legendElementWidth)
      .attr("height", gridSize / 2)
-     .style("fill", function(d, i) { return colors[i]; });
+     .style("fill", function(d, i) { return colors[i]; })
+     .style({'stroke': 'black', 'stroke-width': 0.5});
 
     legend.append("text")
      .attr("class", "mono")
-     .text(function(d) { return "≥ " + Math.round(d); })
+     .text(function(d) { return "≥ " + (Math.round(d)); })
      .attr("x", function(d, i) { return legendElementWidth * i; })
      .attr("y", height + gridSize);
    }
