@@ -4,6 +4,10 @@ gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 gem 'statsample'
 
+#visualization gem
+gem "nvd3-rails", :git => "http://github.com/adeven/nvd3-rails.git", :submodules => true
+gem 'novus-nvd3-rails'
+
 gem 'arel', '6.0.0.beta2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0.beta4'

@@ -20,9 +20,9 @@ class DataMenuController < ApplicationController
     pick_data
     @data_type = DataType.find(params[:data_id]).name
     #@data_type = data_type[0..-5] # Remove '.txt'
-    data_points = DataPoint.where("event_type_id = ?", params[:data_id].to_i)
-    year1 = data_points.first.year
-    year2 = data_points.last.year
+    data_points = DataPoint.where("data_type_id = ?", params[:data_id].to_i)
+    year1 = data_points.first.value_1
+    year2 = data_points.last.value_1
     @start_year = [year1, year2].min
     @end_year = [year1, year2].max
     @num = params[:num] || @start_year
@@ -46,11 +46,11 @@ class DataMenuController < ApplicationController
     # ([] placed in array if no value for a year)
     input = Array.new
     (year_param[0].to_i..year_param[1].to_i).each do |year|
-      event= DataPoint.where(event_type_id:input_set_id,year:year).take
+      event= DataPoint.where(data_type_id:input_set_id,value_1:year).take
       if event == nil
         input.push(nil)
       else  
-        input.push(event[:value])
+        input.push(event[:value_2])
       end
     end
 
@@ -60,11 +60,11 @@ class DataMenuController < ApplicationController
       if set.id != input_set_id
         against = Array.new
         (year_param[0].to_i..year_param[1].to_i).each do |year|
-          event = DataPoint.where(event_type_id:set.id,year:year).take
+          event = DataPoint.where(data_type_id:set.id,value_1:year).take
           if event == nil
             against.push(nil)
           else
-            against.push(event[:value])
+            against.push(event[:value_2])
           end
 
         end
@@ -91,12 +91,12 @@ class DataMenuController < ApplicationController
     do_correlations
     @corrs = DataCorrelation.all
     @dt2 = DataType.where.not(id: @selected_dt)
-    @dt2_corrs = @dt2.zip(@corrs) # => [[@dt2[0], @corrs[0]], [@dt2[1], @corrs[1]], ...]
+    @dt2_corrs = @dt2.zip(@corrs)
     @selected_dt2 = params[:data_id2]
   end
 
   def event_id
-    render :json => DataType.find(params[:event_id])
+    render :json => DataType.find(params[:data_type_id])
   end
 
   def draw_graph
@@ -105,17 +105,13 @@ class DataMenuController < ApplicationController
 
     @selected_dt2 = params[:data_id2]
     @selected_dt = params[:data_id]
-    #redirect_to(action: 'data')
-    #render :json => DataPoint.where("(event_type_id = ? OR event_type_id = ?) AND (year >= ? AND year <= ?)", @selected_dt , @selected_dt2 , @num , @num2 )
     
   end
 
   def data
     pick_correlation
-    #render :json => TimeSlice.where("year > ? AND year < ?", params[:year], params[:year2])
-    #put @dt.to_1
-    render :json => DataPoint.where("(event_type_id = ? OR event_type_id = ?) AND (year >= ? AND year <= ?)", @selected_dt , @selected_dt2 , @num , @num2 )
-    #render :json => DataPoint.where("(event_type_id = ? OR event_type_id = ?) AND (year >= ? AND year <= ?)", params[:selected_dt], params[:selected_dt2], params[:num], params[:num2])
+    render :json => DataPoint.where("(data_type_id = ? OR data_type_id = ?) AND (value_1 >= ? AND value_1 <= ?)", @selected_dt , @selected_dt2 , @num , @num2 )
+    
   end
 
 end

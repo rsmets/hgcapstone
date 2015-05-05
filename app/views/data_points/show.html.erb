@@ -2,17 +2,17 @@
 
 <p>
   <strong>Year:</strong>
-  <%= @data_point.year %>
+  <%= @data_point.value_1 %>
 </p>
 
 <p>
   <strong>Value:</strong>
-  <%= @data_point.value %>
+  <%= @data_point.value_2 %>
 </p>
 
 <p>
   <strong>Event type:</strong>
-  <%= @data_point.event_type_id %>
+  <%= @data_point.data_type_id %>
 </p>
 
 <%= link_to 'Edit', edit_data_point_path(@data_point) %> |

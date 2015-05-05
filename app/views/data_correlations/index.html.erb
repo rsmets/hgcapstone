@@ -19,9 +19,9 @@
         <td><%= data_correlation.s_coeff %></td>
         <td><%= DataType.find(data_correlation.event1_id)[:name] %></td>
         <td><%= DataType.find(data_correlation.event2_id)[:name] %></td>
-        <td><%= link_to 'Show', data_correlation %></td>
+        <!--<td><%= link_to 'Show', data_correlation %></td>
         <td><%= link_to 'Edit', edit_data_correlation_path(data_correlation) %></td>
-        <td><%= link_to 'Destroy', data_correlation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', data_correlation, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
       </tr>
     <% end %>
   </tbody>
@@ -29,4 +29,4 @@
 
 <br>
 
-<%= link_to 'New Data correlation', new_data_correlation_path %>
+<!--<%= link_to 'New Data correlation', new_data_correlation_path %>-->

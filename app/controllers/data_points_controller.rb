@@ -78,6 +78,6 @@ class DataPointsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def data_point_params
-      params.require(:data_point).permit(:year, :value, :event_type_id)
+      params.require(:data_point).permit(:value_1, :value_2, :data_type_id)
     end
 end
