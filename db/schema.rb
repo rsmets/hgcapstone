@@ -23,6 +23,11 @@ ActiveRecord::Schema.define(version: 20150502002928) do
     t.integer "event2_id"
   end
 
+  create_table "data_files", force: true do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "data_points", force: true do |t|
     t.integer  "value_1"
     t.float    "value_2"

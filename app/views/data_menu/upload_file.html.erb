@@ -1,0 +1,12 @@
+<div id="welcome" class="center col-xs-10">
+	
+<h2>CSV File Upload</h2>
+
+<%= form_tag({:action => 'upload_file'}, :multipart => true) do %>
+<p><label for="upload_file">Select File</label>
+<%= file_field_tag :new_file %></p>
+<%= submit_tag "Upload" %>
+<% end %>
+
+
+</div>
