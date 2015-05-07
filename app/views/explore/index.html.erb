@@ -1,5 +1,8 @@
 
 <h2>Explore</h2>
+<%= content_tag :div, id: 'mycontainer', data: {source: @data_types}%>
+<button type="button">Click Me!</button>
+
 <%= javascript_include_tag 'explore.js', 'data-turbolinks-track' => true %>
 
 <svg id="heatmap-chart" width="1000" height="500"></svg>

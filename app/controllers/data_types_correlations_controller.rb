@@ -15,13 +15,18 @@ class DataTypesCorrelationsController < ActionController::Base
     # Populate Correlation Table 'DataCorrelation'
 
     # Clear existing entries in the correlation table
-    # DataCorrelation.delete_all
+    DataCorrelation.delete_all
 
     year_param = Array.new
 
     # USER INPUT: CHANGEABLE PARAMETERS
-    year_param[0] = DataPoint.where(event_type_id: input_set_id).last.year # specifies range of years to perform correlation upon
-    year_param[1] = DataPoint.where(event_type_id: input_set_id).first.year
+    year1 = DataPoint.where(event_type_id: input_set_id).first.year
+    year2 = DataPoint.where(event_type_id: input_set_id).last.year
+    year_param[0] = [year1, year2].min
+    year_param[1] = [year1, year2].max
+
+    #year_param[0] = DataPoint.where(event_type_id: input_set_id).last.year # specifies range of years to perform correlation upon
+    #year_param[1] = DataPoint.where(event_type_id: input_set_id).first.year
 
     # Creating array for input data set with values corresponding to each year in a specified year-range
     # ([] placed in array if no value for a year)
@@ -37,7 +42,7 @@ class DataTypesCorrelationsController < ActionController::Base
 
     # Creating arrays for all other data sets corresponding to each year in a specified year-range
     # ([] placed in array if no value for a year)
-    if !DataCorrelation.exists?(:event1_id => input_set_id)
+    #if !DataCorrelation.exists?(:event1_id => input_set_id)
       DataType.find_each do |set|
         if set.id != input_set_id
           against = Array.new
@@ -48,7 +53,6 @@ class DataTypesCorrelationsController < ActionController::Base
             else
               against.push(event[:value])
             end
-
           end
           DataCorrelation.create(
           # Performing Pearsons' coefficient on arrays 'input' and 'against'
@@ -58,6 +62,7 @@ class DataTypesCorrelationsController < ActionController::Base
           event2_id: set.id)
         end
       end
-    end
+    
   end
+
 end
