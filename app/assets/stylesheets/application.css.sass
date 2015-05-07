@@ -17,19 +17,24 @@
 
 @import "bootstrap-sprockets"
 @import "bootstrap"
-@import url(http://fonts.googleapis.com/css?family=Fugaz+One|Roboto)
+@import url(http://fonts.googleapis.com/css?family=VT323|Press+Start+2P|Audiowide|Roboto)
 
 $light-gray: #666
 $dark-gray: #444
+$orange: #C1731B
+$dark-orange: #AA641B
+$dark-brown: #251B1B
+$yellow-white: #F0E285	
 
 body
 	font-family: 'Roboto', sans-serif
+	//background-color: #757161
 
 .center 
 	text-align: center
 
 h1, h2
-	font-family: 'Fugaz One', cursive
+	//font-family: 'Fugaz One', cursive
 	letter-spacing: -1px
 
 h1
@@ -42,14 +47,37 @@ a
 	&:link, &:visited
 		text-decoration: none
 		background-color: transparent
-		color: $light-gray
+		color: $orange
 	&:hover, &:active
 		text-decoration: none
 		background-color: transparent
-		color: $dark-gray
+		color: $yellow-white
+
+p
+	padding-top: 5%
+
+.navbar-custom-dither
+	//background-image: url(image_path('header-tile.png'))
+	//background-repeat: repeat-x
+	background-color: $dark-brown //#503C27
+	border-width: 0px 0px 10px 0px
+	border-image: url(image_path('header-border-tile.png')) 0 0 10 0 repeat
+	/* Prevent background color leak outs */
+	-webkit-background-clip: padding-box
+	-moz-background-clip:    padding
+	background-clip:         padding-box
+
+.navbar-brand
+	font-family: 'VT323'
+	font-size: 2em
+	letter-spacing: -3px
+	background-image: url(image_path('datadwarf-logo.png'))
+	width: 204px
+	height: 30px
+	margin-top: 8px
 
 #welcome
-	margin-top: 8%
+	margin-top: 10%
 
 #logo
 	display: block
@@ -63,3 +91,7 @@ a
 
 td
 	padding-right: 20px
+
+#main-container
+	padding-top: 90px
+

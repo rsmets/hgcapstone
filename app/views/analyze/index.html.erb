@@ -1,0 +1,43 @@
+
+<%= javascript_include_tag 'analyze.js', 'data-turbolinks-track' => true %>
+<!--
+<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+    Dropdown
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+
+    <% @data_types.each do |data_type| %>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><%= data_type.name %></a></li>
+    <% end %>
+  </ul>
+</div> -->
+<h2>Pick a data set</h2>
+<%= select_tag(:data_type_id, options_from_collection_for_select(@data_types, 'id','name', @selected_data_type), id: 'analyze-data-type') %>
+
+<svg id="heatmap-chart" width="1000" height="500"></svg>
+
+<!--
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Launch demo modal
+</button>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <svg id="graph"></svg>
+        Render graphs here
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+-->

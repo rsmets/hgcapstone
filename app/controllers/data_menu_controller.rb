@@ -33,7 +33,7 @@ class DataMenuController < ApplicationController
     # Populate Correlation Table 'DataCorrelation'
 
     # Clear existing entries in the correlation table
-    DataCorrelation.delete_all
+    # DataCorrelation.delete_all
 
     year_param = Array.new
 
@@ -56,6 +56,7 @@ class DataMenuController < ApplicationController
 
     # Creating arrays for all other data sets corresponding to each year in a specified year-range
     # ([] placed in array if no value for a year)
+    if !DataCorrelation.exists?(:event1_id => input_set_id)
     DataType.find_each do |set|
       if set.id != input_set_id
         against = Array.new
