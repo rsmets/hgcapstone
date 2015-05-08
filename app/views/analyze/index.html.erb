@@ -26,16 +26,26 @@
 </button>
 
 -->
+
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Back to heatmap"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Modal title</h4>
       </div>
-      <div class="modal-body">
-        <svg id="graph"></svg>
-        Render graphs here
+      <div class="modal-body" style="position: relative; display: block;">
+        <div class="btn-group" role="group" aria-label="...">
+          <button id="graph-bar" type="button" class="btn btn-default">Bar</button>
+          <button id="graph-line" type="button" class="btn btn-default">Line</button>
+          <button id="graph-scatter" type="button" class="btn btn-default">Scatter</button>
+        </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="btn-group" role="group" aria-label="...">
+          <button id="graph-bar" type="button" class="btn btn-default">Normalized</button>
+          <button id="graph-line" type="button" class="btn btn-default">Non-Normalized</button>
+        </div>
+        <svg id="graph" width="1000" height="1000"></svg>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -9,7 +9,6 @@ $( document ).ready(function() {
     var year_2 = $("#test").data("year2");
     var dtid = $("#test").data("id");
     var dtid2 = $("#test").data("id2");
-    debugger;
 
     getData(dt, dt2, year_1, year_2, dtid, dtid2)
     return false;});
@@ -146,6 +145,33 @@ function drawNVline(data, graph_name, dt) {
   key: 
   color:
 */
+
+//used to grab the proper data types from the overall data table
+function format(data, dt_id){
+  var out = [];
+  var i = 0;
+  while( i < data.length){
+    if(data[i].data_type_id == dt_id){
+      out.push(data[i]);
+    }i++;
+  }
+  return out;
+}
+
+
+function parse_xy(data){
+  
+  var xymap = data.map(function(item) {
+    return {
+      x: item.value_1,
+      y: item.value_2,
+      data_type_id: item.data_type_id
+    };
+  });
+  //debugger;
+  return xymap;
+}
+
 function format_data(data, dt, colr){
   var x_y = [];
   debugger;
@@ -323,33 +349,8 @@ function exampleData() {
   });
 }
 
-//used to grab the proper data types from the overall data table
-function format(data, dt_id){
-  var out = [];
-  var i = 0;
-  while( i < data.length){
-    if(data[i].data_type_id == dt_id){
-      out.push(data[i]);
-    }i++;
-  }
-  return out;
-}
-
 function clearDrawing(){
   d3.selectAll("svg > *").remove();
-}
-
-function parse_xy(data){
-  
-  var xymap = data.map(function(item) {
-    return {
-      x: item.value_1,
-      y: item.value_2,
-      data_type_id: item.data_type_id
-    };
-  });
-  //debugger;
-  return xymap;
 }
 
 function calcAvg(lineData, num){

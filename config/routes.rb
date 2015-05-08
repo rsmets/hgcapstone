@@ -25,7 +25,9 @@ Rails.application.routes.draw do
   get 'dig' => 'dig#index'
   get 'explore' => 'explore#index'
   get 'analyze' => 'analyze#index'
+  get 'analyze/graph/:id0,:id1' => 'analyze#graph'
   post 'data_types/:id/correlations/' => 'data_types_correlations#create'
+
 
 
   # Example of regular route:
