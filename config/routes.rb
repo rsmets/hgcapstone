@@ -52,6 +52,10 @@ Rails.application.routes.draw do
   get 'graph/' => 'graph#index'
   get 'graph/data' => 'graph#data'
 
+  get 'data_menu/upload' => 'data_menu#upload_file'
+  post 'data_menu/upload' => 'data_menu#upload_file'
+
+
   #resources :graph
 
   # Example resource route (maps HTTP verbs to controller actions automatically):

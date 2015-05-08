@@ -232,6 +232,7 @@ $( document ).ready(function() {
       });
 
       $('#myModal').modal('show');
+      $('#myModal').append("asdfasdfadfasd");
       console.log(eventId0);
       console.log(title1);
    }
