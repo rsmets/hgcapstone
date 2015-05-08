@@ -82,12 +82,49 @@ nav
 	background-clip:         padding-box
 
 .navbar-brand
-	background-image: url(image_path('datadwarf-logo.png'))
 	width: 204px
 	height: 30px
 	margin-top: 8px
+	background-image: url(image_path('datadwarf_logo_sprite.png'))
+	background-position: 0px 0px
 
+	-webkit-animation: shine 0.8s steps(2) infinite
+	-moz-animation: shine 0.8s steps(2) infinite
+	-ms-animation: shine 0.8s steps(2) infinite
+	-o-animation: shine 0.8s steps(2) infinite
+	animation: shine 0.8s steps(2) infinite
 
+	animation-play-state: paused
+
+.navbar-brand
+	&:hover
+		animation-play-state: running
+
+@-webkit-keyframes shine 
+	from
+		background-position: 0px
+	to 
+		background-position: -408px
+@-moz-keyframes shine 
+	from 
+		background-position: 0px
+	to 
+		background-position: -408px
+@-ms-keyframes shine 
+	from 
+		background-position: 0px
+	to 
+		background-position: -408px
+@-o-keyframes shine 
+	from 
+		background-position: 0px
+	to 
+		background-position: -408px
+@keyframes shine 
+	from 
+		background-position: 0px
+	to 
+		background-position: -408px
 
 #welcome
 	margin-top: 10%
