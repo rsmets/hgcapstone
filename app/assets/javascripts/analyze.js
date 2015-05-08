@@ -11,7 +11,8 @@ $( document ).ready(function() {
        buckets = 10,
        colors = ["#660000", "#8B0000", "#b20000", "#ff6666", "#e4e4e4","#9595cf","#5a6890","#314374", "#081d58"], // alternatively colorbrewer.YlGnBu[9]
        coeffs = ["Spearman", "Pearson"],
-       setIds = [];
+       setIds = [],
+       title0 = "";
 
     var tip = d3.tip()
         .attr('class', 'd3-tip')
@@ -49,6 +50,8 @@ $( document ).ready(function() {
       i++;
     }
 
+    title0 = oldData[0].data_type1.name;
+
     for(i = 0; i < 2; i++){
       var flag = 0;
       for(j = 0; j < dataToCompare.length; j++){
@@ -79,6 +82,7 @@ $( document ).ready(function() {
   //  How to make that nasty map
   var makeheatMap = function(data) {
     transformed = dataTransformation(data)
+    console.log(transformed);
     var colorScale = d3.scale.quantile()
        .domain([-1.0, 1.0])
        .range(colors);
@@ -110,40 +114,40 @@ $( document ).ready(function() {
          })
          .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
 
+         var mouseover = function(d){
+          tip.show(d);
+          d3.select(this).style({'stroke': '#98FB98', 'stroke-width': 4.5}).style("cursor","pointer");
 
-    var title = setIds[selectedId];
-    console.log(title);
+         }
+
+         var mouseouttie = function(d, i){
+          tip.hide(d);
+          d3.select(this).style({'stroke': '#7e7e7e', 'stroke-width': 1.0});
+
+         }
 
     var heatMap = svg.selectAll(".Id")
        .data(transformed)
        .enter()
        .append("a")
-       /*.attr("xlink:href", function(d){
-          if(d.Id < selectedId)
-            return "http://en.wikipedia.org/wiki/gongoozler";
-          else
-            return "http://en.wikipedia.org/wiki/coyote"
-
-        })*/
        .append("rect")
        .attr("x", function(d, i) { return (d.Id - 1) * gridSize - 15; })
        .attr("y", function(d, i) { return (d.coeff - 1) * gridSize; })
        .attr("rx", 4)
        .attr("ry", 4)
-      //  .attr("mr-link", "your_custom_link_based/off/this/data")
        .attr("class", "Id bordered")
        .attr("width", gridSize)
        .attr("height", gridSize)
        .style("fill", colors[0])
        .style({'stroke': '#7e7e7e', 'stroke-width': 1.0})
-       .on('mouseover', tip.show).style("cursor", "pointer")
-       .on('mouseout', tip.hide)
+       .on('mouseover', mouseover)
+       .on('mouseout', mouseouttie)
        .on("click", function(d){
           clearDrawing();
           if(d.Id < selectedId)
-            generateGraphInModal(selectedId, d.Id);
+            generateGraphInModal(selectedId, d.Id, title0, setIds[d.Id-1] );
           else
-            generateGraphInModal(selectedId, d.Id+1)
+            generateGraphInModal(selectedId, d.Id+1, title0, setIds[d.Id-1] );
           //$('#myModal').modal('hide');
        });
 
@@ -173,7 +177,7 @@ $( document ).ready(function() {
 
    }
 
-   var generateGraphInModal = function(eventId0, eventId1){
+   var generateGraphInModal = function(eventId0, eventId1, title0, title1){
 
       $('#myModal').modal('toggle');
       $('#myModal').on('shown.bs.modal', function(e){
@@ -184,30 +188,44 @@ $( document ).ready(function() {
            dataType: 'json',
 
            success: function (data) {
-
+              var graphTitle = "" + title0 + " vs. " + title1 + "";
               var rawD0 = format(data, eventId0);
               var rawD1 = format(data, eventId1);
               var mappedD0 = mapData(rawD0);
               var mappedD1 = mapData(rawD1);
               var readyD0 = nvd3Format(mappedD0, eventId0, '#ff7f0e');
               var readyD1 = nvd3Format(mappedD1, eventId1, '#2ca02c');
-              debugger
               var comboD = format_combined_data(mappedD0, mappedD1, eventId0, eventId1, '#ff7f0e', '#2ca02c', 0);
-              
+              $("#myModalLabel").empty();
+              d3.select("#myModalLabel").append("text").text(graphTitle);
+              drawMultiBarChart(comboD,'#graph', eventId0, eventId1);
+
+              $('#graph-norm').on('click',function(){
+                clearDrawing();
+                comboD = format_combined_data(mappedD0, mappedD1, eventId0, eventId1, '#ff7f0e', '#2ca02c', 1);
+                drawMultiBarChart(comboD,'#graph', eventId0, eventId1);
+              });
+
+              $('#graph-nonnorm').on('click',function(){
+                  clearDrawing();
+                  comboD = format_combined_data(mappedD0, mappedD1, eventId0, eventId1, '#ff7f0e', '#2ca02c', 0);
+                  drawMultiBarChart(comboD,'#graph', eventId0, eventId1);
+              });
+
               $('#graph-line').on('click',function(){
                   clearDrawing();
                   drawNVline(comboD, '#graph', eventId0, eventId1);
-                });
+              });
 
-               $('#graph-bar').on('click',function(){
+              $('#graph-bar').on('click',function(){
                   clearDrawing();
                   drawMultiBarChart(comboD,'#graph', eventId0, eventId1);
-               });
+              });
 
-               $('#graph-scatter').on('click',function(){
+              $('#graph-scatter').on('click',function(){
                   clearDrawing();
                   drawScatter(comboD, '#graph', eventId0);
-               });
+              });
 
            }
          });
@@ -215,7 +233,7 @@ $( document ).ready(function() {
 
       $('#myModal').modal('show');
       console.log(eventId0);
-      console.log(eventId1);
+      console.log(title1);
    }
 
    function clearDrawing(){
