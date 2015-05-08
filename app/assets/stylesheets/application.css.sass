@@ -55,6 +55,9 @@ td
 
 /*** Top navbar ***/
 
+nav
+	height: 61px
+
 .nav
 	li
 		a
@@ -68,9 +71,11 @@ td
 				color: $yellow-white
 
 .navbar-custom-dither
+	//background-image: url(image_path('header-tile.png'))
 	background-color: $dark-brown
-	border-width: 0px 0px 10px 0px
-	border-image: url(image_path('header-border-tile.png')) 0 0 10 0 repeat
+	border-width: 0px 0px 20px 0px
+	border-image: url(image_path('header-tile.png')) 0 0 20 0 repeat
+
 	/* Prevent background color leak outs */
 	-webkit-background-clip: padding-box
 	-moz-background-clip:    padding
