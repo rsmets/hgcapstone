@@ -85,8 +85,7 @@ nav
 	width: 204px
 	height: 30px
 	margin-top: 8px
-	background-image: url(image_path('datadwarf_logo_sprite.png'))
-	background-position: 0px 0px
+	background-image: url(image_path('datadwarf_logo.png'))
 
 	-webkit-animation: shine 0.8s steps(2) infinite
 	-moz-animation: shine 0.8s steps(2) infinite
@@ -98,6 +97,8 @@ nav
 
 .navbar-brand
 	&:hover
+		background-image: url(image_path('datadwarf_logo_sprite.png'))
+		background-position: 0px 0px
 		animation-play-state: running
 
 @-webkit-keyframes shine 
