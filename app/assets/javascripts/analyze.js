@@ -161,7 +161,9 @@ $( document ).ready(function() {
        .enter().append("g")
        .attr("class", "legend");
 
-    legend.append("rect")
+    legend.append("a")
+     .attr("xlink:href", "http://en.wikipedia.org/wiki/gongoozler")
+     .append("rect")
      .attr("x", function(d, i) { return legendElementWidth * i; })
      .attr("y", height)
      .attr("width", legendElementWidth)
@@ -174,7 +176,6 @@ $( document ).ready(function() {
      .text(function(d, i) { return "~ " + (Math.round((i*2-8)*100)/100); })
      .attr("x", function(d, i) { return legendElementWidth * i + 20; })
      .attr("y", height + gridSize);
-
    }
 
    var generateGraphInModal = function(eventId0, eventId1, title0, title1){
@@ -188,42 +189,56 @@ $( document ).ready(function() {
            dataType: 'json',
 
            success: function (data) {
+              var choice = 0;
               var graphTitle = "" + title0 + " vs. " + title1 + "";
               var rawD0 = format(data, eventId0);
               var rawD1 = format(data, eventId1);
               var mappedD0 = mapData(rawD0);
               var mappedD1 = mapData(rawD1);
-              var readyD0 = nvd3Format(mappedD0, eventId0, '#ff7f0e');
-              var readyD1 = nvd3Format(mappedD1, eventId1, '#2ca02c');
-              var comboD = format_combined_data(mappedD0, mappedD1, eventId0, eventId1, '#ff7f0e', '#2ca02c', 0);
+              var readyD0 = nvd3Format(mappedD0, title0, '#ff7f0e');
+              var readyD1 = nvd3Format(mappedD1, title1, '#2ca02c');
+              var comboD = format_combined_data(mappedD0, mappedD1, title0, title1, '#ff7f0e', '#2ca02c', 0);
               $("#myModalLabel").empty();
               d3.select("#myModalLabel").append("text").text(graphTitle);
-              drawMultiBarChart(comboD,'#graph', eventId0, eventId1);
+              drawMultiBarChart(comboD,'#graph', title0, title1);
 
               $('#graph-norm').on('click',function(){
                 clearDrawing();
                 comboD = format_combined_data(mappedD0, mappedD1, eventId0, eventId1, '#ff7f0e', '#2ca02c', 1);
-                drawMultiBarChart(comboD,'#graph', eventId0, eventId1);
+                if(choice == 0)
+                  drawMultiBarChart(comboD,'#graph', title0, title1);
+                else if(choice == 1)
+                  drawNVline(comboD, '#graph', eventId0, eventId1);
+                else if(choice == 2)
+                  drawScatter(comboD, '#graph', eventId0);
               });
 
               $('#graph-nonnorm').on('click',function(){
                   clearDrawing();
                   comboD = format_combined_data(mappedD0, mappedD1, eventId0, eventId1, '#ff7f0e', '#2ca02c', 0);
-                  drawMultiBarChart(comboD,'#graph', eventId0, eventId1);
-              });
-
-              $('#graph-line').on('click',function(){
-                  clearDrawing();
-                  drawNVline(comboD, '#graph', eventId0, eventId1);
+                  if(choice == 0)
+                    drawMultiBarChart(comboD,'#graph', title0, title1);
+                  else if(choice == 1)
+                    drawNVline(comboD, '#graph', title0, title1);
+                  else if(choice == 2)
+                    drawScatter(comboD, '#graph', eventId0);
               });
 
               $('#graph-bar').on('click',function(){
                   clearDrawing();
-                  drawMultiBarChart(comboD,'#graph', eventId0, eventId1);
+                  choice = 0;
+                  drawMultiBarChart(comboD,'#graph', title0, title1);
+              });
+
+              $('#graph-line').on('click',function(){
+                  clearDrawing();
+                  choice = 1;
+                  drawNVline(comboD, '#graph', title0, title1);
               });
 
               $('#graph-scatter').on('click',function(){
                   clearDrawing();
+                  choice = 2;
                   drawScatter(comboD, '#graph', eventId0);
               });
 
@@ -299,10 +314,9 @@ function drawNVline(data, graph_name, dt) {
     var chart = nv.models.multiBarChart()
       .reduceXTicks(true)   //If 'false', every single x-axis tick label will be rendered.
       .rotateLabels(0)      //Angle to rotate x-axis labels.
-      //.showControls(true)   //Allow user to switch between 'Grouped' and 'Stacked' mode.
+      .showControls(true)   //Allow user to switch between 'Grouped' and 'Stacked' mode.
       .groupSpacing(0.1)    //Distance between each group of bars.
     ;
-    chart.showControls(true);
   
     chart.xAxis
         .tickFormat(d3.format('f'));
