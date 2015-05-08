@@ -17,19 +17,28 @@
 
 @import "bootstrap-sprockets"
 @import "bootstrap"
-@import url(http://fonts.googleapis.com/css?family=Fugaz+One|Roboto)
+@import url(http://fonts.googleapis.com/css?family=Roboto)
 
+$lighter-gray: #D7D7D7
 $light-gray: #666
 $dark-gray: #444
+$orange: #C1731B
+$dark-orange: #AA641B
+$lighter-brown: #2A2121
+$light-brown: #382F2F
+$dark-brown: #201717//#251B1B
+$yellow-white: #F0E285	
 
 body
 	font-family: 'Roboto', sans-serif
+	color: $dark-brown
+	background-color: $lighter-gray
 
 .center 
 	text-align: center
 
 h1, h2
-	font-family: 'Fugaz One', cursive
+	//font-family: 'Fugaz One', cursive
 	letter-spacing: -1px
 
 h1
@@ -38,18 +47,88 @@ h1
 h2
 	font-size: 2.5em
 
-a
-	&:link, &:visited
-		text-decoration: none
-		background-color: transparent
-		color: $light-gray
-	&:hover, &:active
-		text-decoration: none
-		background-color: transparent
-		color: $dark-gray
+p
+	padding-top: 5%
+
+td
+	padding-right: 20px
+
+/*** Top navbar ***/
+
+nav
+	height: 61px
+
+.nav
+	li
+		a
+			&:link, &:visited
+				text-decoration: none
+				background-color: transparent
+				color: $orange
+			&:hover, &:active
+				text-decoration: none
+				background-color: transparent
+				color: $yellow-white
+
+.navbar-custom-dither
+	//background-image: url(image_path('header-tile.png'))
+	background-color: $dark-brown
+	border-width: 0px 0px 20px 0px
+	border-image: url(image_path('header-tile.png')) 0 0 20 0 repeat
+
+	/* Prevent background color leak outs */
+	-webkit-background-clip: padding-box
+	-moz-background-clip:    padding
+	background-clip:         padding-box
+
+.navbar-brand
+	width: 204px
+	height: 30px
+	margin-top: 8px
+	background-image: url(image_path('datadwarf_logo.png'))
+
+	-webkit-animation: shine 0.8s steps(2) infinite
+	-moz-animation: shine 0.8s steps(2) infinite
+	-ms-animation: shine 0.8s steps(2) infinite
+	-o-animation: shine 0.8s steps(2) infinite
+	animation: shine 0.8s steps(2) infinite
+
+	animation-play-state: paused
+
+.navbar-brand
+	&:hover
+		background-image: url(image_path('datadwarf_logo_sprite.png'))
+		background-position: 0px 0px
+		animation-play-state: running
+
+@-webkit-keyframes shine 
+	from
+		background-position: 0px
+	to 
+		background-position: -408px
+@-moz-keyframes shine 
+	from 
+		background-position: 0px
+	to 
+		background-position: -408px
+@-ms-keyframes shine 
+	from 
+		background-position: 0px
+	to 
+		background-position: -408px
+@-o-keyframes shine 
+	from 
+		background-position: 0px
+	to 
+		background-position: -408px
+@keyframes shine 
+	from 
+		background-position: 0px
+	to 
+		background-position: -408px
 
 #welcome
-	margin-top: 8%
+	margin-top: 10%
 
 #logo
 	display: block
@@ -61,5 +140,23 @@ a
 	padding-top: 90px
 	margin-bottom: 30px
 
-td
-	padding-right: 20px
+/*** Main content container ***/
+
+#main-container
+	padding-top: 90px
+
+#main-container
+	a
+		&:link, &:visited
+			text-decoration: none
+			background-color: transparent
+			color: $dark-orange
+		&:hover, &:active
+			text-decoration: none
+			background-color: transparent
+			color: $yellow-white
+
+#heatmap-chart 
+	margin-left:auto 
+	margin-right:auto
+	display:block
