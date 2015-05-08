@@ -173,6 +173,7 @@ $( document ).ready(function() {
    var generateGraphModal = function(eventId0, eventId1){
       $('#myModal').modal('toggle');
       $('#myModal').modal('show');
+      $('#myModal').append("asdfasdfadfasd");
       console.log(eventId0);
       console.log(eventId1);
    }
