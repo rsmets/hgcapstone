@@ -79,6 +79,8 @@ class DataMenuController < ApplicationController
         event2_id: set.id)
       end
     end
+    end
+
   end
 
   def pick_range_submit
@@ -133,71 +135,48 @@ class DataMenuController < ApplicationController
 
       num1= 0
       CSV.foreach(@file.path) do |line|
-          num2 = 0
-          line.each do |var|
-            if num1 == 0
-              if time_types.include?var
-                time_index= num2
-                time_name= time_types[num2]
-              else
-                variable_names.push(var)
-                new_type= DataType.create(name: @file.original_filename, url:"www.idk.com")
-                variable_index.push(new_type.id)
-              end
+        num2 = 0
+        line.each do |var|
+          if num1 == 0
+            if time_types.include?var
+              time_index= num2
+              time_name= time_types[num2]
             else
-              if num2 != time_index
-                if time_index < num2
-                  column= num2-1
-                else
-                  column= num2
-                end
-                var= var.gsub(/[^0-9,.]/, '')
-                variable = ValueType.create(name: variable_names[num1])
-                instance= ValueType.where(name: time_name).take
-                if instance== nil
-                  instance= ValueType.create(name: time_name)
-                end
-                DataPoint.create(
-
-
-                value_1:line[time_index],
-                value_1_id:instance.id,
-                value_2:var.to_f,
-                value_2_id:variable.id,
-                data_type_id:variable_index[column])
-
-              end
+              variable_names.push(var)
+              new_type= DataType.create(name: @file.original_filename, url:"www.idk.com")
+              variable_index.push(new_type.id)
             end
-            num2= num2+1
-          end 
-          num1= 1
+          else
+            if num2 != time_index
+              if time_index < num2
+                column= num2-1
+              else
+                column= num2
+              end
+              var= var.gsub(/[^0-9,.]/, '')
+              variable = ValueType.create(name: variable_names[num1])
+              instance= ValueType.where(name: time_name).take
+              if instance== nil
+                instance= ValueType.create(name: time_name)
+              end
+              DataPoint.create(
+              value_1:line[time_index],
+              value_1_id:instance.id,
+              value_2:var.to_f,
+              value_2_id:variable.id,
+              data_type_id:variable_index[column])
 
-
+            end
+          end
+          num2= num2+1
+        end 
+        num1= 1
       end
-    end
 
-=begin
-      line.each do |var|
-        num = num+1
-        if time_types.include?var
-          year= var
-        else
-          value= var
-        end
-        if num> 3
-          redirect_to(action: 'upload_file')
-        end
-      end
-    value.delete! '%'
     end
-  DataPoint.create(
-    year:year,
-    value:value.to_f,
-    event_type_id:new_type.id)
-
-=end
-    
   end
+
+
 
 
 end
