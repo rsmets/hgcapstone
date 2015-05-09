@@ -200,11 +200,20 @@ $( document ).ready(function() {
               var comboD = format_combined_data(mappedD0, mappedD1, title0, title1, '#ff7f0e', '#2ca02c', 0);
               $("#myModalLabel").empty();
               d3.select("#myModalLabel").append("text").text(graphTitle);
-              drawMultiBarChart(comboD,'#graph', title0, title1);
+              //drawMultiBarChart(comboD,'#graph', title0, title1);
+              // Set all checkboxes to false since no graph is rendered initially
+              $('#graph-norm').prop('checked', true);
+              $('#graph-nonnorm').prop('checked', false);
+              $('#graph-bar').prop('checked', false);
+              $('#graph-line').prop('checked', false);
+              $('#graph-scatter').prop('checked', false);
 
-              $('#graph-norm').on('click',function(){
+              $('#graph-norm').click(function(e){
+                // prevents the event from bubbling up the DOM tree
+                // eg the modal from cancelling the event
+                e.stopImmediatePropagation();
                 clearDrawing();
-                comboD = format_combined_data(mappedD0, mappedD1, eventId0, eventId1, '#ff7f0e', '#2ca02c', 1);
+                comboD = format_combined_data(mappedD0, mappedD1, eventId0, eventId1, '#ff7f0e', '#2ca02c', 0);
                 if(choice == 0)
                   drawMultiBarChart(comboD,'#graph', title0, title1);
                 else if(choice == 1)
@@ -213,33 +222,40 @@ $( document ).ready(function() {
                   drawScatter(comboD, '#graph', eventId0);
               });
 
-              $('#graph-nonnorm').on('click',function(){
-                  clearDrawing();
-                  comboD = format_combined_data(mappedD0, mappedD1, eventId0, eventId1, '#ff7f0e', '#2ca02c', 0);
-                  if(choice == 0)
-                    drawMultiBarChart(comboD,'#graph', title0, title1);
-                  else if(choice == 1)
-                    drawNVline(comboD, '#graph', title0, title1);
-                  else if(choice == 2)
-                    drawScatter(comboD, '#graph', eventId0);
-              });
-
-              $('#graph-bar').on('click',function(){
-                  clearDrawing();
-                  choice = 0;
+              $('#graph-nonnorm').click(function(e){
+                e.stopImmediatePropagation();
+                clearDrawing();
+                comboD = format_combined_data(mappedD0, mappedD1, eventId0, eventId1, '#ff7f0e', '#2ca02c', 1);
+                if(choice == 0)
                   drawMultiBarChart(comboD,'#graph', title0, title1);
-              });
-
-              $('#graph-line').on('click',function(){
-                  clearDrawing();
-                  choice = 1;
+                else if(choice == 1)
                   drawNVline(comboD, '#graph', title0, title1);
+                else if(choice == 2)
+                  drawScatter(comboD, '#graph', eventId0);
               });
 
-              $('#graph-scatter').on('click',function(){
-                  clearDrawing();
-                  choice = 2;
-                  drawScatter(comboD, '#graph', eventId0);
+              $('#graph-bar').click(function(e){
+                // prevents the event from bubbling up the DOM tree
+                // eg the modal from cancelling the event
+                e.stopImmediatePropagation();
+
+                clearDrawing();
+                choice = 0;
+                drawMultiBarChart(comboD,'#graph', title0, title1);
+              });
+
+              $('#graph-line').click(function(e){
+                e.stopImmediatePropagation();
+                clearDrawing();
+                choice = 1;
+                drawNVline(comboD, '#graph', title0, title1);
+              });
+
+              $('#graph-scatter').click(function(e){
+                e.stopImmediatePropagation();
+                clearDrawing();
+                choice = 2;
+                drawScatter(comboD, '#graph', eventId0);
               });
 
            }
