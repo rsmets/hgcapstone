@@ -203,7 +203,7 @@ $( document ).ready(function() {
               var comboD = format_combined_data(mappedD0, mappedD1, title0, title1, '#ff7f0e', '#2ca02c', 0);
               //console.log("2" + title0 + eventId0 + title1 + eventId1+ "" );
               d3.select("#myModalLabel").append("text").text(graphTitle);
-
+              setTimeout(function(){ drawMultiBarChart(comboD,'#graph'); }, 1000);
               $('#graph-norm').on('click',function(){
                 clearDrawing();
                 comboD = format_combined_data(mappedD0, mappedD1, title0, title1, '#ff7f0e', '#2ca02c', 1);
