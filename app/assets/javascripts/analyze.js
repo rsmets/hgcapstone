@@ -144,10 +144,14 @@ $( document ).ready(function() {
        .on('mouseout', mouseouttie)
        .on("click", function(d){
           clearDrawing();
-          if(d.Id < selectedId)
+          if(d.Id < selectedId){
+            $("#myModalLabel").empty();
             generateGraphInModal(selectedId, d.Id, title0, setIds[d.Id-1] );
-          else
+          }
+          else{
+            $("#myModalLabel").empty();
             generateGraphInModal(selectedId, d.Id+1, title0, setIds[d.Id-1] );
+          }
           //$('#myModal').modal('hide');
        });
 
@@ -178,17 +182,16 @@ $( document ).ready(function() {
      .attr("y", height + gridSize);
    }
 
-   var generateGraphInModal = function(eventId0, eventId1, title0, title1){
-
-      $('#myModal').modal('toggle');
-      $('#myModal').on('shown.bs.modal', function(e){
-        $.ajax({
+   var graphModal = function(eventId0, eventId1, title0, title1){
+    $.ajax({
            type: "GET",
            contentType: "application/json; charset=utf-8",
            url: '/analyze/graph/'+eventId0+','+eventId1+'',
            dataType: 'json',
 
            success: function (data) {
+              $("#myModalLabel").empty();
+              //console.log("1" + title0 + eventId0 + title1 + eventId1 + "" );
               var choice = 0;
               var graphTitle = "" + title0 + " vs. " + title1 + "";
               var rawD0 = format(data, eventId0);
@@ -198,13 +201,15 @@ $( document ).ready(function() {
               var readyD0 = nvd3Format(mappedD0, title0, '#ff7f0e');
               var readyD1 = nvd3Format(mappedD1, title1, '#2ca02c');
               var comboD = format_combined_data(mappedD0, mappedD1, title0, title1, '#ff7f0e', '#2ca02c', 0);
-              $("#myModalLabel").empty();
+              //console.log("2" + title0 + eventId0 + title1 + eventId1+ "" );
               d3.select("#myModalLabel").append("text").text(graphTitle);
-              //drawMultiBarChart(comboD,'#graph', title0, title1);
+
+              setTimeout(function(){ drawMultiBarChart(comboD,'#graph'); }, 1000);
+
               // Set all checkboxes to false since no graph is rendered initially
               $('#graph-norm').prop('checked', true);
               $('#graph-nonnorm').prop('checked', false);
-              $('#graph-bar').prop('checked', false);
+              $('#graph-bar').prop('checked', true);
               $('#graph-line').prop('checked', false);
               $('#graph-scatter').prop('checked', false);
 
@@ -213,13 +218,13 @@ $( document ).ready(function() {
                 // eg the modal from cancelling the event
                 e.stopImmediatePropagation();
                 clearDrawing();
-                comboD = format_combined_data(mappedD0, mappedD1, eventId0, eventId1, '#ff7f0e', '#2ca02c', 0);
+                comboD = format_combined_data(mappedD0, mappedD1, title0, title1, '#ff7f0e', '#2ca02c', 0);
                 if(choice == 0)
-                  drawMultiBarChart(comboD,'#graph', title0, title1);
+                  drawMultiBarChart(comboD,'#graph');
                 else if(choice == 1)
-                  drawNVline(comboD, '#graph', eventId0, eventId1);
+                  drawNVline(comboD, '#graph');
                 else if(choice == 2)
-                  drawScatter(comboD, '#graph', eventId0);
+                  drawScatter(comboD, '#graph');
               });
 
               $('#graph-nonnorm').click(function(e){
@@ -257,23 +262,25 @@ $( document ).ready(function() {
                 choice = 2;
                 drawScatter(comboD, '#graph', eventId0);
               });
-
            }
          });
-      });
+   }
 
+   var generateGraphInModal = function(eventId0, eventId1, title0, title1){
+
+      $('#myModal').modal('toggle');
       $('#myModal').modal('show');
-      $('#myModal').append("asdfasdfadfasd");
-      console.log(eventId0);
-      console.log(title1);
+      $('#myModal').on('shown.bs.modal', graphModal(eventId0, eventId1, title0, title1));
+
    }
 
    function clearDrawing(){
     $("#graph").empty();
   }
 
-    function drawScatter(data, graph_name, dt){
+    function drawScatter(data, graph_name){
   var chart = nv.models.scatterChart()
+                .margin({top:50})
                 .showDistX(true)    //showDist, when true, will display those little distribution lines on the axis.
                 .showDistY(true)
                 //.transitionDuration(350)
@@ -301,9 +308,9 @@ $( document ).ready(function() {
   return chart;
 }
 
-function drawNVline(data, graph_name, dt) {
+function drawNVline(data, graph_name) {
   var chart = nv.models.lineChart()
-                .margin({left: 100})  //Adjust chart margins to give the x-axis some breathing room.
+                .margin({left: 100, top: 50})  //Adjust chart margins to give the x-axis some breathing room.
                 .useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
                 //.transitionDuration(350)  //how fast do you want the lines to transition?
                 .showLegend(true)       //Show the legend, allowing users to turn on/off line series.
@@ -326,8 +333,9 @@ function drawNVline(data, graph_name, dt) {
           return chart;
    }
 
-   function drawMultiBarChart(data, graph_name, dt) {
+   function drawMultiBarChart(data, graph_name) {
     var chart = nv.models.multiBarChart()
+      .margin({top:50})
       .reduceXTicks(true)   //If 'false', every single x-axis tick label will be rendered.
       .rotateLabels(0)      //Angle to rotate x-axis labels.
       .showControls(true)   //Allow user to switch between 'Grouped' and 'Stacked' mode.
@@ -355,14 +363,12 @@ function drawNVline(data, graph_name, dt) {
       total = total + lineData[i].y;
       i++;
     }
-    console.log(total/i);
     return total;
   }
     
   var format_combined_data = function(data, data2, dt, dt2, colr, colr2, norm_flag){
     var x_y = [];
     var x_y2 = [];
-    debugger
     data1_total = 1;
     data2_total = 1;
 
