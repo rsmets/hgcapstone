@@ -17,7 +17,7 @@ var graphModal = function(eventId0, eventId1, title0, title1){
               var readyD0 = nvd3Format(mappedD0, title0, '#ff7f0e');
               var readyD1 = nvd3Format(mappedD1, title1, '#2ca02c');
               var comboD = format_combined_data(mappedD0, mappedD1, title0, title1, '#ff7f0e', '#2ca02c', 1);
-              //console.log("2" + title0 + eventId0 + title1 + eventId1+ "" );
+              console.log("2" + title0 + eventId0 + title1 + eventId1+ "" );
               d3.select("#myModalLabel").append("text").text(graphTitle);
               setTimeout(function(){ drawMultiBarChart(comboD,'#graph'); }, 1000);
               $('#graph-norm').on('click',function(){
