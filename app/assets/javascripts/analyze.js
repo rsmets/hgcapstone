@@ -184,7 +184,7 @@ $( document ).ready(function() {
 
   // When you select stuff, call the JSON correlation API
   selectElement = $('#analyze-data-type')
-  selectElement.change(function(e){
+  selectElement.click(function(e){
     selectedId = $(e.target).find('option:selected').val();
 
     request = $.ajax({
