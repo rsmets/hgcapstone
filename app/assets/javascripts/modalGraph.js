@@ -43,21 +43,27 @@ var graphModal = function(eventId0, eventId1, title0, title1){
               });
 
               $('#graph-bar').on('click',function(){
-                  clearDrawing();
-                  choice = 0;
-                  drawMultiBarChart(comboD,'#graph');
+                  if(choice != 0){
+                    clearDrawing();
+                    choice = 0;
+                    drawMultiBarChart(comboD,'#graph');
+                  }
               });
 
               $('#graph-line').on('click',function(){
-                  clearDrawing();
-                  choice = 1;
-                  drawNVline(comboD, '#graph');
+                  if(choice != 1){
+                    clearDrawing();
+                    choice = 1;
+                    drawNVline(comboD, '#graph');
+                  }
               });
 
               $('#graph-scatter').on('click',function(){
-                  clearDrawing();
-                  choice = 2;
-                  drawScatter(comboD, '#graph');
+                  if(choice != 2 ){
+                    clearDrawing();                    
+                    choice = 2; 
+                    drawScatter(comboD, '#graph');
+                  }
               });
 
            }

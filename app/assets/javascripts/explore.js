@@ -1,18 +1,23 @@
+// Math.floor(Math.random() * ((y-x)+1) + x); Generate randoms numbers between x - y
+
 $( document ).ready(function() {
 //copied over the analyze js file and replaced the selectedId with a hard coded 1 for now. 
 //need to make a random num gnerator eventually and call docorrelations on each random num.
 //made some minor changes to the copied code, obviously.
-request = $.ajax({
+    
+    request = $.ajax({
          url: "/data_types/" + 1 + "/correlations",
          method: "POST",
          dataType: "json"
         });
-          // Upon success, make a new map!
-          successCallback = function(dataTypeCorrelations){
-            makeheatMap(dataTypeCorrelations['data_types_correlations']);
-          }
+    // Upon success, make a new map!
+    successCallback = function(dataTypeCorrelations){
+      makeheatMap(dataTypeCorrelations['data_types_correlations']);
+    }
 
-          request.done(successCallback);
+    request.done(successCallback);
+
+
 
   var margin = { top: 200, right: 0, bottom: 100, left: 300 },
          width = 1000 - margin.left - margin.right,
@@ -21,22 +26,22 @@ request = $.ajax({
          legendElementWidth = gridSize*2,
          buckets = 10,
          colors = ["#660000", "#8B0000", "#b20000", "#ff6666", "#e4e4e4","#9595cf","#5a6890","#314374", "#081d58"], // alternatively colorbrewer.YlGnBu[9]
-         setIdsY = [],
-         setIdsX = [];
+         setIdsY = [1, 2, 3, 4],
+         setIdsX = [5, 6, 7, 8];
 
-      var tip = d3.tip()
-        .attr('class', 'd3-tip')
-        .style("cursor", "crosshair")
-        .style("visibility","visible")
-        .style("background","rgba(0,0,0,0.85)")
-        .style("padding", "12px")
-        .style("font-family", "Veranda")
-        .style("color", "#fff")
-        .style("opacity", .5)
-        .offset([-10, 0])
-        .html(function(d, i) {
-          return "<span style='color:red'> Correlation Value: " + d.value;
-        });
+  var tip = d3.tip()
+    .attr('class', 'd3-tip')
+    .style("cursor", "crosshair")
+    .style("visibility","visible")
+    .style("background","rgba(0,0,0,0.85)")
+    .style("padding", "12px")
+    .style("font-family", "Veranda")
+     .style("color", "#fff")
+    .style("opacity", .5)
+    .offset([-10, 0])
+    .html(function(d, i) {
+      return "<span style='color:red'> Correlation Value: " + d.value;
+  u});
 
   var dataTransformation = function(oldData){
     d3.select('svg').text('')
@@ -81,14 +86,31 @@ request = $.ajax({
 
         newFormattedData.push(set);
       }
-      debugger
     }
     
     return newFormattedData
   }
+
+  var transformed = [{coeff: 1, Id: 5, value: .3},
+                     {coeff: 1, Id: 6, value: .1},
+                     {coeff: 1, Id: 7, value: -.2},
+                     {coeff: 1, Id: 8, value: .5},
+                     {coeff: 2, Id: 5, value: .9},
+                     {coeff: 2, Id: 6, value: -.9},
+                     {coeff: 2, Id: 7, value: -.6},
+                     {coeff: 2, Id: 8, value: 7},
+                     {coeff: 3, Id: 5, value: -.4},
+                     {coeff: 3, Id: 6, value: -.8},
+                     {coeff: 3, Id: 7, value: .56},
+                     {coeff: 3, Id: 8, value: .12},
+                     {coeff: 4, Id: 5, value: 0.0},
+                     {coeff: 4, Id: 6, value: .7612},
+                     {coeff: 4, Id: 7, value: -.921},
+                     {coeff: 4, Id: 8, value: -.5} 
+                     ]
   //  How to make that nasty map
   var makeheatMap = function(data) {
-    transformed = dataTransformation(data)
+    //transformed = dataTransformation(data)
     var colorScale = d3.scale.quantile()
        .domain([-1.0, 1.0])
        .range(colors);
