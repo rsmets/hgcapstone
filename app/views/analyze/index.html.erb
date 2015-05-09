@@ -28,7 +28,7 @@
 
 -->
 
-<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -36,17 +36,16 @@
         <h4 class="modal-title" id="myModalLabel"></h4>
       </div>
       <div class="modal-body" style="position: relative; display: block;">
-        <div class="btn-group" role="group" aria-label="...">
-          <button id="graph-bar" type="button" class="btn btn-default">Bar</button>
-          <button id="graph-line" type="button" class="btn btn-default">Line</button>
-          <button id="graph-scatter" type="button" class="btn btn-default">Scatter</button>
+        <div class="btn-group modal-toolbar" role="group" aria-label="..." data-toggle="buttons">
+          <label><input id="graph-bar" type="radio" name="graph-type">Bar</label>
+          <label><input id="graph-line" type="radio" name="graph-type">Line</label>
+          <label><input id="graph-scatter" type="radio" name="graph-type">Scatter</label>
         </div>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Default
         <div class="btn-group" role="group" aria-label="..." data-toggle="buttons-radio">
           <button id="graph-nonnorm" type="button" class="btn btn-default">Normalized</button>
           <button id="graph-norm" type="button" class="btn btn-default">Non-Normalized</button>
         </div>
-
         <svg id="graph" width="2000" height="1000"></svg>
 
       </div>
