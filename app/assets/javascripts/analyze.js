@@ -3,7 +3,7 @@
 
 $( document ).ready(function() {
 
-  var margin = { top: 200, right: 0, bottom: 100, left: 300 },
+  var margin = { top: 200, right: 0, bottom: 100, left: 100 },
        width = 1000 - margin.left - margin.right,
        height = 500 - margin.top - margin.bottom,
        gridSize = Math.floor(width / 24),
@@ -13,22 +13,6 @@ $( document ).ready(function() {
        coeffs = ["Spearman", "Pearson"],
        setIds = [],
        title0 = "";
-
-    var tip = d3.tip()
-        .attr('class', 'd3-tip')
-        .style("cursor", "crosshair")
-        .style("visibility","visible")
-        .style("background","rgba(0,0,0,0.85)")
-        .style("padding", "12px")
-        .style("font-family", "Veranda")
-        .style("color", "#fff")
-        .style("opacity", .5)
-        .offset([-10, 0])
-        .html(function(d, i) {
-          return "<span style='color:red'> Correlation Value: " + d.value;
-        });
-                  
-
 
   var dataTransformation = function(oldData){
     d3.select('svg').text('')
@@ -113,18 +97,6 @@ $( document ).ready(function() {
             return "translate(" + (i * gridSize) +", -6)" + "rotate(45)"
          })
          .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
-
-         var mouseover = function(d){
-          tip.show(d);
-          d3.select(this).style({'stroke': '#98FB98', 'stroke-width': 4.5}).style("cursor","pointer");
-
-         }
-
-         var mouseouttie = function(d, i){
-          tip.hide(d);
-          d3.select(this).style({'stroke': '#7e7e7e', 'stroke-width': 1.0});
-
-         }
 
     var heatMap = svg.selectAll(".Id")
        .data(transformed)

@@ -19,7 +19,7 @@ $( document ).ready(function() {
 
 
 
-  var margin = { top: 200, right: 0, bottom: 100, left: 300 },
+  var margin = { top: 100, right: 0, bottom: 100, left: 100 },
          width = 1000 - margin.left - margin.right,
          height = 500 - margin.top - margin.bottom,
          gridSize = Math.floor(width / 24),
@@ -29,21 +29,8 @@ $( document ).ready(function() {
          setIdsY = [1, 2, 3, 4],
          setIdsX = [5, 6, 7, 8];
 
-  var tip = d3.tip()
-    .attr('class', 'd3-tip')
-    .style("cursor", "crosshair")
-    .style("visibility","visible")
-    .style("background","rgba(0,0,0,0.85)")
-    .style("padding", "12px")
-    .style("font-family", "Veranda")
-     .style("color", "#fff")
-    .style("opacity", .5)
-    .offset([-10, 0])
-    .html(function(d, i) {
-      return "<span style='color:red'> Correlation Value: " + d.value;
-  u});
-
   var dataTransformation = function(oldData){
+    debugger;
     d3.select('svg').text('')
     console.log(legendElementWidth);
     var i = 0;
@@ -91,26 +78,27 @@ $( document ).ready(function() {
     return newFormattedData
   }
 
-  var transformed = [{coeff: 1, Id: 5, value: .3},
-                     {coeff: 1, Id: 6, value: .1},
-                     {coeff: 1, Id: 7, value: -.2},
-                     {coeff: 1, Id: 8, value: .5},
-                     {coeff: 2, Id: 5, value: .9},
-                     {coeff: 2, Id: 6, value: -.9},
-                     {coeff: 2, Id: 7, value: -.6},
-                     {coeff: 2, Id: 8, value: 7},
-                     {coeff: 3, Id: 5, value: -.4},
-                     {coeff: 3, Id: 6, value: -.8},
-                     {coeff: 3, Id: 7, value: .56},
-                     {coeff: 3, Id: 8, value: .12},
-                     {coeff: 4, Id: 5, value: 0.0},
-                     {coeff: 4, Id: 6, value: .7612},
-                     {coeff: 4, Id: 7, value: -.921},
-                     {coeff: 4, Id: 8, value: -.5} 
-                     ]
+  var transformed = [{y_ID: 1, x_ID: 5, value: .3},
+                     {y_ID: 1, x_ID: 6, value: .1},
+                     {y_ID: 1, x_ID: 7, value: -.2},
+                     {y_ID: 1, x_ID: 8, value: .5},
+                     {y_ID: 2, x_ID: 5, value: .9},
+                     {y_ID: 2, x_ID: 6, value: -.9},
+                     {y_ID: 2, x_ID: 7, value: -.6},
+                     {y_ID: 2, x_ID: 8, value: 7},
+                     {y_ID: 3, x_ID: 5, value: -.4},
+                     {y_ID: 3, x_ID: 6, value: -.8},
+                     {y_ID: 3, x_ID: 7, value: .56},
+                     {y_ID: 3, x_ID: 8, value: .12},
+                     {y_ID: 4, x_ID: 5, value: 0.0},
+                     {y_ID: 4, x_ID: 6, value: .7612},
+                     {y_ID: 4, x_ID: 7, value: -.921},
+                     {y_ID: 4, x_ID: 8, value: -.5} 
+                     ];
   //  How to make that nasty map
   var makeheatMap = function(data) {
     //transformed = dataTransformation(data)
+    debugger
     var colorScale = d3.scale.quantile()
        .domain([-1.0, 1.0])
        .range(colors);
@@ -122,23 +110,23 @@ $( document ).ready(function() {
        .append("g")
        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var coeffLabels = svg.selectAll(".coeffLabel")
-         .data(coeffs)
+    var yLabels = svg.selectAll(".yLabel")
+         .data(setIdsY)
          .enter().append("text")
            .text(function (d) { return d; })
            .attr("x", -10)
            .attr("y", function (d, i) { return i * gridSize; })
            .style("text-anchor", "end")
-           .attr("transform", "translate(-25," + gridSize / 1.5 + ")")
+           .attr("transform", "translate(+125," + gridSize / 1.5 + ")")
            .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "coeffLabel mono axis axis-workweek" : "coeffLabel mono axis"); });
 
-    var timeLabels = svg.selectAll(".timeLabel") // data set label
-       .data(setIds)
+    var xLabels = svg.selectAll(".xLabel") // data set label
+       .data(setIdsX)
        .enter().append("text")
          .text(function(d) { return d; })
          .style("text-anchor", "end")
          .attr("transform", function(d, i){
-            return "translate(" + (i * gridSize) +", -6)" + "rotate(45)"
+            return "translate(" + (i * gridSize + 150) + ", -6)" + "rotate(45)"
          })
          .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
 
@@ -147,16 +135,9 @@ $( document ).ready(function() {
        .data(transformed)
        .enter()
        .append("a")
-       /*.attr("xlink:href", function(d){
-          if(d.Id < selectedId)
-            return "http://en.wikipedia.org/wiki/gongoozler";
-          else
-            return "http://en.wikipedia.org/wiki/coyote"
-
-        })*/
        .append("rect")
-       .attr("x", function(d, i) { return (d.Id - 1) * gridSize - 15; })
-       .attr("y", function(d, i) { return (d.coeff - 1) * gridSize; })
+       .attr("x", function(d, i) { return (d.x_ID - 1) * gridSize - 15; })
+       .attr("y", function(d, i) { return (d.y_ID - 1) * gridSize; })
        .attr("rx", 4)
        .attr("ry", 4)
       //  .attr("mr-link", "your_custom_link_based/off/this/data")
@@ -165,14 +146,11 @@ $( document ).ready(function() {
        .attr("height", gridSize)
        .style("fill", colors[0])
        .style({'stroke': '#7e7e7e', 'stroke-width': 1.0})
-       .on('mouseover', tip.show)
-       .on('mouseout', tip.hide)
+       .on('mouseover', mouseover)
+       .on('mouseout', mouseouttie)
        .on("click", function(d){
-          if(d.Id < 1)
-            generateGraphModal(1, d.Id);
-          else
-            generateGraphModal(1, d.Id+1)
-          //$('#myModal').modal('hide');
+        debugger
+          generateGraphInModal(d.y_ID, d.x_ID, "hello", "world");
        });
 
     heatMap.transition().duration(1000)
@@ -201,32 +179,4 @@ $( document ).ready(function() {
 
    }
 
-   var generateGraphModal = function(eventId0, eventId1){
-      $('#myModal').modal('toggle');
-      $('#myModal').modal('show');
-      $('#myModal').append("asdfasdfadfasd");
-      console.log(eventId0);
-      console.log(eventId1);
-   }
-
-      /*request = $.ajax({
-         url: "/data_types/" + 1 + "/correlations",
-         method: "POST",
-         dataType: "json"
-      });*/
-/*
-      $("explore_dts").click(function(){
-        alert("asdfasdf");
-        request = $.ajax({
-         url: "/data_types/" + 1 + "/correlations",
-         method: "POST",
-         dataType: "json"
-        });
-          // Upon success, make a new map!
-          successCallback = function(dataTypeCorrelations){
-            makeheatMap(dataTypeCorrelations['data_types_correlations']);
-          }
-
-          request.done(successCallback);
-      });*/
 });
