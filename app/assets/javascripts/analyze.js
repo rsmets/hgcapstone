@@ -103,8 +103,8 @@ $( document ).ready(function() {
        .enter()
        .append("a")
        .append("rect")
-       .attr("x", function(d, i) { return (d.Id - 1) * gridSize - 15; })
-       .attr("y", function(d, i) { return (d.coeff - 1) * gridSize; })
+       .attr("x", function(d, i) { return (d.Id*1.09 - 1) * gridSize - 15; })
+       .attr("y", function(d, i) { return (d.coeff*1.09 - 1) * gridSize; })
        .attr("rx", 4)
        .attr("ry", 4)
        .attr("class", "Id bordered")
@@ -152,6 +152,12 @@ $( document ).ready(function() {
      .text(function(d, i) { return "~ " + (Math.round((i*2-8)*100)/100); })
      .attr("x", function(d, i) { return legendElementWidth * i + 20; })
      .attr("y", height + gridSize);
+
+    legend.append("text")
+      .attr("class", "mono")
+      .text("Inversely (-1) Correlated to Directly (+1) Correlated")
+      .attr("x", legendElementWidth + 30)
+      .attr("y", height - 30);
    }
 
   // When you select stuff, call the JSON correlation API
