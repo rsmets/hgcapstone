@@ -126,7 +126,7 @@ $( document ).ready(function() {
          .text(function(d) { return d; })
          .style("text-anchor", "end")
          .attr("transform", function(d, i){
-            return "translate(" + (i * gridSize + 150) + ", -6)" + "rotate(45)"
+            return "translate(" + (i * gridSize + 160) + ", -6)" + "rotate(45)"
          })
          .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
 
@@ -136,8 +136,8 @@ $( document ).ready(function() {
        .enter()
        .append("a")
        .append("rect")
-       .attr("x", function(d, i) { return (d.x_ID*1.05 - 1) * gridSize - 15; })
-       .attr("y", function(d, i) { return (d.y_ID*1.05 - 1) * gridSize; })
+       .attr("x", function(d, i) { return (d.x_ID*1.09 - 1) * gridSize - 15; })
+       .attr("y", function(d, i) { return (d.y_ID*1.09 - 1) * gridSize; })
        .attr("rx", 4)
        .attr("ry", 4)
       //  .attr("mr-link", "your_custom_link_based/off/this/data")
@@ -180,6 +180,12 @@ $( document ).ready(function() {
      .attr("x", function(d, i) { return legendElementWidth * i + 20; })
      .attr("y", height + gridSize);
 
-   }
 
+   legend.append("text")
+      .attr("class", "mono")
+      .text("Inversely (-1) Correlated to Directly (+1) Correlated")
+      .attr("x", legendElementWidth + 30)
+      .attr("y", height - 30);
+
+   }
 });
