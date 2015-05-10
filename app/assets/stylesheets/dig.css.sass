@@ -1,0 +1,56 @@
+// Place all the styles related to the Dig controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+=bg-image-anim($img-path, $sprite-path, $img-length)
+	background-image: url($img-path)
+
+	-webkit-animation: shine-anim 0.8s steps(2) infinite
+	-moz-animation: shine-anim 0.8s steps(2) infinite
+	-ms-animation: shine-anim 0.8s steps(2) infinite
+	-o-animation: shine-anim 0.8s steps(2) infinite
+	animation: shine-anim 0.8s steps(2) infinite
+	animation-play-state: paused
+
+	&:hover
+		background-image: url($sprite-path)
+		background-position: 0px 0px
+		animation-play-state: running
+
+	@-webkit-keyframes shine-anim 
+		from
+			background-position: 0px
+		to 
+			background-position: -$img-length
+	@-moz-keyframes shine-anim 
+		from 
+			background-position: 0px
+		to 
+			background-position: -$img-length
+	@-ms-keyframes shine-anim 
+		from 
+			background-position: 0px
+		to 
+			background-position: -$img-length
+	@-o-keyframes shine-anim 
+		from 
+			background-position: 0px
+		to 
+			background-position: -$img-length
+	@keyframes shine-anim 
+		from 
+			background-position: 0px
+		to 
+			background-position: -$img-length
+
+
+.dig-button
+	display: inline-block
+	width: 128px
+	height: 128px
+
+.analyze-anim
+	+bg-image-anim(image_path('dwarf_analyze.png'), image_path('dwarf_analyze_sprite.png'), 256px)
+
+.explore-anim
+	+bg-image-anim(image_path('dwarf_explore.png'), image_path('dwarf_explore_sprite.png'), 256px)
