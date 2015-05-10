@@ -20,7 +20,7 @@ var tip = d3.tip()
     .style("background","rgba(0,0,0,0.85)")
     .style("padding", "12px")
     .style("font-family", "Veranda")
-     .style("color", "#fff")
+    .style("color", "#fff")
     .style("opacity", .5)
     .offset([-10, 0])
     .html(function(d, i) {
@@ -100,7 +100,7 @@ var graphModal = function(eventId0, eventId1, title0, title1){
          });
    }
 
-   var generateGraphInModal = function(eventId0, eventId1, title0, title1){
+  var generateGraphInModal = function(eventId0, eventId1, title0, title1){
       debugger
       $('#myModal').modal('toggle');
       $('#myModal').modal('show');
@@ -108,7 +108,7 @@ var graphModal = function(eventId0, eventId1, title0, title1){
 
    }
 
-   function clearDrawing(){
+  function clearDrawing(){
     $("#graph").empty();
   }
 

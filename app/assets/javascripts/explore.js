@@ -136,8 +136,8 @@ $( document ).ready(function() {
        .enter()
        .append("a")
        .append("rect")
-       .attr("x", function(d, i) { return (d.x_ID - 1) * gridSize - 15; })
-       .attr("y", function(d, i) { return (d.y_ID - 1) * gridSize; })
+       .attr("x", function(d, i) { return (d.x_ID*1.05 - 1) * gridSize - 15; })
+       .attr("y", function(d, i) { return (d.y_ID*1.05 - 1) * gridSize; })
        .attr("rx", 4)
        .attr("ry", 4)
       //  .attr("mr-link", "your_custom_link_based/off/this/data")
@@ -149,7 +149,8 @@ $( document ).ready(function() {
        .on('mouseover', mouseover)
        .on('mouseout', mouseouttie)
        .on("click", function(d){
-        debugger
+          $("#graph").empty();
+          $("#myModalLabel").empty();
           generateGraphInModal(d.y_ID, d.x_ID, "hello", "world");
        });
 
@@ -163,7 +164,9 @@ $( document ).ready(function() {
        .enter().append("g")
        .attr("class", "legend");
 
-    legend.append("rect")
+    legend.append("a")
+     .attr("xlink:href", "http://en.wikipedia.org/wiki/gongoozler")
+     .append("rect")
      .attr("x", function(d, i) { return legendElementWidth * i; })
      .attr("y", height)
      .attr("width", legendElementWidth)

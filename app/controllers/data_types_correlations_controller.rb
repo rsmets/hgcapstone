@@ -7,6 +7,11 @@ class DataTypesCorrelationsController < ActionController::Base
     render json: DataCorrelation.where(event1_id: params[:id])
   end
 
+  def createMatrix # this is for heatmap
+    # codysSweetDoCorrelationsReturnAMatrix();
+    #render json: result of cody's sweet algorithm
+  end
+  
   private
 
   # Params:

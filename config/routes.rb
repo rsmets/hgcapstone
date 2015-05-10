@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   get 'analyze' => 'analyze#index'
   get 'analyze/graph/:id0,:id1' => 'analyze#graph'
   post 'data_types/:id/correlations/' => 'data_types_correlations#create'
+  post 'data_types/correlations/' => 'data_types_correlations#createMatrix'
 
 
 
