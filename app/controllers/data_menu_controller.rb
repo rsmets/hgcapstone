@@ -122,7 +122,7 @@ class DataMenuController < ApplicationController
 
   def upload_file
     # array of time strings valid to be used as time parameters
-    time_types= ["Year","year"]
+    time_types= ["Year","year","Date","date"]
 
     if params[:new_file]!= nil
 
