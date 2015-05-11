@@ -1,0 +1,48 @@
+/* bg-image-anim
+ * $anim-name - name of animation (must be unique)
+ * $img-path - path to :link image 
+ * $sprite-path - path to :hover animation spritesheet
+ * $sprite-length - total length of spritesheet (e.g. 256px)
+ * $num-frames - number of frames in spritesheet
+ * $anim-length - time period over which the frames should be played (e.g. 0.8s)
+ */
+=bg-image-anim($anim-name, $img-path, $sprite-path, $sprite-length, $num-frames, $anim-length)
+	background-image: url($img-path)
+
+	-webkit-animation: $anim-name $anim-length steps($num-frames) infinite
+	-moz-animation: $anim-name $anim-length steps($num-frames) infinite
+	-ms-animation: $anim-name $anim-length steps($num-frames) infinite
+	-o-animation: $anim-name $anim-length steps($num-frames) infinite
+	animation: $anim-name $anim-length steps($num-frames) infinite
+	animation-play-state: paused
+
+	&:hover
+		background-image: url($sprite-path)
+		background-position: 0px 0px
+		animation-play-state: running
+
+	@-webkit-keyframes #{$anim-name}
+		from
+			background-position: 0px
+		to 
+			background-position: -$sprite-length
+	@-moz-keyframes #{$anim-name}
+		from 
+			background-position: 0px
+		to 
+			background-position: -$sprite-length
+	@-ms-keyframes #{$anim-name}
+		from 
+			background-position: 0px
+		to 
+			background-position: -$sprite-length
+	@-o-keyframes #{$anim-name}
+		from 
+			background-position: 0px
+		to 
+			background-position: -$sprite-length
+	@keyframes #{$anim-name}
+		from 
+			background-position: 0px
+		to 
+			background-position: -$sprite-length

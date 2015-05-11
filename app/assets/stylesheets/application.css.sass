@@ -19,6 +19,7 @@
 @import "bootstrap"
 @import url(http://fonts.googleapis.com/css?family=Roboto|VT323|Press+Start+2P)
 @import "variables"
+@import "bg_image_anim"
 
 body
 	font-family: 'Roboto', sans-serif
@@ -76,45 +77,7 @@ nav
 	width: 204px
 	height: 30px
 	margin-top: 8px
-	background-image: url(image_path('datadwarf_logo.png'))
-
-	-webkit-animation: shine 0.8s steps(2) infinite
-	-moz-animation: shine 0.8s steps(2) infinite
-	-ms-animation: shine 0.8s steps(2) infinite
-	-o-animation: shine 0.8s steps(2) infinite
-	animation: shine 0.8s steps(2) infinite
-	animation-play-state: paused
-
-	&:hover
-		background-image: url(image_path('datadwarf_logo_sprite.png'))
-		background-position: 0px 0px
-		animation-play-state: running
-
-	@-webkit-keyframes shine 
-		from
-			background-position: 0px
-		to 
-			background-position: -408px
-	@-moz-keyframes shine 
-		from 
-			background-position: 0px
-		to 
-			background-position: -408px
-	@-ms-keyframes shine 
-		from 
-			background-position: 0px
-		to 
-			background-position: -408px
-	@-o-keyframes shine 
-		from 
-			background-position: 0px
-		to 
-			background-position: -408px
-	@keyframes shine 
-		from 
-			background-position: 0px
-		to 
-			background-position: -408px
+	+bg-image-anim(logo-anim, image_path('datadwarf_logo.png'), image_path('datadwarf_logo_sprite.png'), 408px, 2, 0.8s)
 
 #welcome
 	margin-top: 10%
