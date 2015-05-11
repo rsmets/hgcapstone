@@ -1,3 +1,10 @@
+# Input: 2 matrices
+#        arrays1: each row corresponds to a dataset on the left side of the Explore map
+#        arrays2: each row corresponds to a dataset on the top side of the Explore map
+# Output: 1 matrix
+#         where each entry[i][j] is the correlation of the ith dataset on the left side
+#           with the jth dataset on the top side
+
 require 'statsample'
 
 # the following ruby_pearson was altered and copied from http://blog.chrislowis.co.uk/2008/11/24/ruby-gsl-pearson.html
@@ -78,5 +85,9 @@ if __FILE__ == $0
     a5=[[2,2,3,3,4,3,4,5],[8,7,6,5,4,3,2,1]]
 
     test(4,5,a4,a5) # not totally correlated, inversely correlated
+
+    a6=[[2,2,3,3,4,4],[1,2,3,3,5,4,6,5,7]]
+
+    test(4,6,a4,a6) # different length
   end
 end
