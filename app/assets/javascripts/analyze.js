@@ -83,7 +83,7 @@ $( document ).ready(function() {
          .enter().append("text")
            .text(function (d) { return d; })
            .attr("x", -10)
-           .attr("y", function (d, i) { return i * gridSize; })
+           .attr("y", function (d, i) { return i * gridSize * 1.09; })
            .style("text-anchor", "end")
            .attr("transform", "translate(-25," + gridSize / 1.5 + ")")
            .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "coeffLabel mono axis axis-workweek" : "coeffLabel mono axis"); });
@@ -94,7 +94,7 @@ $( document ).ready(function() {
          .text(function(d) { return d; })
          .style("text-anchor", "end")
          .attr("transform", function(d, i){
-            return "translate(" + (i * gridSize) +", -6)" + "rotate(45)"
+            return "translate(" + (i*1.09 * gridSize + 5) +", -6)" + "rotate(45)"
          })
          .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
 
