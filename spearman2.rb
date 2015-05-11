@@ -1,5 +1,7 @@
+require 'statsample'
+
 # the following ruby_pearson was altered and copied from http://blog.chrislowis.co.uk/2008/11/24/ruby-gsl-pearson.html
-def pearson2(arrays1, arrays2)
+def spearman2(arrays1, arrays2)
 
   # the following 3 lines were altered and copied from http://stackoverflow.com/questions/5372701/how-to-declare-an-empty-2-dimensional-array-in-ruby
   width = arrays1.length
@@ -39,26 +41,15 @@ def pearson2(arrays1, arrays2)
       elsif numSkipped2 == array2.length
         ans[i][j] = 0.0
       else
-        # Correlation pre-calculations
-        n=x.length
+        # convert to proper input syntax
+        c=x.collect {|point| point }.to_scale
+        d=y.collect {|point| point }.to_scale
+        #puts "c= #{c}"
+        #puts "d= #{d}"
 
-        sumx=x.inject(0) {|r,m| r + m}
-        sumy=y.inject(0) {|r,m| r + m}
-
-        sumxSq=x.inject(0) {|r,m| r + m**2}
-        sumySq=y.inject(0) {|r,m| r + m**2}
-
-        prods=[]; x.each_with_index{|this_x,m| prods << this_x*y[m]}
-        pSum=prods.inject(0){|r,m| r + m}
-
-        # Calculate Pearson score
-        num=pSum-(sumx*sumy/n)
-        den=((sumxSq-(sumx**2)/n)*(sumySq-(sumy**2)/n))**0.5
-        if den==0
-          return 0
-        end
-        r=num/den
-        ans[i][j] = r.real
+        # run algorithm
+        ans[i][j]=Statsample::Bivariate.spearman(c,d)
+        #return output
       end
       #puts "-ans[#{i}][#{j}]= #{ans[i][j]}"
     }
@@ -67,7 +58,7 @@ def pearson2(arrays1, arrays2)
 end
 
 def test(a,b,x,y)
-	puts "corr(#{a},#{b})= #{pearson2(x,y)}"
+	puts "corr(#{a},#{b})= #{spearman2(x,y)}"
 end
 
 if __FILE__ == $0
