@@ -50,7 +50,20 @@ var graphModal = function(eventId0, eventId1, title0, title1){
               console.log("2" + title0 + eventId0 + title1 + eventId1+ "" );
               d3.select("#myModalLabel").append("text").text(graphTitle);
               setTimeout(function(){ drawMultiBarChart(comboD,'#graph'); }, 1000);
-              $('#graph-norm').on('click',function(){
+
+              // Check buttons for graphs that are displayed by default.
+              $('#graph-norm').prop('checked', true);
+              $('#graph-bar').prop('checked', true);
+
+              // Ensure non defaults are unchecked.
+              $('#graph-scatter').prop('checked', false);
+              $('#graph-line').prop('checked', false);
+              $('#graph-nonnorm').prop('checked', false);
+              
+              $('#graph-norm').on('click',function(e){
+                // prevents the event from bubbling up the DOM tree
+                // eg the modal from cancelling the event
+                e.stopImmediatePropagation();
                 clearDrawing();
                 comboD = format_combined_data(mappedD0, mappedD1, title0, title1, '#ff7f0e', '#2ca02c', 1);
                 if(choice == 0)
@@ -61,7 +74,8 @@ var graphModal = function(eventId0, eventId1, title0, title1){
                   drawScatter(comboD, '#graph');
               });
 
-              $('#graph-nonnorm').on('click',function(){
+              $('#graph-nonnorm').on('click',function(e){
+                  e.stopImmediatePropagation();
                   clearDrawing();
                   comboD = format_combined_data(mappedD0, mappedD1, title0, title1, '#ff7f0e', '#2ca02c', 0);
                   if(choice == 0)
@@ -72,7 +86,8 @@ var graphModal = function(eventId0, eventId1, title0, title1){
                     drawScatter(comboD, '#graph');
               });
 
-              $('#graph-bar').on('click',function(){
+              $('#graph-bar').on('click',function(e){
+                  e.stopImmediatePropagation();
                   if(choice != 0){
                     clearDrawing();
                     choice = 0;
@@ -80,7 +95,8 @@ var graphModal = function(eventId0, eventId1, title0, title1){
                   }
               });
 
-              $('#graph-line').on('click',function(){
+              $('#graph-line').on('click',function(e){
+                  e.stopImmediatePropagation();
                   if(choice != 1){
                     clearDrawing();
                     choice = 1;
@@ -88,7 +104,8 @@ var graphModal = function(eventId0, eventId1, title0, title1){
                   }
               });
 
-              $('#graph-scatter').on('click',function(){
+              $('#graph-scatter').on('click',function(e){
+                  e.stopImmediatePropagation();
                   if(choice != 2 ){
                     clearDrawing();                    
                     choice = 2; 
