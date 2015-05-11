@@ -133,6 +133,8 @@ class DataMenuController < ApplicationController
       variable_index= Array.new
       time_index= 0
 
+      new_type= DataType.create(name: @file.original_filename, url:"USER INPUT FILE")
+
       num1= 0
       CSV.foreach(@file.path) do |line|
         num2 = 0
@@ -140,11 +142,11 @@ class DataMenuController < ApplicationController
           if num1 == 0
             if time_types.include?var
               time_index= num2
-              time_name= time_types[num2]
+              index= time_types.index(var)
+              @time_name= time_types[index]
             else
-              variable_names.push(var)
-              new_type= DataType.create(name: @file.original_filename, url:"www.idk.com")
-              variable_index.push(new_type.id)
+              variable = ValueType.create(name: var)
+              variable_names.push(variable.id)
             end
           else
             if num2 != time_index
@@ -153,18 +155,17 @@ class DataMenuController < ApplicationController
               else
                 column= num2
               end
-              var= var.gsub(/[^0-9,.]/, '')
-              variable = ValueType.create(name: variable_names[num1])
-              instance= ValueType.where(name: time_name).take
+              #var= var.gsub(/[^0-9,.]/, '')
+              instance= ValueType.where(name: @time_name).take
               if instance== nil
-                instance= ValueType.create(name: time_name)
+                instance= ValueType.create(name: @time_name)
               end
               DataPoint.create(
               value_1:line[time_index],
               value_1_id:instance.id,
               value_2:var.to_f,
-              value_2_id:variable.id,
-              data_type_id:variable_index[column])
+              value_2_id:variable_names[column],
+              data_type_id:new_type.id)
 
             end
           end
