@@ -24,7 +24,7 @@ var tip = d3.tip()
     .style("opacity", .5)
     .offset([-10, 0])
     .html(function(d, i) {
-      return "<span style='color:red'> Correlation Value: " + d.value;
+      return "<span style='color:red'> Click to Visualize <br /> Correlation Value: " + d.value;
   });
 
 var graphModal = function(eventId0, eventId1, title0, title1){
@@ -52,8 +52,8 @@ var graphModal = function(eventId0, eventId1, title0, title1){
               setTimeout(function(){ drawMultiBarChart(comboD,'#graph'); }, 1000);
 
               // Check buttons for graphs that are displayed by default.
-              $('#graph-norm').prop('checked', true);
-              $('#graph-bar').prop('checked', true);
+              $('#graph-norm').prop('checked', false);
+              $('#graph-bar').prop('checked', false);
 
               // Ensure non defaults are unchecked.
               $('#graph-scatter').prop('checked', false);
@@ -63,7 +63,7 @@ var graphModal = function(eventId0, eventId1, title0, title1){
               $('#graph-norm').on('click',function(e){
                 // prevents the event from bubbling up the DOM tree
                 // eg the modal from cancelling the event
-                e.stopImmediatePropagation();
+                //e.stopImmediatePropagation();
                 clearDrawing();
                 comboD = format_combined_data(mappedD0, mappedD1, title0, title1, '#ff7f0e', '#2ca02c', 1);
                 if(choice == 0)
@@ -75,7 +75,7 @@ var graphModal = function(eventId0, eventId1, title0, title1){
               });
 
               $('#graph-nonnorm').on('click',function(e){
-                  e.stopImmediatePropagation();
+                  //e.stopImmediatePropagation();
                   clearDrawing();
                   comboD = format_combined_data(mappedD0, mappedD1, title0, title1, '#ff7f0e', '#2ca02c', 0);
                   if(choice == 0)
@@ -87,7 +87,7 @@ var graphModal = function(eventId0, eventId1, title0, title1){
               });
 
               $('#graph-bar').on('click',function(e){
-                  e.stopImmediatePropagation();
+                  //e.stopImmediatePropagation();
                   if(choice != 0){
                     clearDrawing();
                     choice = 0;
@@ -96,7 +96,7 @@ var graphModal = function(eventId0, eventId1, title0, title1){
               });
 
               $('#graph-line').on('click',function(e){
-                  e.stopImmediatePropagation();
+                  //e.stopImmediatePropagation();
                   if(choice != 1){
                     clearDrawing();
                     choice = 1;
@@ -105,7 +105,7 @@ var graphModal = function(eventId0, eventId1, title0, title1){
               });
 
               $('#graph-scatter').on('click',function(e){
-                  e.stopImmediatePropagation();
+                  //e.stopImmediatePropagation();
                   if(choice != 2 ){
                     clearDrawing();                    
                     choice = 2; 

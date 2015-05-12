@@ -131,7 +131,7 @@ class DataMenuController < ApplicationController
 
       variable_names= Array.new
       variable_index= Array.new
-      time_index= 0
+      time_index= nil
 
       new_type= DataType.create(name: @file.original_filename, url:"USER INPUT FILE")
 
@@ -149,7 +149,14 @@ class DataMenuController < ApplicationController
               variable_names.push(variable.id)
             end
           else
-            if num2 != time_index
+            if time_index== new_file  # error check for no valid time_type string in the CSV header
+              DataType.destroy(new_type.id)
+              variable_names.each do |remove|
+                ValueType.destroy(remove)
+              end
+              puts "ERROR. No valid time string in the CSV file header."
+              return
+            elsif (num2 != time_index) && (var!= nil)
               if time_index < num2
                 column= num2-1
               else

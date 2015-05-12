@@ -39,6 +39,9 @@ h1
 h2
 	font-size: 4em
 
+h3
+	margin-top: 0px
+
 p
 	padding-top: 5%
 
@@ -80,7 +83,7 @@ nav
 	+bg-image-anim(logo-anim, image_path('datadwarf_logo.png'), image_path('datadwarf_logo_sprite.png'), 408px, 2, 0.8s)
 
 #welcome
-	margin-top: 10%
+	//margin-top: 10%
 
 #logo
 	display: block
@@ -95,18 +98,18 @@ nav
 /*** Main content container ***/
 
 #main-container
-	padding-top: 90px
+	margin-top: 100px
 
 #main-container
 	a
 		&:link, &:visited
 			text-decoration: none
 			background-color: transparent
-			color: $dark-orange
+			color: $dark-gray
 		&:hover, &:active
 			text-decoration: none
 			background-color: transparent
-			color: $yellow-white
+			color: $dark-gray
 
 #heatmap-chart 
 	margin-left:auto 

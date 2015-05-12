@@ -3,6 +3,28 @@
 
 $( document ).ready(function() {
 
+  var opts = {
+  lines: 5, // The number of lines to draw
+  length: 0, // The length of each line
+  width: 30, // The line thickness
+  radius: 21, // The radius of the inner circle
+  corners: 0, // Corner roundness (0..1)
+  rotate: 18, // The rotation offset
+  direction: 1, // 1: clockwise, -1: counterclockwise
+  color: '#000', // #rgb or #rrggbb or array of colors
+  speed: 1.3, // Rounds per second
+  trail: 63, // Afterglow percentage
+  shadow: false, // Whether to render a shadow
+  hwaccel: false, // Whether to use hardware acceleration
+  className: 'spinner', // The CSS class to assign to the spinner
+  zIndex: 2e9, // The z-index (defaults to 2000000000)
+  top: '50%', // Top position relative to parent
+  left: '50%' // Left position relative to parent
+};
+var target = document.getElementById('spinner');
+var spinner = new Spinner(opts).spin(target);
+spinner.stop();
+
   var margin = { top: 200, right: 0, bottom: 100, left: 100 },
        width = 1000 - margin.left - margin.right,
        height = 500 - margin.top - margin.bottom,
@@ -85,7 +107,7 @@ $( document ).ready(function() {
            .attr("x", -10)
            .attr("y", function (d, i) { return i * gridSize * 1.09; })
            .style("text-anchor", "end")
-           .attr("transform", "translate(-25," + gridSize / 1.5 + ")")
+           .attr("transform", "translate(-25," + ((gridSize / 1.5) + 50) +")")
            .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "coeffLabel mono axis axis-workweek" : "coeffLabel mono axis"); });
 
     var timeLabels = svg.selectAll(".timeLabel") // data set label
@@ -94,7 +116,7 @@ $( document ).ready(function() {
          .text(function(d) { return d; })
          .style("text-anchor", "end")
          .attr("transform", function(d, i){
-            return "translate(" + (i*1.09 * gridSize + 5) +", -6)" + "rotate(45)"
+            return "translate(" + (i*1.09 * gridSize + 5) +", +50)" + "rotate(45)"
          })
          .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
 
@@ -104,7 +126,7 @@ $( document ).ready(function() {
        .append("a")
        .append("rect")
        .attr("x", function(d, i) { return (d.Id*1.09 - 1) * gridSize - 15; })
-       .attr("y", function(d, i) { return (d.coeff*1.09 - 1) * gridSize; })
+       .attr("y", function(d, i) { return (d.coeff*1.09 - 1) * gridSize + 50; })
        .attr("rx", 4)
        .attr("ry", 4)
        .attr("class", "Id bordered")
@@ -158,18 +180,22 @@ $( document ).ready(function() {
       .text("Inversely (-1) Correlated to Directly (+1) Correlated")
       .attr("x", legendElementWidth + 30)
       .attr("y", height - 30);
-   }
+
+      spinner.stop();
+  }
 
   // When you select stuff, call the JSON correlation API
   selectElement = $('#analyze-data-type')
   selectElement.click(function(e){
     selectedId = $(e.target).find('option:selected').val();
+    
 
     request = $.ajax({
       url: "/data_types/" + selectedId + "/correlations",
       method: "POST",
       dataType: "json"
     });
+    spinner.spin(target);
 
     // Upon success, make a new map!
     successCallback = function(dataTypeCorrelations){
