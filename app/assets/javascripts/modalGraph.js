@@ -38,7 +38,7 @@ var graphModal = function(eventId0, eventId1, title0, title1){
             debugger
               $("#myModalLabel").empty();
               //console.log("1" + title0 + eventId0 + title1 + eventId1 + "" );
-              var choice = 0;
+              var choice = 1;
               var graphTitle = "" + title0 + " vs. " + title1 + "";
               var rawD0 = format(data, eventId0);
               var rawD1 = format(data, eventId1);
@@ -49,7 +49,7 @@ var graphModal = function(eventId0, eventId1, title0, title1){
               var comboD = format_combined_data(mappedD0, mappedD1, title0, title1, '#ff7f0e', '#2ca02c', 1);
               console.log("2" + title0 + eventId0 + title1 + eventId1+ "" );
               d3.select("#myModalLabel").append("text").text(graphTitle);
-              setTimeout(function(){ drawMultiBarChart(comboD,'#graph'); }, 1000);
+              setTimeout(function(){ drawNVline(comboD,'#graph'); }, 1000);
 
               // Check buttons for graphs that are displayed by default.
               $('#graph-norm').prop('checked', false);
