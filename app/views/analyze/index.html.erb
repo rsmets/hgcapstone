@@ -3,7 +3,9 @@
 
 <%= select_tag(:data_type_id, options_from_collection_for_select(@data_types, 'id','name', @selected_data_type), id: 'analyze-data-type') %>
 
-<svg id="heatmap-chart" align="center" width="5000" height="5000" ></svg>
+<div id="scroll-wrapper">
+  <svg id="heatmap-chart" align="center" ></svg>
+</div>
 
 <%= javascript_include_tag 'analyze.js', 'data-turbolinks-track' => true %>
 <%= javascript_include_tag 'modalGraph.js', 'data-turbolinks-track' => true %>
