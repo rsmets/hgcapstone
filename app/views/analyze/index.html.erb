@@ -3,6 +3,7 @@
 
 <%= select_tag(:data_type_id, options_from_collection_for_select(@data_types, 'id','name', @selected_data_type), id: 'analyze-data-type') %>
 
+<div id="spinner"></div>
 <div id="scroll-wrapper">
   <svg id="heatmap-chart" align="center" ></svg>
 </div>

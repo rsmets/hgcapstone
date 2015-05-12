@@ -134,6 +134,7 @@ task :adddatapoints => :environment do
 
           num1= 0
           CSV.foreach(file) do |line|
+            puts "HELLO"
             num2 = 0
             line.each do |var|
               if num1 == 0
@@ -146,7 +147,7 @@ task :adddatapoints => :environment do
                   variable_names.push(variable.id)
                 end
               else
-                if num2 != time_index
+                if (num2 != time_index) && (var!= nil)
                   if time_index < num2
                     column= num2-1
                   else
@@ -163,7 +164,6 @@ task :adddatapoints => :environment do
                   value_2:var.to_f,
                   value_2_id: variable_names[column],
                   data_type_id:new_type.id)
-
                 end
               end
               num2= num2+1
@@ -176,6 +176,6 @@ task :adddatapoints => :environment do
     end
   end
 
-  puts "addDataPoints finished."
+  puts "addDataPoints finished. "
 
 end
