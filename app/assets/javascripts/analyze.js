@@ -71,10 +71,10 @@ $( document ).ready(function() {
        .domain([-1.0, 1.0])
        .range(colors);
 
-    var svg = d3.select("#heatmap-chart").append("svg")
+    var svg = d3.select("#heatmap-chart")
         .call(tip)
-       .attr("width", width + margin.left + margin.right)
-       .attr("height", height + margin.top + margin.bottom)
+       //.attr("width", width + margin.left + margin.right)
+       //.attr("height", height + margin.top + margin.bottom)
        .append("g")
        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
