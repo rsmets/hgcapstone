@@ -101,6 +101,7 @@ GEM
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     novus-nvd3-rails (1.8.0)
+    open_uri_redirections (0.2.1)
     pg (0.18.1)
     prawn (0.8.4)
       prawn-core (>= 0.8.4, < 0.9)
@@ -218,8 +219,11 @@ DEPENDENCIES
   byebug
   jbuilder (~> 2.0)
   jquery-rails (~> 4.0.0.beta2)
+  json
+  nokogiri
   novus-nvd3-rails
   nvd3-rails!
+  open_uri_redirections
   pg
   rails (= 4.2.0.beta4)
   rails_12factor

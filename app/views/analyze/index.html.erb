@@ -1,32 +1,13 @@
 
-<!--
-<div class="dropdown">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-    Dropdown
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-
-    <% @data_types.each do |data_type| %>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><%= data_type.name %></a></li>
-    <% end %>
-  </ul>
-</div> -->
 <h2>Pick a data set</h2>
 
 <%= select_tag(:data_type_id, options_from_collection_for_select(@data_types, 'id','name', @selected_data_type), id: 'analyze-data-type') %>
 
-<svg id="heatmap-chart" align="center" width="1000" height="500"></svg>
+<svg id="heatmap-chart" align="center" width="5000" height="5000" ></svg>
 
 <%= javascript_include_tag 'analyze.js', 'data-turbolinks-track' => true %>
 <%= javascript_include_tag 'modalGraph.js', 'data-turbolinks-track' => true %>
 <%= javascript_include_tag 'index.js', 'data-turbolinks-track' => true %>
-<!--
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-  Launch demo modal
-</button>
-
--->
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">

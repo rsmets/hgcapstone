@@ -1,5 +1,7 @@
 require 'csv'
 
+
+
 task :adddatapoints => :environment do
 
   #creating the unique value types.
@@ -111,4 +113,69 @@ task :adddatapoints => :environment do
       value_2_id:dollars_value_type.id,
       data_type_id:new_data_type.id)
   end
+
+  # Tim's CSVDataSets.tar -> Added on May 10th
+
+  # array of time strings valid to be used as time parameters
+  time_types= ["Year","year","Date","date"]
+
+  # go through entire CSVDataSets directory and add each fle one-by-one
+  Dir.foreach("#{Rails.root}/public/CSVDataSets") do |directory|
+    if (directory != ".") && (directory != "..")
+      Dir.foreach("#{Rails.root}/public/CSVDataSets/" + directory) do |filename|
+        if (filename != ".") && (filename != "..")
+          file= "#{Rails.root}/public/CSVDataSets/" + directory + "/" + filename
+
+          filename.slice!(".csv")
+          new_type= DataType.create(name: filename, url:"https://www.quandl.com")
+
+          variable_names= Array.new
+          time_index= 0
+
+          num1= 0
+          CSV.foreach(file) do |line|
+            num2 = 0
+            line.each do |var|
+              if num1 == 0
+                if time_types.include?var
+                  time_index= num2
+                  index= time_types.index(var)
+                  @time_name= time_types[index]
+                else
+                  variable = ValueType.create(name: var)
+                  variable_names.push(variable.id)
+                end
+              else
+                if num2 != time_index
+                  if time_index < num2
+                    column= num2-1
+                  else
+                    column= num2
+                  end
+                  #var= var.gsub(/[^0-9,.]/, '')
+                  instance= ValueType.where(name: @time_name).take
+                  if instance== nil
+                    instance= ValueType.create(name: @time_name)
+                  end
+                  DataPoint.create(
+                  value_1:line[time_index],
+                  value_1_id:instance.id,
+                  value_2:var.to_f,
+                  value_2_id: variable_names[column],
+                  data_type_id:new_type.id)
+
+                end
+              end
+              num2= num2+1
+            end
+            num1= 1
+          end
+
+        end
+      end
+    end
+  end
+
+  puts "addDataPoints finished."
+
 end
