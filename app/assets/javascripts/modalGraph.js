@@ -216,6 +216,14 @@ function drawNVline(data, graph_name) {
     }
     return total;
   }
+
+function compare(a,b) {
+  if (a.x < b.x)
+     return -1;
+  if (a.x > b.x)
+    return 1;
+  return 0;
+}
     
   var format_combined_data = function(data, data2, dt, dt2, colr, colr2, norm_flag){
     var x_y = [];
@@ -227,6 +235,9 @@ function drawNVline(data, graph_name) {
       data1_total = normalizeVal(data);
       data2_total = normalizeVal(data2);
     }
+
+    data.sort(compare);
+    data2.sort(compare);
     
     data.map(function(item){
       x_y.push({x: item.x, y: (item.y / data1_total)})
@@ -276,6 +287,7 @@ function drawNVline(data, graph_name) {
 
    var nvd3Format = function(data, dt, colr){
       var x_y = [];
+      data.sort(compare);
       data.map(function(item){
         x_y.push({x: item.x, y: item.y})
       })
