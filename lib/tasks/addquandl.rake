@@ -109,7 +109,10 @@ menu_hash[menu_hash_index]["children"].each do |children|
 			  		data_types= Array.new
 			  		node.css("a").each do |element|
 			  			if (element.text.strip != 'CSV') && (element.text.strip != 'JSON') && !element["href"].include?("graph")
-							if !element["href"].include?("quandl.com")
+							if (element["href"].include?("http")) && (!element["href"].include?("quandl.com"))
+								puts "ERROR: Invalid URL."
+								next
+							elsif !element["href"].include?("quandl.com")
 								@filename= "https://www.quandl.com" + element["href"]
 								puts "Source url: " + @filename
 							else
@@ -141,6 +144,7 @@ menu_hash[menu_hash_index]["children"].each do |children|
 											else
 								  				@id= upload_file(@url,@name,@filename)
 								  				data_types.push(@id)
+								  				#data_types.push(0)
 								  				puts @name + " successfully stored in database."
 								  			end
 
@@ -152,9 +156,9 @@ menu_hash[menu_hash_index]["children"].each do |children|
 
 							rescue OpenURI::HTTPError => e
 								if e.message == '404 Not Found'
-									puts '404 Not Found'
+									puts 'ERROR: 404 Not Found.'
 								else
-									puts "File Opening Error"
+									puts "ERROR: File Opening Error."
 								end
 								next
 							end
