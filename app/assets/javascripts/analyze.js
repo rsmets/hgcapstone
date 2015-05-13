@@ -113,10 +113,10 @@ spinner.stop();
     var timeLabels = svg.selectAll(".timeLabel") // data set label
        .data(setIds)
        .enter().append("text")
-         .text(function(d) { return d; })
+         .text(function(d) { return d +" - "; })
          .style("text-anchor", "end")
          .attr("transform", function(d, i){
-            return "translate(" + (i*1.09 * gridSize + 5) +", +50)" + "rotate(45)"
+            return "translate(" + (i*1.09 * gridSize + 5) +", +50)" + "rotate(35)"
          })
          .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
 
