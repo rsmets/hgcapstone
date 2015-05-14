@@ -39,6 +39,7 @@ var graphModal = function(eventId0, eventId1, title0, title1){
               $("#myModalLabel").empty();
               //console.log("1" + title0 + eventId0 + title1 + eventId1 + "" );
               var choice = 1;
+              var normalized = 0;
               var graphTitle = "" + title0 + " vs. " + title1 + "";
               var rawD0 = format(data, eventId0);
               var rawD1 = format(data, eventId1);
@@ -61,21 +62,22 @@ var graphModal = function(eventId0, eventId1, title0, title1){
               $('#graph-nonnorm').prop('checked', false);
               
               $('#graph-norm').on('click',function(e){
-                // prevents the event from bubbling up the DOM tree
-                // eg the modal from cancelling the event
-                //e.stopImmediatePropagation();
-                clearDrawing();
-                comboD = format_combined_data(mappedD0, mappedD1, title0, title1, '#ff7f0e', '#2ca02c', 1);
-                if(choice == 0)
-                  drawMultiBarChart(comboD,'#graph');
-                else if(choice == 1)
-                  drawNVline(comboD, '#graph');
-                else if(choice == 2)
-                  drawScatter(comboD, '#graph');
+                if(normalized != 0){
+                  normalized = 0;
+                  clearDrawing();
+                  comboD = format_combined_data(mappedD0, mappedD1, title0, title1, '#ff7f0e', '#2ca02c', 1);
+                  if(choice == 0)
+                    drawMultiBarChart(comboD,'#graph');
+                  else if(choice == 1)
+                    drawNVline(comboD, '#graph');
+                  else if(choice == 2)
+                    drawScatter(comboD, '#graph');
+                }
               });
 
               $('#graph-nonnorm').on('click',function(e){
-                  //e.stopImmediatePropagation();
+                if(normalized != 1){
+                  normalized = 1;
                   clearDrawing();
                   comboD = format_combined_data(mappedD0, mappedD1, title0, title1, '#ff7f0e', '#2ca02c', 0);
                   if(choice == 0)
@@ -84,6 +86,7 @@ var graphModal = function(eventId0, eventId1, title0, title1){
                     drawNVline(comboD, '#graph');
                   else if(choice == 2)
                     drawScatter(comboD, '#graph');
+                }
               });
 
               $('#graph-bar').on('click',function(e){
