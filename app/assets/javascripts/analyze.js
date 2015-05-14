@@ -107,16 +107,16 @@ spinner.stop();
            .attr("x", -10)
            .attr("y", function (d, i) { return i * gridSize * 1.09; })
            .style("text-anchor", "end")
-           .attr("transform", "translate(-25," + gridSize / 1.5 + ")")
+           .attr("transform", "translate(-25," + ((gridSize / 1.5) + 50) +")")
            .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "coeffLabel mono axis axis-workweek" : "coeffLabel mono axis"); });
 
     var timeLabels = svg.selectAll(".timeLabel") // data set label
        .data(setIds)
        .enter().append("text")
-         .text(function(d) { return d; })
+         .text(function(d) { return d +" - "; })
          .style("text-anchor", "end")
          .attr("transform", function(d, i){
-            return "translate(" + (i*1.09 * gridSize + 5) +", -6)" + "rotate(45)"
+            return "translate(" + (i*1.09 * gridSize + 5) +", +50)" + "rotate(35)"
          })
          .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
 
@@ -126,7 +126,7 @@ spinner.stop();
        .append("a")
        .append("rect")
        .attr("x", function(d, i) { return (d.Id*1.09 - 1) * gridSize - 15; })
-       .attr("y", function(d, i) { return (d.coeff*1.09 - 1) * gridSize; })
+       .attr("y", function(d, i) { return (d.coeff*1.09 - 1) * gridSize + 50; })
        .attr("rx", 4)
        .attr("ry", 4)
        .attr("class", "Id bordered")
