@@ -152,7 +152,7 @@ spinner.stop();
     heatMap.transition().duration(1000)
        .style("fill", function(d) { return colorScale(d.value); });
 
-    heatMap.append("title").text(function(d) { return d.value; });
+    //heatMap.append("title").text(function(d) { return d.value; });
 
     var legend = svg.selectAll(".legend")
        .data([0].concat(colorScale.quantiles()), function(d) { return d; })

@@ -110,23 +110,6 @@ var spinner = new Spinner(opts).spin(target);
     return newFormattedData
   }
 
-  var transformed = [{y_ID: 1, x_ID: 5, value: .3},
-                     {y_ID: 1, x_ID: 6, value: .1},
-                     {y_ID: 1, x_ID: 7, value: -.2},
-                     {y_ID: 1, x_ID: 8, value: .5},
-                     {y_ID: 2, x_ID: 5, value: .9},
-                     {y_ID: 2, x_ID: 6, value: -.9},
-                     {y_ID: 2, x_ID: 7, value: -.6},
-                     {y_ID: 2, x_ID: 8, value: 7},
-                     {y_ID: 3, x_ID: 5, value: -.4},
-                     {y_ID: 3, x_ID: 6, value: -.8},
-                     {y_ID: 3, x_ID: 7, value: .56},
-                     {y_ID: 3, x_ID: 8, value: .12},
-                     {y_ID: 4, x_ID: 5, value: 0.0},
-                     {y_ID: 4, x_ID: 6, value: .7612},
-                     {y_ID: 4, x_ID: 7, value: -.921},
-                     {y_ID: 4, x_ID: 8, value: -.5} 
-                     ];
   //  How to make that nasty map
   var makeheatMap = function(data) {
     debugger;
@@ -151,16 +134,16 @@ var spinner = new Spinner(opts).spin(target);
            .attr("x", -10)
            .attr("y", function (d, i) { return i * gridSize * 1.09; })
            .style("text-anchor", "end")
-           .attr("transform", "translate(-25," + ((gridSize / 1.5) + 50) +")")
+           .attr("transform", "translate(+310," + ((gridSize / 1.5) + 50) +")")
            .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "coeffLabel mono axis axis-workweek" : "coeffLabel mono axis"); });
 
     var timeLabels = svg.selectAll(".timeLabel") // data set label
        .data(xsetNames)
        .enter().append("text")
-         .text(function(d) { return d; })
+         .text(function(d) { return d + " - "; })
          .style("text-anchor", "end")
          .attr("transform", function(d, i){
-            return "translate(" + (i*1.09 * gridSize + 5) +", +50)" + "rotate(45)"
+            return "translate(" + (i*1.09 * gridSize + 320) +", +50)" + "rotate(20)"
          })
          .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
 
@@ -190,7 +173,7 @@ var spinner = new Spinner(opts).spin(target);
     heatMap.transition().duration(1000)
        .style("fill", function(d) { return colorScale(d.value); });
 
-    heatMap.append("title").text(function(d) { return d.value; });
+    //heatMap.append("title").text(function(d) { return d.value; });
 
     var legend = svg.selectAll(".legend")
        .data([0].concat(colorScale.quantiles()), function(d) { return d; })
@@ -200,8 +183,8 @@ var spinner = new Spinner(opts).spin(target);
     legend.append("a")
      .attr("xlink:href", "http://en.wikipedia.org/wiki/gongoozler")
      .append("rect")
-     .attr("x", function(d, i) { return legendElementWidth * i; })
-     .attr("y", height)
+     .attr("x", function(d, i) { return legendElementWidth * i + 140; })
+     .attr("y", height + 120)
      .attr("width", legendElementWidth)
      .attr("height", gridSize / 2)
      .style("fill", function(d, i) { return colors[i]; })
@@ -210,14 +193,14 @@ var spinner = new Spinner(opts).spin(target);
     legend.append("text")
      .attr("class", "mono")
      .text(function(d, i) { return "~ " + (Math.round((i*2-8)*100)/100); })
-     .attr("x", function(d, i) { return legendElementWidth * i + 20; })
-     .attr("y", height + gridSize);
+     .attr("x", function(d, i) { return legendElementWidth * i + 160; })
+     .attr("y", height + gridSize + 120);
 
     legend.append("text")
       .attr("class", "mono")
       .text("Inversely (-1) Correlated to Directly (+1) Correlated")
-      .attr("x", legendElementWidth + 30)
-      .attr("y", height - 30);
+      .attr("x", legendElementWidth + 250)
+      .attr("y", height + 100);
 
       spinner.stop();
 

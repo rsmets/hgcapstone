@@ -10,8 +10,6 @@ class DataTypesCorrelationsController < ActionController::Base
   end
 
   def createMatrix # this is for heatmap
-    # codysSweetDoCorrelationsReturnAMatrix();
-    #render json: result of cody's sweet algorithm
     do_correlations_matrix()
     render json: DataCorrelation.all
   end
