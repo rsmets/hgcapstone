@@ -26,9 +26,14 @@ class DataTypesCorrelationsController < ActionController::Base
     data_sets_y = Array.new #an array of array of data points (aka data sets)
     time_param = Array.new
 
+    # Max value of table for data type Ids
+    DataPoint.maximum("data_type_id")
+    puts
+
     # CURRENTLY USING ONLY THE FIRST ~4 DATA SETS
     y_data_set_nums = Array.new
-    y_data_set_nums = [*1..8]
+    y_data_set_nums = [*1..8] #(1..upper_bound).to_a.sample
+    # (min..max).sortby(value)
     y_data_set_nums.each do |data_set_num|
       time1 = DataPoint.where(data_type_id: data_set_num).first.value_1
       time2 = DataPoint.where(data_type_id: data_set_num).last.value_1

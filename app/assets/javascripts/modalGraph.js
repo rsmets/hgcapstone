@@ -5,7 +5,7 @@ Sharing makes the world go round
 
 var mouseover = function(d){
   tip.show(d);
-  d3.select(this).style({'stroke': '#FFFBCC', 'stroke-width': 4.5}).style("cursor","pointer");
+  d3.select(this).style({'stroke': '#636F57', 'stroke-width': 4.5}).style("cursor","pointer");
 }
 
 var mouseouttie = function(d, i){
