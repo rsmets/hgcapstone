@@ -35,7 +35,6 @@ var graphModal = function(eventId0, eventId1, title0, title1){
            dataType: 'json',
 
            success: function (data) {
-            debugger
               $("#myModalLabel").empty();
               //console.log("1" + title0 + eventId0 + title1 + eventId1 + "" );
               var choice = 1;
@@ -45,10 +44,30 @@ var graphModal = function(eventId0, eventId1, title0, title1){
               var rawD1 = format(data, eventId1);
               var mappedD0 = mapData(rawD0);
               var mappedD1 = mapData(rawD1);
-              var readyD0 = nvd3Format(mappedD0, title0, '#ff7f0e');
-              var readyD1 = nvd3Format(mappedD1, title1, '#2ca02c');
-              var comboD = format_combined_data(mappedD0, mappedD1, title0, title1, '#ff7f0e', '#2ca02c', 1);
-              console.log("2" + title0 + eventId0 + title1 + eventId1+ "" );
+              //// Intersection ////
+              var min = Math.min(mappedD0.length, mappedD1.length);
+
+              var minSet; // Shorter data set
+              var yearRange = [];
+              if( min == mappedD0.length)
+                minSet = 0;
+              else
+                minSet = 1;
+
+              for(var i = 0; i < min; i++){
+                if(minSet == 0){
+                  yearRange.push(mappedD0[i].x);
+                  //console.log(mappedD0[i].x);
+                } else {
+                  yearRange.push(mappedD1[i].x);
+                  //console.log(mappedD1[i].x);
+                }
+              }              
+
+              var readyD0 = nvd3Format(mappedD0, title0, '#ff7f0e', yearRange);
+              var readyD1 = nvd3Format(mappedD1, title1, '#2ca02c', yearRange);
+              var comboD = format_combined_data(mappedD0, mappedD1, title0, title1, '#ff7f0e', '#2ca02c', 1, yearRange);
+             // console.log("2" + title0 + eventId0 + title1 + eventId1+ "" );
               d3.select("#myModalLabel").append("text").text(graphTitle);
               setTimeout(function(){ drawNVline(comboD,'#graph'); }, 1000);
 
@@ -65,7 +84,7 @@ var graphModal = function(eventId0, eventId1, title0, title1){
                 if(normalized != 0){
                   normalized = 0;
                   clearDrawing();
-                  comboD = format_combined_data(mappedD0, mappedD1, title0, title1, '#ff7f0e', '#2ca02c', 1);
+                  comboD = format_combined_data(mappedD0, mappedD1, title0, title1, '#ff7f0e', '#2ca02c', 1, yearRange);
                   if(choice == 0)
                     drawMultiBarChart(comboD,'#graph');
                   else if(choice == 1)
@@ -79,7 +98,7 @@ var graphModal = function(eventId0, eventId1, title0, title1){
                 if(normalized != 1){
                   normalized = 1;
                   clearDrawing();
-                  comboD = format_combined_data(mappedD0, mappedD1, title0, title1, '#ff7f0e', '#2ca02c', 0);
+                  comboD = format_combined_data(mappedD0, mappedD1, title0, title1, '#ff7f0e', '#2ca02c', 0, yearRange);
                   if(choice == 0)
                     drawMultiBarChart(comboD,'#graph');
                   else if(choice == 1)
@@ -121,7 +140,6 @@ var graphModal = function(eventId0, eventId1, title0, title1){
    }
 
   var generateGraphInModal = function(eventId0, eventId1, title0, title1){
-      debugger
       $('#myModal').modal('toggle');
       $('#myModal').modal('show');
       $('#myModal').on('shown.bs.modal', graphModal(eventId0, eventId1, title0, title1));
@@ -228,7 +246,7 @@ function compare(a,b) {
   return 0;
 }
     
-  var format_combined_data = function(data, data2, dt, dt2, colr, colr2, norm_flag){
+  var format_combined_data = function(data, data2, dt, dt2, colr, colr2, norm_flag, yearRange){
     var x_y = [];
     var x_y2 = [];
     data1_total = 1;
@@ -243,11 +261,16 @@ function compare(a,b) {
     data2.sort(compare);
     
     data.map(function(item){
-      x_y.push({x: item.x, y: (item.y / data1_total)})
+      if(yearRange.indexOf(item.x) != -1){
+      //if(item.x >= yearRange[0] && item.x <= yearRange[yearRange.length-1]){
+        x_y.push({x: item.x, y: (item.y / data1_total)})
+      }
     })
 
     data2.map(function(item){
-      x_y2.push({x: item.x, y: (item.y / data2_total)})
+      if(yearRange.indexOf(item.x) != -1){
+       x_y2.push({x: item.x, y: (item.y / data2_total)})
+      }
     })
     return [
       {
@@ -288,11 +311,14 @@ function compare(a,b) {
     return xymap;
    }
 
-   var nvd3Format = function(data, dt, colr){
+   var nvd3Format = function(data, dt, colr, yearRange){
       var x_y = [];
       data.sort(compare);
+      debugger
       data.map(function(item){
-        x_y.push({x: item.x, y: item.y})
+        if(item.x >= yearRange[0] && item.x <= yearRange[yearRange.length-1]){
+          x_y.push({x: item.x, y: item.y})
+        }
       })
       return [
         {
