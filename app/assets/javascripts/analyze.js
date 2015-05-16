@@ -40,10 +40,10 @@ spinner.stop();
     d3.select('svg').text('')
     var i = 0;
     var dataToCompare = []; // Event ID's to be compared against
-    var dataTCName = []; 
+    var dataTCName = [];
     var pcoeffVal = []; // Pearson's coefficients
     var scoeffVal = []; // Spearman's coefficients
-    var newFormattedData = []; 
+    var newFormattedData = [];
     setNames = [];
 
     while(i < oldData.length){
@@ -65,7 +65,7 @@ spinner.stop();
 
         if(j+1 == selectedId) // This fixes the possibility of D3 rendering a blank box at selected Id's location
           flag = 1;
-        if(flag == 0) 
+        if(flag == 0)
           set.Id = dataToCompare[j];
         else
           set.Id = (dataToCompare[j] - 1);
@@ -80,9 +80,9 @@ spinner.stop();
 
         newFormattedData.push(set);
       }
-      
+
     }
-    
+
     return newFormattedData
   }
   //  How to make that nasty map
@@ -185,10 +185,10 @@ spinner.stop();
   }
 
   // When you select stuff, call the JSON correlation API
-  selectElement = $('#analyze-data-type')
-  selectElement.click(function(e){
-    selectedId = $(e.target).find('option:selected').val();
-    
+
+  var findSelectedOptionFromSelectAndStartGraphGeneration = function(htmlSelectElement){
+    selectedId = $(htmlSelectElement).find('option:selected').val();
+
 
     request = $.ajax({
       url: "/data_types/" + selectedId + "/correlations",
@@ -204,5 +204,8 @@ spinner.stop();
 
     request.done(successCallback);
 
-  })
+  }
+  selectElement = $('#analyze-data-type')
+  selectElement.change(function(e){findSelectedOptionFromSelectAndStartGraphGeneration(e.target)})
+  findSelectedOptionFromSelectAndStartGraphGeneration(selectElement)
 });
