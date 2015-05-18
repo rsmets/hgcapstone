@@ -1,0 +1,32 @@
+// Place all the styles related to the welcome controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.welcome
+	position: relative
+	overflow: visible
+	&::before
+		content: ' '
+		display: block
+		position: absolute
+		left: 0
+		top: -125px // May need to change this to change the background of welcome
+		width: 100%
+		height: 250px // May need to change this to change the background of welcome
+		z-index: -1
+		background-image: url(image_path('rs_dwarf.png')) // Change this to change the background of welcome
+		background-repeat: no-repeat
+		background-position: 50% 0
+		-ms-background-size: contain
+		-o-background-size: contain
+		-moz-background-size: contain
+		-webkit-background-size: contain
+		background-size: contain
+	&:link::before, &:visited::before
+		-webkit-filter: blur(3px)
+		filter: blur(3px)
+		-webkit-transition : -webkit-filter 1000ms ease
+	&:hover::before, &:active::before
+		-webkit-filter: blur(0px)
+		filter: blur(0px)
+		-webkit-transition : -webkit-filter 1000ms ease
