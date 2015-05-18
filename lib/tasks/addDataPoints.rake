@@ -134,7 +134,6 @@ task :adddatapoints => :environment do
 
           num1= 0
           CSV.foreach(file) do |line|
-            puts "HELLO"
             num2 = 0
             line.each do |var|
               if num1 == 0
