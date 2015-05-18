@@ -4,9 +4,30 @@ $( document ).ready(function() {
 //copied over the analyze js file and replaced the selectedId with a hard coded 1 for now. 
 //need to make a random num gnerator eventually and call docorrelations on each random num.
 //made some minor changes to the copied code, obviously.
+
+  var opts = {
+  lines: 5, // The number of lines to draw
+  length: 0, // The length of each line
+  width: 30, // The line thickness
+  radius: 21, // The radius of the inner circle
+  corners: 0, // Corner roundness (0..1)
+  rotate: 18, // The rotation offset
+  direction: 1, // 1: clockwise, -1: counterclockwise
+  color: '#000', // #rgb or #rrggbb or array of colors
+  speed: 1.3, // Rounds per second
+  trail: 63, // Afterglow percentage
+  shadow: false, // Whether to render a shadow
+  hwaccel: false, // Whether to use hardware acceleration
+  className: 'spinner', // The CSS class to assign to the spinner
+  zIndex: 2e9, // The z-index (defaults to 2000000000)
+  top: '50%', // Top position relative to parent
+  left: '50%' // Left position relative to parent
+};
+var target = document.getElementById('spinner');
+var spinner = new Spinner(opts).spin(target);
     
     request = $.ajax({
-         url: "/data_types/" + 1 + "/correlations",
+         url: "/data_types/correlations",
          method: "POST",
          dataType: "json"
         });
@@ -26,121 +47,115 @@ $( document ).ready(function() {
          legendElementWidth = gridSize*2,
          buckets = 10,
          colors = ["#660000", "#8B0000", "#b20000", "#ff6666", "#e4e4e4","#9595cf","#5a6890","#314374", "#081d58"], // alternatively colorbrewer.YlGnBu[9]
-         setIdsY = [1, 2, 3, 4],
-         setIdsX = [5, 6, 7, 8];
+         ysetNames = [], //populate for axis label
+         xsetNames = [];
+         xnames = [];
 
   var dataTransformation = function(oldData){
-    debugger;
     d3.select('svg').text('')
-    console.log(legendElementWidth);
     var i = 0;
-    var dataToCompare = []; // Event ID's to be compared against
-    var dataTCName = []; 
+    var xDataIds = [];
+    var yDataIds = [];
     var pcoeffVal = []; // Pearson's coefficients
     var scoeffVal = []; // Spearman's coefficients
     var newFormattedData = []; 
-    setIds = [];
-
+    debugger;
+    var coeffObjs = [];
     while(i < oldData.length){
-      console.log(oldData[i].data_type2.name);
-      dataToCompare.push(oldData[i].event2_id);
-      setIds.push(oldData[i].data_type2.name);//.substring(0,25));
+      yDataIds.push(oldData[i].event1_id);
+      xDataIds.push(oldData[i].event2_id);
+      xnames.push(oldData[i].data_type2.name);
+      if(i < Math.sqrt(oldData.length)){
+        xsetNames.push(oldData[i].data_type2.name);//.substring(0,25));
+      }
+      if(i % Math.sqrt(oldData.length) == 0){
+        ysetNames.push(oldData[i].data_type1.name);//.substring(0,25));
+      }
+
       pcoeffVal.push(oldData[i].p_coeff);
       scoeffVal.push(oldData[i].s_coeff);
       //console.log(oldData[i].data_type2.name);
+
+      /*var obj = {
+        yId: oldData[i].event1_id,
+        xId: oldData[i].event2_id,
+        xsetName: oldData[i].data_type2.name,
+        ysetName: oldData[i].data_type1.name,
+        pcoeff: oldData[i].p_coeff,
+        scoeff: oldData[i].s_coeff
+      }
+
+      coeffObjs.push(obj);*/
+
       i++;
     }
 
-    for(i = 0; i < 2; i++){
-      var flag = 0;
-      for(j = 0; j < dataToCompare.length; j++){
-        var set = { coeff: "", Id: "", value: "" };
+    //debugger;
 
-        if(j+1 == 1)
-          flag = 3;
-        if(flag == 0) 
-          set.Id = dataToCompare[j];
-        else
-          set.Id = (dataToCompare[j] - 1);
-        if(i == 0){
-          set.coeff = 1;
-          set.value = pcoeffVal[j];
-        }
-        if(i == 1){
-          set.coeff = 2;
-          set.value = scoeffVal[j];
-        }
+    //return coeffObjs;
+    for(i = 0; i < yDataIds.length; i++){
+      
+      var set = { yId: "", xId: "", value: "" };
 
-        newFormattedData.push(set);
-      }
+      set.xId = xDataIds[i];
+      set.yId = yDataIds[i];
+      set.value = pcoeffVal[i];
+
+      newFormattedData.push(set);
+      
     }
+
+    debugger
     
     return newFormattedData
   }
 
-  var transformed = [{y_ID: 1, x_ID: 5, value: .3},
-                     {y_ID: 1, x_ID: 6, value: .1},
-                     {y_ID: 1, x_ID: 7, value: -.2},
-                     {y_ID: 1, x_ID: 8, value: .5},
-                     {y_ID: 2, x_ID: 5, value: .9},
-                     {y_ID: 2, x_ID: 6, value: -.9},
-                     {y_ID: 2, x_ID: 7, value: -.6},
-                     {y_ID: 2, x_ID: 8, value: 7},
-                     {y_ID: 3, x_ID: 5, value: -.4},
-                     {y_ID: 3, x_ID: 6, value: -.8},
-                     {y_ID: 3, x_ID: 7, value: .56},
-                     {y_ID: 3, x_ID: 8, value: .12},
-                     {y_ID: 4, x_ID: 5, value: 0.0},
-                     {y_ID: 4, x_ID: 6, value: .7612},
-                     {y_ID: 4, x_ID: 7, value: -.921},
-                     {y_ID: 4, x_ID: 8, value: -.5} 
-                     ];
   //  How to make that nasty map
   var makeheatMap = function(data) {
-    //transformed = dataTransformation(data)
-    debugger
+    debugger;
+    transformed = dataTransformation(data)
+    debugger;
+    console.log(transformed);
     var colorScale = d3.scale.quantile()
        .domain([-1.0, 1.0])
        .range(colors);
 
-    var svg = d3.select("#heatmap-chart").append("svg")
+    var svg = d3.select("#heatmap-chart")
         .call(tip)
-       .attr("width", width + margin.left + margin.right)
-       .attr("height", height + margin.top + margin.bottom)
+       //.attr("width", width + margin.left + margin.right)
+       //.attr("height", height + margin.top + margin.bottom)
        .append("g")
        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var yLabels = svg.selectAll(".yLabel")
-         .data(setIdsY)
+    var coeffLabels = svg.selectAll(".coeffLabel")
+         .data(ysetNames)
          .enter().append("text")
            .text(function (d) { return d; })
            .attr("x", -10)
-           .attr("y", function (d, i) { return i * gridSize; })
+           .attr("y", function (d, i) { return i * gridSize * 1.09; })
            .style("text-anchor", "end")
-           .attr("transform", "translate(+125," + gridSize / 1.5 + ")")
+           .attr("transform", "translate(+310," + ((gridSize / 1.5) + 50) +")")
            .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "coeffLabel mono axis axis-workweek" : "coeffLabel mono axis"); });
 
-    var xLabels = svg.selectAll(".xLabel") // data set label
-       .data(setIdsX)
+    var timeLabels = svg.selectAll(".timeLabel") // data set label
+       .data(xsetNames)
        .enter().append("text")
-         .text(function(d) { return d; })
+         .text(function(d) { return d + " - "; })
          .style("text-anchor", "end")
          .attr("transform", function(d, i){
-            return "translate(" + (i * gridSize + 160) + ", -6)" + "rotate(45)"
+            return "translate(" + (i*1.09 * gridSize + 320) +", +50)" + "rotate(20)"
          })
          .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
-
 
     var heatMap = svg.selectAll(".Id")
        .data(transformed)
        .enter()
        .append("a")
        .append("rect")
-       .attr("x", function(d, i) { return (d.x_ID*1.09 - 1) * gridSize - 15; })
-       .attr("y", function(d, i) { return (d.y_ID*1.09 - 1) * gridSize; })
+       .attr("x", function(d, i) { return (d.xId*1.09 - 1) * gridSize - 15; })
+       .attr("y", function(d, i) { return (d.yId*1.09 - 1) * gridSize + 50; })
        .attr("rx", 4)
        .attr("ry", 4)
-      //  .attr("mr-link", "your_custom_link_based/off/this/data")
        .attr("class", "Id bordered")
        .attr("width", gridSize)
        .attr("height", gridSize)
@@ -149,15 +164,16 @@ $( document ).ready(function() {
        .on('mouseover', mouseover)
        .on('mouseout', mouseouttie)
        .on("click", function(d){
-          $("#graph").empty();
+          clearDrawing();
           $("#myModalLabel").empty();
-          generateGraphInModal(d.y_ID, d.x_ID, "hello", "world");
+          generateGraphInModal(d.yId, d.xId, ysetNames[d.yId-1], xnames[d.xId-1] );
+
        });
 
     heatMap.transition().duration(1000)
        .style("fill", function(d) { return colorScale(d.value); });
 
-    heatMap.append("title").text(function(d) { return d.value; });
+    //heatMap.append("title").text(function(d) { return d.value; });
 
     var legend = svg.selectAll(".legend")
        .data([0].concat(colorScale.quantiles()), function(d) { return d; })
@@ -167,8 +183,8 @@ $( document ).ready(function() {
     legend.append("a")
      .attr("xlink:href", "http://en.wikipedia.org/wiki/gongoozler")
      .append("rect")
-     .attr("x", function(d, i) { return legendElementWidth * i; })
-     .attr("y", height)
+     .attr("x", function(d, i) { return legendElementWidth * i + 140; })
+     .attr("y", height + 120)
      .attr("width", legendElementWidth)
      .attr("height", gridSize / 2)
      .style("fill", function(d, i) { return colors[i]; })
@@ -177,15 +193,18 @@ $( document ).ready(function() {
     legend.append("text")
      .attr("class", "mono")
      .text(function(d, i) { return "~ " + (Math.round((i*2-8)*100)/100); })
-     .attr("x", function(d, i) { return legendElementWidth * i + 20; })
-     .attr("y", height + gridSize);
+     .attr("x", function(d, i) { return legendElementWidth * i + 160; })
+     .attr("y", height + gridSize + 120);
 
-
-   legend.append("text")
+    legend.append("text")
       .attr("class", "mono")
       .text("Inversely (-1) Correlated to Directly (+1) Correlated")
-      .attr("x", legendElementWidth + 30)
-      .attr("y", height - 30);
+      .attr("x", legendElementWidth + 250)
+      .attr("y", height + 100);
+
+      spinner.stop();
+
+      spinner.stop();
 
    }
 });

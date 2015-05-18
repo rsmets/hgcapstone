@@ -33,23 +33,23 @@ spinner.stop();
        buckets = 10,
        colors = ["#660000", "#8B0000", "#b20000", "#ff6666", "#e4e4e4","#9595cf","#5a6890","#314374", "#081d58"], // alternatively colorbrewer.YlGnBu[9]
        coeffs = ["Spearman", "Pearson"],
-       setIds = [],
+       setNames = [],
        title0 = "";
 
   var dataTransformation = function(oldData){
     d3.select('svg').text('')
     var i = 0;
     var dataToCompare = []; // Event ID's to be compared against
-    var dataTCName = []; 
+    var dataTCName = [];
     var pcoeffVal = []; // Pearson's coefficients
     var scoeffVal = []; // Spearman's coefficients
-    var newFormattedData = []; 
-    setIds = [];
+    var newFormattedData = [];
+    setNames = [];
 
     while(i < oldData.length){
       console.log(oldData[i].data_type2.name);
       dataToCompare.push(oldData[i].event2_id);
-      setIds.push(oldData[i].data_type2.name);//.substring(0,25));
+      setNames.push(oldData[i].data_type2.name);//.substring(0,25));
       pcoeffVal.push(oldData[i].p_coeff);
       scoeffVal.push(oldData[i].s_coeff);
       //console.log(oldData[i].data_type2.name);
@@ -63,9 +63,9 @@ spinner.stop();
       for(j = 0; j < dataToCompare.length; j++){
         var set = { coeff: "", Id: "", value: "" };
 
-        if(j+1 == selectedId)
-          flag = 3;
-        if(flag == 0) 
+        if(j+1 == selectedId) // This fixes the possibility of D3 rendering a blank box at selected Id's location
+          flag = 1;
+        if(flag == 0)
           set.Id = dataToCompare[j];
         else
           set.Id = (dataToCompare[j] - 1);
@@ -80,9 +80,9 @@ spinner.stop();
 
         newFormattedData.push(set);
       }
-      
+
     }
-    
+
     return newFormattedData
   }
   //  How to make that nasty map
@@ -111,7 +111,7 @@ spinner.stop();
            .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "coeffLabel mono axis axis-workweek" : "coeffLabel mono axis"); });
 
     var timeLabels = svg.selectAll(".timeLabel") // data set label
-       .data(setIds)
+       .data(setNames)
        .enter().append("text")
          .text(function(d) { return d +" - "; })
          .style("text-anchor", "end")
@@ -140,11 +140,11 @@ spinner.stop();
           clearDrawing();
           if(d.Id < selectedId){
             $("#myModalLabel").empty();
-            generateGraphInModal(selectedId, d.Id, title0, setIds[d.Id-1] );
+            generateGraphInModal(selectedId, d.Id, title0, setNames[d.Id-1] );
           }
           else{
             $("#myModalLabel").empty();
-            generateGraphInModal(selectedId, d.Id+1, title0, setIds[d.Id-1] );
+            generateGraphInModal(selectedId, d.Id+1, title0, setNames[d.Id-1] );
           }
           //$('#myModal').modal('hide');
        });
@@ -152,7 +152,7 @@ spinner.stop();
     heatMap.transition().duration(1000)
        .style("fill", function(d) { return colorScale(d.value); });
 
-    heatMap.append("title").text(function(d) { return d.value; });
+    //heatMap.append("title").text(function(d) { return d.value; });
 
     var legend = svg.selectAll(".legend")
        .data([0].concat(colorScale.quantiles()), function(d) { return d; })
@@ -185,10 +185,10 @@ spinner.stop();
   }
 
   // When you select stuff, call the JSON correlation API
-  selectElement = $('#analyze-data-type')
-  selectElement.click(function(e){
-    selectedId = $(e.target).find('option:selected').val();
-    
+
+  var findSelectedOptionFromSelectAndStartGraphGeneration = function(htmlSelectElement){
+    selectedId = $(htmlSelectElement).find('option:selected').val();
+
 
     request = $.ajax({
       url: "/data_types/" + selectedId + "/correlations",
@@ -204,5 +204,8 @@ spinner.stop();
 
     request.done(successCallback);
 
-  })
+  }
+  selectElement = $('#analyze-data-type')
+  selectElement.change(function(e){findSelectedOptionFromSelectAndStartGraphGeneration(e.target)})
+  findSelectedOptionFromSelectAndStartGraphGeneration(selectElement)
 });
