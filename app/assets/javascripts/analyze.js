@@ -159,8 +159,7 @@ spinner.stop();
        .enter().append("g")
        .attr("class", "legend");
 
-    legend.append("a")
-     .attr("xlink:href", "http://en.wikipedia.org/wiki/gongoozler")
+    legend
      .append("rect")
      .attr("x", function(d, i) { return legendElementWidth * i; })
      .attr("y", height)
