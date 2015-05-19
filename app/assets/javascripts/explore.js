@@ -61,14 +61,15 @@ var spinner = new Spinner(opts).spin(target);
     var newFormattedData = []; 
     var coeffObjs = [];
     while(i < oldData.length){
-      console.log("length: " + oldData.length);
+      debugger
+      console.log("yID: " + oldData[i].event1_id);
       yDataIds.push(oldData[i].event1_id);
       xDataIds.push(oldData[i].event2_id);
       xnames.push(oldData[i].data_type2.name);
       if(i < Math.sqrt(oldData.length)){
         xsetNames.push(oldData[i].data_type2.name);//.substring(0,25));
       }
-      if(oldData.length % i == 0){
+      if(i % Math.sqrt(oldData.length) == 0){
         ysetNames.push(oldData[i].data_type1.name);//.substring(0,25));
       }
 
@@ -190,7 +191,12 @@ var spinner = new Spinner(opts).spin(target);
 
     legend.append("text")
      .attr("class", "mono")
-     .text(function(d, i) { return "~ " + (Math.round((i*2-8)*100)/100); })
+     .text(function(d, i) {
+        if(i < 4)
+          return "~ -0." + (Math.abs(Math.round((i*2-8)*100)/100)); 
+        else
+          return "~ 0." + (Math.round((i*2-8)*100)/100);
+           })
      .attr("x", function(d, i) { return legendElementWidth * i + 160; })
      .attr("y", height + gridSize + 120);
 

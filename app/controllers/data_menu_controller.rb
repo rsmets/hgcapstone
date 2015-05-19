@@ -1,5 +1,7 @@
-load Rails.root.join('pearson.rb')
-load Rails.root.join('spearman.rb')
+load Rails.root.join('lib/correlations/pearson.rb')
+load Rails.root.join('lib/correlations/spearman.rb')
+load Rails.root.join('lib/correlations/spearman2.rb')
+load Rails.root.join('lib/correlations/pearson2.rb')
 
 require 'csv'
 
