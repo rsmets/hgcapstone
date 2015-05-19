@@ -9,12 +9,12 @@
 		content: ' '
 		display: block
 		position: absolute
-		left: 0
-		top: -125px // May need to change this to change the background of welcome
-		width: 100%
-		height: 250px // May need to change this to change the background of welcome
+		left: -950px
+		top: -155px // May need to change this to change the background of welcome
+		width: 1000%
+		height: 700px // May need to change this to change the background of welcome
 		z-index: -1
-		background-image: url(image_path('rs_dwarf.png')) // Change this to change the background of welcome
+		background-image: url(image_path('Chasm.jpg')) // Change this to change the background of welcome
 		background-repeat: no-repeat
 		background-position: 50% 0
 		-ms-background-size: contain
@@ -23,10 +23,10 @@
 		-webkit-background-size: contain
 		background-size: contain
 	&:link::before, &:visited::before
-		-webkit-filter: blur(3px)
-		filter: blur(3px)
+		-webkit-filter: blur(6px) opacity(0.3)
+		filter: blur(6px) opacity(0.3)
 		-webkit-transition : -webkit-filter 1000ms ease
 	&:hover::before, &:active::before
-		-webkit-filter: blur(0px)
-		filter: blur(0px)
+		-webkit-filter: blur(0px) opacity(1.0)
+		filter: blur(0px) opacity(1.0)
 		-webkit-transition : -webkit-filter 1000ms ease
