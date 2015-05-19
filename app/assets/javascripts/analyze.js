@@ -61,7 +61,7 @@ spinner.stop();
     for(i = 0; i < 2; i++){
       var flag = 0;
       for(j = 0; j < dataToCompare.length; j++){
-        var set = { coeff: "", Id: "", value: "" };
+        var set = { coeff: "", Id: "", value: "", xPos: ""};
 
         if(j+1 == selectedId) // This fixes the possibility of D3 rendering a blank box at selected Id's location
           flag = 1;
@@ -77,7 +77,7 @@ spinner.stop();
           set.coeff = 2;
           set.value = scoeffVal[j];
         }
-
+        set.xPos = j+1;
         newFormattedData.push(set);
       }
 
@@ -125,7 +125,7 @@ spinner.stop();
        .enter()
        .append("a")
        .append("rect")
-       .attr("x", function(d, i) { return (d.Id*1.09 - 1) * gridSize - 15; })
+       .attr("x", function(d, i) { return (d.xPos*1.09 - 1) * gridSize - 15; })
        .attr("y", function(d, i) { return (d.coeff*1.09 - 1) * gridSize + 50; })
        .attr("rx", 4)
        .attr("ry", 4)
