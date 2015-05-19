@@ -30,7 +30,7 @@ spinner.stop();
        height = 500 - margin.top - margin.bottom,
        gridSize = Math.floor(width / 24),
        legendElementWidth = gridSize*2,
-       buckets = 10,
+       buckets = 9,
        colors = ["#660000", "#8B0000", "#b20000", "#ff6666", "#e4e4e4","#9595cf","#5a6890","#314374", "#081d58"], // alternatively colorbrewer.YlGnBu[9]
        coeffs = ["Spearman", "Pearson"],
        setNames = [],

@@ -314,7 +314,6 @@ function compare(a,b) {
    var nvd3Format = function(data, dt, colr, yearRange){
       var x_y = [];
       data.sort(compare);
-      debugger
       data.map(function(item){
         if(item.x >= yearRange[0] && item.x <= yearRange[yearRange.length-1]){
           x_y.push({x: item.x, y: item.y})

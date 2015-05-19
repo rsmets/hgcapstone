@@ -68,7 +68,7 @@ var spinner = new Spinner(opts).spin(target);
       if(i < Math.sqrt(oldData.length)){
         xsetNames.push(oldData[i].data_type2.name);//.substring(0,25));
       }
-      if(i % Math.sqrt(oldData.length) == 0){
+      if(oldData.length % i == 0){
         ysetNames.push(oldData[i].data_type1.name);//.substring(0,25));
       }
 
@@ -89,18 +89,6 @@ var spinner = new Spinner(opts).spin(target);
 
       i++;
     }
-    /*
-    for(i = 0; i < xDataIds.length; i++){
-      for(var j = 0; j < yDataIds.length; j++){
-        var set = { yId: "", xId: "", value: "" , xPos: i+1, yPos: j+1};
-
-        set.xId = xDataIds[i];
-        set.yId = yDataIds[j];
-        set.value = pcoeffVal[j];
-
-        newFormattedData.push(set);
-      }
-    }*/
 
     //return coeffObjs;
     for(i = 0; i < yDataIds.length; i++){
@@ -111,8 +99,8 @@ var spinner = new Spinner(opts).spin(target);
       set.yId = yDataIds[i];
       set.value = pcoeffVal[i];
 
-      //console.log("xId: " + set.xId + "\tyId: " + set.yId);
-      //debugger
+      console.log("xId: " + set.xId + "\tyId: " + set.yId);
+      
       newFormattedData.push(set);
       
     }
@@ -124,6 +112,7 @@ var spinner = new Spinner(opts).spin(target);
   var makeheatMap = function(data) {
     transformed = dataTransformation(data)
     console.log(transformed);
+    debugger
     var colorScale = d3.scale.quantile()
        .domain([-1.0, 1.0])
        .range(colors);
