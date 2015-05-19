@@ -23,10 +23,10 @@
 		-webkit-background-size: contain
 		background-size: contain
 	&:link::before, &:visited::before
-		-webkit-filter: blur(6px) opacity(0.3)
-		filter: blur(6px) opacity(0.3)
+		-webkit-filter: blur(6px) sepia(1)
+		filter: blur(6px)
 		-webkit-transition : -webkit-filter 1000ms ease
 	&:hover::before, &:active::before
-		-webkit-filter: blur(0px) opacity(1.0)
-		filter: blur(0px) opacity(1.0)
+		-webkit-filter: blur(0px) sepia(0)
+		filter: blur(0px)
 		-webkit-transition : -webkit-filter 1000ms ease

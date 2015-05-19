@@ -32,7 +32,9 @@ class DataTypesCorrelationsController < ActionController::Base
 
     # CURRENTLY USING ONLY THE FIRST ~4 DATA SETS
     y_data_set_nums = Array.new
-    y_data_set_nums = [*3..10] #(1..upper_bound).to_a.sample
+    #y_data_set_nums = [*3..10] 
+    y_data_set_nums = (1...20).sort_by{ rand } #Upper bound is hardcoded right now - needs fix
+    y_data_set_nums = y_data_set_nums.take(8);
     # (min..max).sortby(value)
     y_data_set_nums.each do |data_set_num|
       time1 = DataPoint.where(data_type_id: data_set_num).first.value_1
