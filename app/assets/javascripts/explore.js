@@ -59,9 +59,9 @@ var spinner = new Spinner(opts).spin(target);
     var pcoeffVal = []; // Pearson's coefficients
     var scoeffVal = []; // Spearman's coefficients
     var newFormattedData = []; 
-    debugger;
     var coeffObjs = [];
     while(i < oldData.length){
+      console.log("length: " + oldData.length);
       yDataIds.push(oldData[i].event1_id);
       xDataIds.push(oldData[i].event2_id);
       xnames.push(oldData[i].data_type2.name);
@@ -89,32 +89,40 @@ var spinner = new Spinner(opts).spin(target);
 
       i++;
     }
+    /*
+    for(i = 0; i < xDataIds.length; i++){
+      for(var j = 0; j < yDataIds.length; j++){
+        var set = { yId: "", xId: "", value: "" , xPos: i+1, yPos: j+1};
 
-    //debugger;
+        set.xId = xDataIds[i];
+        set.yId = yDataIds[j];
+        set.value = pcoeffVal[j];
+
+        newFormattedData.push(set);
+      }
+    }*/
 
     //return coeffObjs;
     for(i = 0; i < yDataIds.length; i++){
       
-      var set = { yId: "", xId: "", value: "" };
+      var set = { yId: "", xId: "", value: "" , xPos: (i%8 + 1), yPos: (Math.floor(i/8) + 1)};
 
       set.xId = xDataIds[i];
       set.yId = yDataIds[i];
       set.value = pcoeffVal[i];
 
+      //console.log("xId: " + set.xId + "\tyId: " + set.yId);
+      //debugger
       newFormattedData.push(set);
       
     }
-
-    debugger
     
     return newFormattedData
   }
 
   //  How to make that nasty map
   var makeheatMap = function(data) {
-    debugger;
     transformed = dataTransformation(data)
-    debugger;
     console.log(transformed);
     var colorScale = d3.scale.quantile()
        .domain([-1.0, 1.0])
@@ -147,13 +155,14 @@ var spinner = new Spinner(opts).spin(target);
          })
          .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
 
+    //// Make Da Heat ////
     var heatMap = svg.selectAll(".Id")
        .data(transformed)
        .enter()
        .append("a")
        .append("rect")
-       .attr("x", function(d, i) { return (d.xId*1.09 - 1) * gridSize - 15; })
-       .attr("y", function(d, i) { return (d.yId*1.09 - 1) * gridSize + 50; })
+       .attr("x", function(d, i) { return (d.xPos*1.09 - 1) * gridSize + 305; })
+       .attr("y", function(d, i) { return (d.yPos*1.09 - 1) * gridSize + 50; })
        .attr("rx", 4)
        .attr("ry", 4)
        .attr("class", "Id bordered")
