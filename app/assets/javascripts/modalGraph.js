@@ -3,15 +3,6 @@ Modal graph logic here. As well as all other things shared between analyze and e
 Sharing makes the world go round
 */
 
-var mouseover = function(d){
-  tip.show(d);
-  d3.select(this).style({'stroke': '#636F57', 'stroke-width': 4.5}).style("cursor","pointer");
-}
-
-var mouseouttie = function(d, i){
-  tip.hide(d);
-  d3.select(this).style({'stroke': '#7e7e7e', 'stroke-width': 1.0});
-}
 
 var tip = d3.tip()
     .attr('class', 'd3-tip')

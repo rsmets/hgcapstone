@@ -37,8 +37,24 @@ var spinner = new Spinner(opts).spin(target);
     }
 
     request.done(successCallback);
+  var coeffLabels;
+  var timeLabels;
 
+  var mouseover = function(d){
+    //console.log("timelabel: " + timeLabels[0][d.Id]);
+    d3.select(timeLabels[0][d.xPos-1]).style({'fill': 'none', 'stroke': 'blue', 'stroke-width': 0.5});
+    d3.select(coeffLabels[0][d.yPos-1]).style({'fill': 'none', 'stroke': 'blue', 'stroke-width': 0.5});
+    //d3.select(coeffLabels[0][d.Id-1]).style("fill", "yellow");
+    tip.show(d);
+    d3.select(this).style({'stroke': '#636F57', 'stroke-width': 4.5}).style("cursor","pointer");
+  }
 
+  var mouseouttie = function(d, i){
+    d3.select(timeLabels[0][d.xPos-1]).style({'fill': 'black', 'stroke': 'none', 'stroke-width': 1.0});
+    d3.select(coeffLabels[0][d.yPos-1]).style({'fill': 'black', 'stroke': 'none', 'stroke-width': 1.0});
+    tip.hide(d);
+    d3.select(this).style({'stroke': '#7e7e7e', 'stroke-width': 1.0});
+  }
 
   var margin = { top: 100, right: 0, bottom: 100, left: 100 },
          width = 1000 - margin.left - margin.right,
@@ -65,7 +81,6 @@ var spinner = new Spinner(opts).spin(target);
     var newFormattedData = []; 
     var coeffObjs = [];
     while(i < oldData.length){
-      debugger
       console.log("yID: " + oldData[i].event1_id);
       yDataIds.push(oldData[i].event1_id);
       xDataIds.push(oldData[i].event2_id);
@@ -104,7 +119,6 @@ var spinner = new Spinner(opts).spin(target);
   var makeheatMap = function(data) {
     transformed = dataTransformation(data)
     console.log(transformed);
-    debugger
     var colorScale = d3.scale.quantile()
        .domain([-1.0, 1.0])
        .range(colors);
@@ -114,7 +128,7 @@ var spinner = new Spinner(opts).spin(target);
        .append("g")
        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var coeffLabels = svg.selectAll(".coeffLabel")
+    coeffLabels = svg.selectAll(".coeffLabel")
          .data(ysetNames)
          .enter().append("text")
            .text(function (d) { return d; })
@@ -124,7 +138,7 @@ var spinner = new Spinner(opts).spin(target);
            .attr("transform", "translate(+310," + ((gridSize / 1.5) + 50) +")")
            .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "coeffLabel mono axis axis-workweek" : "coeffLabel mono axis"); });
 
-    var timeLabels = svg.selectAll(".timeLabel") // data set label
+    timeLabels = svg.selectAll(".timeLabel") // data set label
        .data(xsetNames)
        .enter().append("text")
          .text(function(d) { return d + " - "; })

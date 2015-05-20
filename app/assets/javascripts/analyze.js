@@ -21,9 +21,25 @@ $( document ).ready(function() {
   top: '50%', // Top position relative to parent
   left: '50%' // Left position relative to parent
 };
-var target = document.getElementById('spinner');
-var spinner = new Spinner(opts).spin(target);
-spinner.stop();
+  var target = document.getElementById('spinner');
+  var spinner = new Spinner(opts).spin(target);
+  var timeLabels; 
+  var coeffLabels;
+  spinner.stop();
+  
+  var mouseover = function(d){
+    //console.log("timelabel: " + timeLabels[0][d.Id]);
+    d3.select(timeLabels[0][d.Id-1]).style({'fill': 'none', 'stroke': 'blue', 'stroke-width': 0.5});
+    //d3.select(coeffLabels[0][d.Id-1]).style("fill", "yellow");
+    tip.show(d);
+    d3.select(this).style({'stroke': '#636F57', 'stroke-width': 4.5}).style("cursor","pointer");
+  }
+
+  var mouseouttie = function(d, i){
+    d3.select(timeLabels[0][d.Id-1]).style({'fill': 'black', 'stroke': 'none', 'stroke-width': 1.0});
+    tip.hide(d);
+    d3.select(this).style({'stroke': '#7e7e7e', 'stroke-width': 1.0});
+  }
 
   var margin = { top: 200, right: 0, bottom: 100, left: 100 },
        width = 1000 - margin.left - margin.right,
@@ -100,7 +116,17 @@ spinner.stop();
        .append("g")
        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var coeffLabels = svg.selectAll(".coeffLabel")
+    timeLabels = svg.selectAll(".timeLabel") // data set label
+     .data(setNames)
+     .enter().append("text")
+       .text(function(d) { return d +" - "; })
+       .style("text-anchor", "end")
+       .attr("transform", function(d, i){
+          return "translate(" + (i*1.09 * gridSize + 5) +", +50)" + "rotate(35)"
+       })
+       .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
+
+    coeffLabels = svg.selectAll(".coeffLabel")
          .data(coeffs)
          .enter().append("text")
            .text(function (d) { return d; })
@@ -109,16 +135,6 @@ spinner.stop();
            .style("text-anchor", "end")
            .attr("transform", "translate(-25," + ((gridSize / 1.5) + 50) +")")
            .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "coeffLabel mono axis axis-workweek" : "coeffLabel mono axis"); });
-
-    var timeLabels = svg.selectAll(".timeLabel") // data set label
-       .data(setNames)
-       .enter().append("text")
-         .text(function(d) { return d +" - "; })
-         .style("text-anchor", "end")
-         .attr("transform", function(d, i){
-            return "translate(" + (i*1.09 * gridSize + 5) +", +50)" + "rotate(35)"
-         })
-         .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
 
     var heatMap = svg.selectAll(".Id")
        .data(transformed)
@@ -141,8 +157,7 @@ spinner.stop();
           if(d.Id < selectedId){
             $("#myModalLabel").empty();
             generateGraphInModal(selectedId, d.Id, title0, setNames[d.Id-1] );
-          }
-          else{
+          } else {
             $("#myModalLabel").empty();
             generateGraphInModal(selectedId, d.Id+1, title0, setNames[d.Id-1] );
           }
