@@ -30,7 +30,7 @@ spinner.stop();
        height = 500 - margin.top - margin.bottom,
        gridSize = Math.floor(width / 24),
        legendElementWidth = gridSize*2,
-       buckets = 10,
+       buckets = 9,
        colors = ["#660000", "#8B0000", "#b20000", "#ff6666", "#e4e4e4","#9595cf","#5a6890","#314374", "#081d58"], // alternatively colorbrewer.YlGnBu[9]
        coeffs = ["Spearman", "Pearson"],
        setNames = [],
@@ -170,8 +170,13 @@ spinner.stop();
 
     legend.append("text")
      .attr("class", "mono")
-     .text(function(d, i) { return "~ " + (Math.round((i*2-8)*100)/100); })
-     .attr("x", function(d, i) { return legendElementWidth * i + 20; })
+     .text(function(d, i) { 
+        if(i < 4)
+          return "-0." + (Math.abs(Math.round((i*2-8)*100)/100)); 
+        else
+          return "0." + (Math.round((i*2-8)*100)/100)
+      })
+     .attr("x", function(d, i) { return legendElementWidth * i + 25; })
      .attr("y", height + gridSize);
 
     legend.append("text")

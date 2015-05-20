@@ -154,34 +154,34 @@ var graphModal = function(eventId0, eventId1, title0, title1){
     $("#graph").empty();
   }
 
-    function drawScatter(data, graph_name){
-  var chart = nv.models.scatterChart()
+  function drawScatter(data, graph_name){
+    var chart = nv.models.scatterChart()
                 .margin({top:50})
                 .showDistX(true)    //showDist, when true, will display those little distribution lines on the axis.
                 .showDistY(true)
                 //.transitionDuration(350)
                 .color(d3.scale.category10().range());
 
-  //Configure how the tooltip looks.
-  chart.tooltipContent(function(key) {
-      return '<h3>' + key + '</h3>';
-  });
+    //Configure how the tooltip looks.
+    chart.tooltipContent(function(key) {
+        return '<h3>' + key + '</h3>';
+    });
 
-  //Axis settings
-  chart.xAxis.tickFormat(d3.format('.02f'));
-  chart.yAxis.tickFormat(d3.format('.02f'));
+    //Axis settings
+    chart.xAxis.tickFormat(d3.format('.02f'));
+    chart.yAxis.tickFormat(d3.format(",.5f"));
 
-  //We want to show shapes other than circles.
-  //chart.scatter.onlyCircles(false);
+    //We want to show shapes other than circles.
+    //chart.scatter.onlyCircles(false);
 
-  //var myData = randomData(4,40);
-  d3.select(graph_name)
-      .datum(data)
-      .call(chart);
+    //var myData = randomData(4,40);
+    d3.select(graph_name)
+        .datum(data)
+        .call(chart);
 
-  nv.utils.windowResize(chart.update);
+    nv.utils.windowResize(chart.update);
 
-  return chart;
+    return chart;
 }
 
 function drawLineScope(data, graph_name) {
@@ -227,7 +227,7 @@ function drawNVline(data, graph_name) {
 
           chart.yAxis     //Chart y-axis settings
               .axisLabel('Amount')
-              .tickFormat(d3.format(',1000fM'));
+              .tickFormat(d3.format(",.5f"));
 
           d3.select(graph_name)    //Select the <svg> element you want to render the chart in.   
               .datum(data)         //Populate the <svg> element with chart data...
@@ -250,7 +250,7 @@ function drawNVline(data, graph_name) {
         .tickFormat(d3.format('f'));
 
     chart.yAxis
-        .tickFormat(d3.format(',1000000000f'));
+        .tickFormat(d3.format(",.5f"));
 
     d3.select(graph_name)
         .datum(data)
@@ -346,7 +346,6 @@ function compare(a,b) {
    var nvd3Format = function(data, dt, colr, yearRange){
       var x_y = [];
       data.sort(compare);
-      debugger
       data.map(function(item){
         if(item.x >= yearRange[0] && item.x <= yearRange[yearRange.length-1]){
           x_y.push({x: item.x, y: item.y})

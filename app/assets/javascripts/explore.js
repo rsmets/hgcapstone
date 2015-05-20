@@ -65,7 +65,8 @@ var spinner = new Spinner(opts).spin(target);
     var newFormattedData = []; 
     var coeffObjs = [];
     while(i < oldData.length){
-      console.log("length: " + oldData.length);
+      debugger
+      console.log("yID: " + oldData[i].event1_id);
       yDataIds.push(oldData[i].event1_id);
       xDataIds.push(oldData[i].event2_id);
       xnames.push(oldData[i].data_type2.name);
@@ -91,6 +92,8 @@ var spinner = new Spinner(opts).spin(target);
       set.yId = yDataIds[i];
       set.value = pcoeffVal[i];
 
+      //console.log("xId: " + set.xId + "\tyId: " + set.yId);
+
       newFormattedData.push(set);
     }
     
@@ -101,6 +104,7 @@ var spinner = new Spinner(opts).spin(target);
   var makeheatMap = function(data) {
     transformed = dataTransformation(data)
     console.log(transformed);
+    debugger
     var colorScale = d3.scale.quantile()
        .domain([-1.0, 1.0])
        .range(colors);
@@ -174,8 +178,13 @@ var spinner = new Spinner(opts).spin(target);
 
     legend.append("text")
      .attr("class", "mono")
-     .text(function(d, i) { return "~ " + (Math.round((i*2-8)*100)/100); })
-     .attr("x", function(d, i) { return legendElementWidth * i + 160; })
+     .text(function(d, i) {
+        if(i < 4)
+          return "-0." + (Math.abs(Math.round((i*2-8)*100)/100)); 
+        else
+          return "0." + (Math.round((i*2-8)*100)/100);
+           })
+     .attr("x", function(d, i) { return legendElementWidth * i + 165; })
      .attr("y", height + gridSize + 120);
 
     legend.append("text")
