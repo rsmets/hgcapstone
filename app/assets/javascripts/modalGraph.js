@@ -169,7 +169,7 @@ var graphModal = function(eventId0, eventId1, title0, title1){
 
     //Axis settings
     chart.xAxis.tickFormat(d3.format('.02f'));
-    chart.yAxis.tickFormat(d3.format(",.5f"));
+    chart.yAxis.tickFormat(d3.format(",.3f"));
 
     //We want to show shapes other than circles.
     //chart.scatter.onlyCircles(false);
@@ -197,10 +197,10 @@ function drawLineScope(data, graph_name) {
 
   chart.yAxis
     .axisLabel('Amount')
-    .tickFormat(d3.format(',.2f'));
+    .tickFormat(d3.format(',.3f'));
 
   chart.y2Axis
-    .tickFormat(d3.format(',.2f'));
+    .tickFormat(d3.format(',.3f'));
 
   d3.select(graph_name)
     .datum(data)
@@ -250,7 +250,7 @@ function drawNVline(data, graph_name) {
         .tickFormat(d3.format('f'));
 
     chart.yAxis
-        .tickFormat(d3.format(",.5f"));
+        .tickFormat(d3.format(",.3f"));
 
     d3.select(graph_name)
         .datum(data)
