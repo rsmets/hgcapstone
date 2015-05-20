@@ -69,7 +69,8 @@ var graphModal = function(eventId0, eventId1, title0, title1){
               var comboD = format_combined_data(mappedD0, mappedD1, title0, title1, '#ff7f0e', '#2ca02c', 1, yearRange);
              // console.log("2" + title0 + eventId0 + title1 + eventId1+ "" );
               d3.select("#myModalLabel").append("text").text(graphTitle);
-              setTimeout(function(){ drawNVline(comboD,'#graph'); }, 1000);
+              setTimeout(function(){ drawLineScope(comboD, '#graph');//drawNVline(comboD,'#graph'); 
+            }, 1000);
 
               // Check buttons for graphs that are displayed by default.
               $('#graph-norm').prop('checked', false);
@@ -88,7 +89,8 @@ var graphModal = function(eventId0, eventId1, title0, title1){
                   if(choice == 0)
                     drawMultiBarChart(comboD,'#graph');
                   else if(choice == 1)
-                    drawNVline(comboD, '#graph');
+                    drawLineScope(comboD, '#graph');
+                    //drawNVline(comboD, '#graph');
                   else if(choice == 2)
                     drawScatter(comboD, '#graph');
                 }
@@ -102,7 +104,8 @@ var graphModal = function(eventId0, eventId1, title0, title1){
                   if(choice == 0)
                     drawMultiBarChart(comboD,'#graph');
                   else if(choice == 1)
-                    drawNVline(comboD, '#graph');
+                    drawLineScope(comboD, '#graph');
+                    //drawNVline(comboD, '#graph');
                   else if(choice == 2)
                     drawScatter(comboD, '#graph');
                 }
@@ -122,7 +125,8 @@ var graphModal = function(eventId0, eventId1, title0, title1){
                   if(choice != 1){
                     clearDrawing();
                     choice = 1;
-                    drawNVline(comboD, '#graph');
+                    drawLineScope(comboD, '#graph');
+                    //drawNVline(comboD, '#graph');
                   }
               });
 
@@ -179,6 +183,34 @@ var graphModal = function(eventId0, eventId1, title0, title1){
 
   return chart;
 }
+
+function drawLineScope(data, graph_name) {
+  var chart = nv.models.lineWithFocusChart()
+                .margin({left: 100, top: 50})  //Adjust chart margins to give the x-axis some breathing room.
+                //.useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
+                //.transitionDuration(350)  //how fast do you want the lines to transition?
+                .showLegend(true);
+
+  chart.xAxis
+    .axisLabel('Time (Years)')
+    .tickFormat(d3.format('r'));
+
+  chart.yAxis
+    .axisLabel('Amount')
+    .tickFormat(d3.format(',.2f'));
+
+  chart.y2Axis
+    .tickFormat(d3.format(',.2f'));
+
+  d3.select(graph_name)
+    .datum(data)
+    .transition().duration(500)
+    .call(chart);
+
+  nv.utils.windowResize(chart.update() );
+
+  return chart;
+};
 
 function drawNVline(data, graph_name) {
   var chart = nv.models.lineChart()

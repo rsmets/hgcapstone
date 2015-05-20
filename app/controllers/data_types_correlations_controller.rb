@@ -28,7 +28,6 @@ class DataTypesCorrelationsController < ActionController::Base
 
     # Max value of table for data type Ids
     DataPoint.maximum("data_type_id")
-    puts
 
     # CURRENTLY USING ONLY THE FIRST ~4 DATA SETS
     y_data_set_nums = Array.new
