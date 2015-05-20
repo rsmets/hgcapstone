@@ -1,0 +1,10 @@
+What they are
+
+	our correlations range from -1 to 1
+	positive correlation - two values increase at the same time
+	negative correlation - one value increases while the other decreases
+	zero correlation - one value increases while the other sometimes increases 				   and sometimes decreases
+
+How we use them
+
+	we use correlations to tell us how much two datasets behave like eachother
