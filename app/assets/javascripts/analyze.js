@@ -172,11 +172,11 @@ spinner.stop();
      .attr("class", "mono")
      .text(function(d, i) { 
         if(i < 4)
-          return "~ -0." + (Math.abs(Math.round((i*2-8)*100)/100)); 
+          return "-0." + (Math.abs(Math.round((i*2-8)*100)/100)); 
         else
-          return "~ 0." + (Math.round((i*2-8)*100)/100)
+          return "0." + (Math.round((i*2-8)*100)/100)
       })
-     .attr("x", function(d, i) { return legendElementWidth * i + 20; })
+     .attr("x", function(d, i) { return legendElementWidth * i + 25; })
      .attr("y", height + gridSize);
 
     legend.append("text")
