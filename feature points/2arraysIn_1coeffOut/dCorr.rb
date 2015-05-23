@@ -1,7 +1,7 @@
 def dCorr(a,b)
 
   # Initialize testing mode
-  tests = 1
+  tests = 0
 
   # Sift out empty values
   x = [0.0]
@@ -23,7 +23,7 @@ def dCorr(a,b)
   # Begin algorithm
   if tests==1
     start = Time.now
-    puts "t0= #{start-start} secs"
+    puts "\n t0= #{start-start} secs"
   end
 
   n = x.length
@@ -59,7 +59,7 @@ def dCorr(a,b)
 
   if tests==1
     t1 = Time.now
-    puts "t1= #{t1-start} secs"
+    puts " t1= #{t1-start} secs"
   end
 
   # Calculate matrix mX
@@ -77,7 +77,7 @@ def dCorr(a,b)
 
   if tests==1
     t2 = Time.now
-    puts "t2= #{t2-t1} secs"
+    puts " t2= #{t2-t1} secs"
   end
 
   # Generate matrix of distances for y
@@ -111,7 +111,7 @@ def dCorr(a,b)
 
   if tests==1
     t3 = Time.now
-    puts "t3= #{t3-t2} secs"
+    puts " t3= #{t3-t2} secs"
   end
 
   # Calculate matrix mY
@@ -133,7 +133,7 @@ def dCorr(a,b)
 
   if tests==1
     t4 = Time.now
-    puts "end= #{t4-start} secs"
+    puts " end= #{t4-start} secs"
   end
 
   if ans.nan?
@@ -149,18 +149,18 @@ end
 
 if __FILE__ == $0
 
-  tests = 1
+  tests = 0
   if tests == 1
-  	a1 = [1,2,3,4,5,6,7,8]
-  	a2 = [2,3,4,5,6,7,8,9]   # directly correlated with a1
+  	# a1 = [1,2,3,4,5,6,7,8]
+  	# a2 = [2,3,4,5,6,7,8,9]   # directly correlated with a1
 
-  	#test(1,2,a1,a2)
+  	# #test(1,2,a1,a2)
 
-  	a3=[1,2,3,4,5,6]
-  	a4=[1,2,3,4,5,6,7,8]   # different size
-  	a5=[1,2,3,4,5,6,nil,nil]   # missing values at back end
-  	a6=[nil,nil,3,4,5,6,7,8]   # missing values at front end
-  	a7=[1,2,nil,nil,nil,nil,nil,nil]   # no values to correlate with a6
+  	# a3=[1,2,3,4,5,6]
+  	# a4=[1,2,3,4,5,6,7,8]   # different size
+  	# a5=[1,2,3,4,5,6,nil,nil]   # missing values at back end
+  	# a6=[nil,nil,3,4,5,6,7,8]   # missing values at front end
+  	# a7=[1,2,nil,nil,nil,nil,nil,nil]   # no values to correlate with a6
 
   	# test(3,4,a3,a4)
    #  test(3,5,a3,a5)
@@ -168,25 +168,27 @@ if __FILE__ == $0
    #  test(5,6,a5,a6)
    #  test(6,7,a6,a7)
 
-    a8=[2,3,5,6,8,9,12,13,14,18,23,12,23,24,14,35,65]
-    a9=[23,25,24,29,29,10,30,30,31,32,36,44,71]
+   #  a8=[2,3,5,6,8,9,12,13,14,18,23,12,23,24,14,35,65]
+   #  a9=[23,25,24,29,29,10,30,30,31,32,36,44,71]
 
-    # test(8,9,a8,a9)
-    # test(1,8,a1,a8)
-    # test(8,1,a8,a1)
+   #  test(8,9,a8,a9)
+   #  test(1,8,a1,a8)
+   #  test(8,1,a8,a1)
 
-    # non-linear correlations
-    a10=[1,4,9,16,25,36,49,64] # square of a1
-    a11=[1,3,10,14,28,40,45,66] # square of a1, but noisy
+   #  # non-linear correlations
+   #  a10=[1,4,9,16,25,36,49,64] # square of a1
+   #  a11=[1,3,10,14,28,40,45,66] # square of a1, but noisy
 
-    # test(1,10,a1,a10)
-    # test(1,11,a1,a11)
+   #  test(1,10,a1,a10)
+   #  test(1,11,a1,a11)
 
     a12=[]
     a13=[]
+ 
+	numDataSets = 1 # number of datasets to run algorithm on 
 
-	start2 = Time.now    
-    (0..1).each do |i2|
+	start2 = Time.now   
+    (0..numDataSets-1).each do |i2|
       (0..1000).each do |i|
         a12[i] = (i-3)*(i-8)*(i-20)*(i-44) # non-linear compared to a13
         a13[i] = i
@@ -194,10 +196,6 @@ if __FILE__ == $0
 
       test(12,13,a12,13)
     end
-    puts "^v^end2= #{Time.now-start2}"
-
-    # asdf = a1.zip(a2).inspect
-    # puts asdf.inspect
-
+    puts "\n total_time= #{Time.now-start2}\n\n"
   end
 end

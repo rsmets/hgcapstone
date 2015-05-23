@@ -50,7 +50,7 @@ def spearman(a,b)
   if output.nan?
     return 0
   else
-    return output
+    return output.real
   end
 end
 
