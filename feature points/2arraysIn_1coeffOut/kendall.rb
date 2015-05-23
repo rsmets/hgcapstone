@@ -47,7 +47,7 @@ end
 
 if __FILE__ == $0
 
-  tests = 1
+  tests = 0
   if tests == 1
 
 	a1=[1,2,3,4,5,6,7,8]
