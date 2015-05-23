@@ -196,9 +196,9 @@ $( document ).ready(function() {
 
     legend.append("text")
       .attr("class", "mono")
-      .text("Inversely (-1) Correlated to Directly (+1) Correlated")
-      .attr("x", legendElementWidth + 30)
-      .attr("y", height - 30);
+      .text("Inversely (-1) Correlated <----------------------------------------------Neutral--------------------------------------------> Directly (+1) Correlated")
+      .attr("x", legendElementWidth - 85)
+      .attr("y", height - 10);
 
       spinner.stop();
   }
