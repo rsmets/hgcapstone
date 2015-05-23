@@ -2,9 +2,6 @@
 # 		  -1 = inversely correlated
 # 		  0 = not correlated
 # 		  1 = perfectly correlated
-# 		  NaN = No points in dataSet A have corresponding points in dataSet B
-# 		  		and thus they cannot be correlated against each other. Likely
-# 		  		the range isn't appropriate for these two dataSets
 
 require 'statsample'
 
@@ -36,7 +33,12 @@ def kendall(a,b)
 
   # run algorithm
   output=Statsample::Bivariate.tau_a(c,d)
-  return output
+
+  if output.nan?
+  	return 0
+  else
+  	return output
+  end
 end
 
 def test(num1 = 0, num2 = 0, a1 = [0.0], a2 = [0.0])
@@ -45,7 +47,7 @@ end
 
 if __FILE__ == $0
 
-  tests = 0
+  tests = 1
   if tests == 1
 
 	a1=[1,2,3,4,5,6,7,8]

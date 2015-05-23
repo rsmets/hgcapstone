@@ -7,8 +7,10 @@
 
 	Correlation Algorithms:
 
-		pearson.rb
-		spearman.rb
+		pearson.rb - linear correlation algorithm
+		spearman.rb - linear correlation algorithm
+		kendall.rb - linear correlation algorithm
+		dCorr.rb - non-linear correlation algorithm (about 4.5sec each correlation!)
 		
 	Statistical Analysis:
 
@@ -21,7 +23,6 @@
 
 	Probability Tests:
 
-		kendall.rb - idk, some sort of non-parametric hypothesis test 
 		tPearson.rb - the value of a T-test, based on Pearson's algorithm
 
 

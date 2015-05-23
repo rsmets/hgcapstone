@@ -2,9 +2,6 @@
 #         -1 = inversely correlated
 #         0 = not correlated
 #         1 = perfectly correlated
-#         NaN = No points in dataSet A have corresponding points in dataSet B
-#               and thus they cannot be correlated against each other. Likely
-#               the range isn't appropriate for these two dataSets
 
 require 'statsample'
 
