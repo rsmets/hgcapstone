@@ -226,5 +226,5 @@ $( document ).ready(function() {
   }
   selectElement = $('#analyze-data-type')
   selectElement.change(function(e){findSelectedOptionFromSelectAndStartGraphGeneration(e.target)})
-  //findSelectedOptionFromSelectAndStartGraphGeneration(selectElement)
+  findSelectedOptionFromSelectAndStartGraphGeneration(selectElement)
 });

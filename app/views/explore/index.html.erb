@@ -5,7 +5,17 @@
 <%= javascript_include_tag 'modalGraph.js', 'data-turbolinks-track' => true %>
 <%= javascript_include_tag 'index.js', 'data-turbolinks-track' => true %>
 
+
 <div id="spinner"></div>
+
+<h3>Correlation Type</h3>
+<select id="explore-algorithm-type">
+  <option value="Spearman">Spearman</option>
+  <option value="Pearson">Pearson</option>
+  <option value="Kendall">Kendall</option>
+  <option value="Gongoozler">Gongoozler</option>
+</select>
+
 <svg id="heatmap-chart" width="1000" height="500"></svg>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

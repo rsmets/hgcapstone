@@ -1,7 +1,7 @@
 // Math.floor(Math.random() * ((y-x)+1) + x); Generate randoms numbers between x - y
 
 $( document ).ready(function() {
-//copied over the analyze js file and replaced the selectedId with a hard coded 1 for now. 
+//copied over the analyze js file and replaced the coeffType with a hard coded 1 for now. 
 //need to make a random num gnerator eventually and call docorrelations on each random num.
 //made some minor changes to the copied code, obviously.
 
@@ -25,7 +25,7 @@ $( document ).ready(function() {
 };
 var target = document.getElementById('spinner');
 var spinner = new Spinner(opts).spin(target);
-    
+    /*
     request = $.ajax({
          url: "/data_types/correlations",
          method: "POST",
@@ -34,9 +34,35 @@ var spinner = new Spinner(opts).spin(target);
     // Upon success, make a new map!
     successCallback = function(dataTypeCorrelations){
       makeheatMap(dataTypeCorrelations['data_types_correlations']);
+
+    }
+
+    request.done(successCallback);*/
+
+  var findSelectedOptionFromSelectAndStartGraphGeneration = function(htmlSelectElement){
+    coeffType = $(htmlSelectElement).find('option:selected').val();
+    //debugger
+    request = $.ajax({
+         url: "/data_types/correlations",
+         method: "POST",
+         dataType: "json"
+        });
+    spinner.spin(target);
+
+    // Upon success, make a new map!
+    successCallback = function(dataTypeCorrelations){
+      makeheatMap(dataTypeCorrelations['data_types_correlations']);
     }
 
     request.done(successCallback);
+
+  }
+  selectElement = $('#explore-algorithm-type')
+  selectElement.change(function(e){
+    findSelectedOptionFromSelectAndStartGraphGeneration(e.target);
+  })
+  findSelectedOptionFromSelectAndStartGraphGeneration(selectElement)
+  
   var coeffLabels;
   var timeLabels;
 
@@ -105,7 +131,10 @@ var spinner = new Spinner(opts).spin(target);
 
       set.xId = xDataIds[i];
       set.yId = yDataIds[i];
-      set.value = pcoeffVal[i];
+      if(coeffType == "Spearman")
+        set.value = scoeffVal[i];
+      else if(coeffType == "Pearson")
+        set.value = pcoeffVal[i];
 
       //console.log("xId: " + set.xId + "\tyId: " + set.yId);
 
@@ -118,7 +147,7 @@ var spinner = new Spinner(opts).spin(target);
   //  How to make that nasty map
   var makeheatMap = function(data) {
     transformed = dataTransformation(data)
-    console.log(transformed);
+    console.log(coeffType);
     var colorScale = d3.scale.quantile()
        .domain([-1.0, 1.0])
        .range(colors);
@@ -131,7 +160,12 @@ var spinner = new Spinner(opts).spin(target);
     coeffLabels = svg.selectAll(".coeffLabel")
          .data(ysetNames)
          .enter().append("text")
-           .text(function (d) { return d; })
+           .text(function (d, i) { 
+              if(i <= 7)
+                return d; 
+              else
+                return;
+            })
            .attr("x", -10)
            .attr("y", function (d, i) { return i * gridSize * 1.09; })
            .style("text-anchor", "end")
@@ -141,7 +175,12 @@ var spinner = new Spinner(opts).spin(target);
     timeLabels = svg.selectAll(".timeLabel") // data set label
        .data(xsetNames)
        .enter().append("text")
-         .text(function(d) { return d + " - "; })
+         .text(function(d, i) { 
+          if(i <= 7)
+            return d + " - "; 
+          else
+            return;
+          })
          .style("text-anchor", "end")
          .attr("transform", function(d, i){
             return "translate(" + (i*1.09 * gridSize + 320) +", +50)" + "rotate(20)"

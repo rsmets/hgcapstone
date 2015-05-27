@@ -141,6 +141,10 @@ var graphModal = function(eventId0, eventId1, title0, title1){
 
    }
 
+  function clearSvg(){
+    $("#heatmap-chart").empty();
+  }
+
   function clearDrawing(){
     $("#graph").empty();
   }
