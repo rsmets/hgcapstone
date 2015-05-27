@@ -5,7 +5,17 @@
 <%= javascript_include_tag 'modalGraph.js', 'data-turbolinks-track' => true %>
 <%= javascript_include_tag 'index.js', 'data-turbolinks-track' => true %>
 
+
 <div id="spinner"></div>
+
+<h3>Correlation Type</h3>
+<select id="explore-algorithm-type">
+  <option value="Spearman">Spearman</option>
+  <option value="Pearson">Pearson</option>
+  <option value="Kendall">Kendall</option>
+  <option value="Gongoozler">Gongoozler</option>
+</select>
+
 <svg id="heatmap-chart" width="1000" height="500"></svg>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -17,17 +27,15 @@
       </div>
       <div class="modal-body" style="position: relative; display: block;">
         <div class="btn-group modal-toolbar" role="group" aria-label="..." data-toggle="buttons">
-          <label><input id="graph-bar" type="radio" name="graph-type">Bar</label>
-          <label><input id="graph-line" type="radio" name="graph-type">Line</label>
-          <label><input id="graph-scatter" type="radio" name="graph-type">Scatter</label>
+          <label for="graph-line"><input id="graph-line" type="radio" name="graph-type">Line</label>
+          <label for="graph-bar"><input id="graph-bar" type="radio" name="graph-type">Bar</label>
+          <label for="graph-scatter"><input id="graph-scatter" type="radio" name="graph-type">Scatter</label>
         </div>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Default
-        <div class="btn-group" role="group" aria-label="..." data-toggle="buttons-radio">
-          <button id="graph-norm" type="button" class="btn btn-default">Normalized</button>
-          <button id="graph-nonnorm" type="button" class="btn btn-default">Non-Normalized</button>
+        <div class="btn-group" role="group" aria-label="..." data-toggle="buttons">
+          <label for="graph-norm"><input id="graph-norm" type="radio" name="graph-norm-type">Normalized</label>
+          <label for="graph-nonnorm"><input id="graph-nonnorm" type="radio" name="graph-norm-type">Non-Normalized</label>
         </div>
         <svg id="graph" width="2000" height="1000"></svg>
-
       </div>
     </div>
   </div>

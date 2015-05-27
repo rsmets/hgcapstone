@@ -1,7 +1,7 @@
 // Math.floor(Math.random() * ((y-x)+1) + x); Generate randoms numbers between x - y
 
 $( document ).ready(function() {
-//copied over the analyze js file and replaced the selectedId with a hard coded 1 for now. 
+//copied over the analyze js file and replaced the coeffType with a hard coded 1 for now. 
 //need to make a random num gnerator eventually and call docorrelations on each random num.
 //made some minor changes to the copied code, obviously.
 
@@ -25,7 +25,7 @@ $( document ).ready(function() {
 };
 var target = document.getElementById('spinner');
 var spinner = new Spinner(opts).spin(target);
-    
+    /*
     request = $.ajax({
          url: "/data_types/correlations",
          method: "POST",
@@ -34,11 +34,53 @@ var spinner = new Spinner(opts).spin(target);
     // Upon success, make a new map!
     successCallback = function(dataTypeCorrelations){
       makeheatMap(dataTypeCorrelations['data_types_correlations']);
+
+    }
+
+    request.done(successCallback);*/
+
+  var findSelectedOptionFromSelectAndStartGraphGeneration = function(htmlSelectElement){
+    coeffType = $(htmlSelectElement).find('option:selected').val();
+    //debugger
+    request = $.ajax({
+         url: "/data_types/correlations",
+         method: "POST",
+         dataType: "json"
+        });
+    spinner.spin(target);
+
+    // Upon success, make a new map!
+    successCallback = function(dataTypeCorrelations){
+      makeheatMap(dataTypeCorrelations['data_types_correlations']);
     }
 
     request.done(successCallback);
 
+  }
+  selectElement = $('#explore-algorithm-type')
+  selectElement.change(function(e){
+    findSelectedOptionFromSelectAndStartGraphGeneration(e.target);
+  })
+  findSelectedOptionFromSelectAndStartGraphGeneration(selectElement)
+  
+  var coeffLabels;
+  var timeLabels;
 
+  var mouseover = function(d){
+    //console.log("timelabel: " + timeLabels[0][d.Id]);
+    d3.select(timeLabels[0][d.xPos-1]).style({'fill': 'none', 'stroke': 'blue', 'stroke-width': 0.5});
+    d3.select(coeffLabels[0][d.yPos-1]).style({'fill': 'none', 'stroke': 'blue', 'stroke-width': 0.5});
+    //d3.select(coeffLabels[0][d.Id-1]).style("fill", "yellow");
+    tip.show(d);
+    d3.select(this).style({'stroke': '#636F57', 'stroke-width': 4.5}).style("cursor","pointer");
+  }
+
+  var mouseouttie = function(d, i){
+    d3.select(timeLabels[0][d.xPos-1]).style({'fill': 'black', 'stroke': 'none', 'stroke-width': 1.0});
+    d3.select(coeffLabels[0][d.yPos-1]).style({'fill': 'black', 'stroke': 'none', 'stroke-width': 1.0});
+    tip.hide(d);
+    d3.select(this).style({'stroke': '#7e7e7e', 'stroke-width': 1.0});
+  }
 
   var margin = { top: 100, right: 0, bottom: 100, left: 100 },
          width = 1000 - margin.left - margin.right,
@@ -47,8 +89,12 @@ var spinner = new Spinner(opts).spin(target);
          legendElementWidth = gridSize*2,
          buckets = 10,
          colors = ["#660000", "#8B0000", "#b20000", "#ff6666", "#e4e4e4","#9595cf","#5a6890","#314374", "#081d58"], // alternatively colorbrewer.YlGnBu[9]
+         //colors = ["#0066FF", "#005CE6", "#0052CC", "#0047B2", "#003D99", "#003380", "#002966", "#001F4C", "#001433", "#000A1A",
+         //         "#000000",
+         //         "#1A0500", "#330A00", "#4C0F00", "#661400", "#801A00", "#991F00", "#B22400", "#CC2900", "#E62E00", "#FF3300"]
          ysetNames = [], //populate for axis label
          xsetNames = [];
+         ynames = {};
          xnames = [];
 
   var dataTransformation = function(oldData){
@@ -61,7 +107,7 @@ var spinner = new Spinner(opts).spin(target);
     var newFormattedData = []; 
     var coeffObjs = [];
     while(i < oldData.length){
-      console.log("length: " + oldData.length);
+      console.log("yID: " + oldData[i].event1_id);
       yDataIds.push(oldData[i].event1_id);
       xDataIds.push(oldData[i].event2_id);
       xnames.push(oldData[i].data_type2.name);
@@ -69,52 +115,30 @@ var spinner = new Spinner(opts).spin(target);
         xsetNames.push(oldData[i].data_type2.name);//.substring(0,25));
       }
       if(i % Math.sqrt(oldData.length) == 0){
-        ysetNames.push(oldData[i].data_type1.name);//.substring(0,25));
+        ysetNames.push(oldData[i].data_type1.name);
+        ynames[oldData[i].event1_id] = oldData[i].data_type1.name;
       }
 
       pcoeffVal.push(oldData[i].p_coeff);
       scoeffVal.push(oldData[i].s_coeff);
-      //console.log(oldData[i].data_type2.name);
-
-      /*var obj = {
-        yId: oldData[i].event1_id,
-        xId: oldData[i].event2_id,
-        xsetName: oldData[i].data_type2.name,
-        ysetName: oldData[i].data_type1.name,
-        pcoeff: oldData[i].p_coeff,
-        scoeff: oldData[i].s_coeff
-      }
-
-      coeffObjs.push(obj);*/
-
+      
       i++;
     }
-    /*
-    for(i = 0; i < xDataIds.length; i++){
-      for(var j = 0; j < yDataIds.length; j++){
-        var set = { yId: "", xId: "", value: "" , xPos: i+1, yPos: j+1};
 
-        set.xId = xDataIds[i];
-        set.yId = yDataIds[j];
-        set.value = pcoeffVal[j];
-
-        newFormattedData.push(set);
-      }
-    }*/
-
-    //return coeffObjs;
     for(i = 0; i < yDataIds.length; i++){
       
       var set = { yId: "", xId: "", value: "" , xPos: (i%8 + 1), yPos: (Math.floor(i/8) + 1)};
 
       set.xId = xDataIds[i];
       set.yId = yDataIds[i];
-      set.value = pcoeffVal[i];
+      if(coeffType == "Spearman")
+        set.value = scoeffVal[i];
+      else if(coeffType == "Pearson")
+        set.value = pcoeffVal[i];
 
       //console.log("xId: " + set.xId + "\tyId: " + set.yId);
-      //debugger
+
       newFormattedData.push(set);
-      
     }
     
     return newFormattedData
@@ -123,32 +147,40 @@ var spinner = new Spinner(opts).spin(target);
   //  How to make that nasty map
   var makeheatMap = function(data) {
     transformed = dataTransformation(data)
-    console.log(transformed);
+    console.log(coeffType);
     var colorScale = d3.scale.quantile()
        .domain([-1.0, 1.0])
        .range(colors);
 
     var svg = d3.select("#heatmap-chart")
         .call(tip)
-       //.attr("width", width + margin.left + margin.right)
-       //.attr("height", height + margin.top + margin.bottom)
        .append("g")
        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var coeffLabels = svg.selectAll(".coeffLabel")
+    coeffLabels = svg.selectAll(".coeffLabel")
          .data(ysetNames)
          .enter().append("text")
-           .text(function (d) { return d; })
+           .text(function (d, i) { 
+              if(i <= 7)
+                return d; 
+              else
+                return;
+            })
            .attr("x", -10)
            .attr("y", function (d, i) { return i * gridSize * 1.09; })
            .style("text-anchor", "end")
            .attr("transform", "translate(+310," + ((gridSize / 1.5) + 50) +")")
            .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "coeffLabel mono axis axis-workweek" : "coeffLabel mono axis"); });
 
-    var timeLabels = svg.selectAll(".timeLabel") // data set label
+    timeLabels = svg.selectAll(".timeLabel") // data set label
        .data(xsetNames)
        .enter().append("text")
-         .text(function(d) { return d + " - "; })
+         .text(function(d, i) { 
+          if(i <= 7)
+            return d + " - "; 
+          else
+            return;
+          })
          .style("text-anchor", "end")
          .attr("transform", function(d, i){
             return "translate(" + (i*1.09 * gridSize + 320) +", +50)" + "rotate(20)"
@@ -175,14 +207,12 @@ var spinner = new Spinner(opts).spin(target);
        .on("click", function(d){
           clearDrawing();
           $("#myModalLabel").empty();
-          generateGraphInModal(d.yId, d.xId, ysetNames[d.yId-1], xnames[d.xId-1] );
+          generateGraphInModal(d.yId, d.xId, ynames[d.yId], xnames[d.xId-1] );
 
        });
 
     heatMap.transition().duration(1000)
        .style("fill", function(d) { return colorScale(d.value); });
-
-    //heatMap.append("title").text(function(d) { return d.value; });
 
     var legend = svg.selectAll(".legend")
        .data([0].concat(colorScale.quantiles()), function(d) { return d; })
@@ -201,8 +231,13 @@ var spinner = new Spinner(opts).spin(target);
 
     legend.append("text")
      .attr("class", "mono")
-     .text(function(d, i) { return "~ " + (Math.round((i*2-8)*100)/100); })
-     .attr("x", function(d, i) { return legendElementWidth * i + 160; })
+     .text(function(d, i) {
+        if(i < 4)
+          return "-0." + (Math.abs(Math.round((i*2-8)*100)/100)); 
+        else
+          return "0." + (Math.round((i*2-8)*100)/100);
+           })
+     .attr("x", function(d, i) { return legendElementWidth * i + 165; })
      .attr("y", height + gridSize + 120);
 
     legend.append("text")
@@ -210,8 +245,6 @@ var spinner = new Spinner(opts).spin(target);
       .text("Inversely (-1) Correlated to Directly (+1) Correlated")
       .attr("x", legendElementWidth + 250)
       .attr("y", height + 100);
-
-      spinner.stop();
 
       spinner.stop();
 

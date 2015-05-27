@@ -3,15 +3,6 @@ Modal graph logic here. As well as all other things shared between analyze and e
 Sharing makes the world go round
 */
 
-var mouseover = function(d){
-  tip.show(d);
-  d3.select(this).style({'stroke': '#636F57', 'stroke-width': 4.5}).style("cursor","pointer");
-}
-
-var mouseouttie = function(d, i){
-  tip.hide(d);
-  d3.select(this).style({'stroke': '#7e7e7e', 'stroke-width': 1.0});
-}
 
 var tip = d3.tip()
     .attr('class', 'd3-tip')
@@ -69,7 +60,8 @@ var graphModal = function(eventId0, eventId1, title0, title1){
               var comboD = format_combined_data(mappedD0, mappedD1, title0, title1, '#ff7f0e', '#2ca02c', 1, yearRange);
              // console.log("2" + title0 + eventId0 + title1 + eventId1+ "" );
               d3.select("#myModalLabel").append("text").text(graphTitle);
-              setTimeout(function(){ drawNVline(comboD,'#graph'); }, 1000);
+              setTimeout(function(){ drawLineScope(comboD, '#graph');//drawNVline(comboD,'#graph'); 
+            }, 1000);
 
               // Check buttons for graphs that are displayed by default.
               $('#graph-norm').prop('checked', false);
@@ -88,7 +80,8 @@ var graphModal = function(eventId0, eventId1, title0, title1){
                   if(choice == 0)
                     drawMultiBarChart(comboD,'#graph');
                   else if(choice == 1)
-                    drawNVline(comboD, '#graph');
+                    drawLineScope(comboD, '#graph');
+                    //drawNVline(comboD, '#graph');
                   else if(choice == 2)
                     drawScatter(comboD, '#graph');
                 }
@@ -102,7 +95,8 @@ var graphModal = function(eventId0, eventId1, title0, title1){
                   if(choice == 0)
                     drawMultiBarChart(comboD,'#graph');
                   else if(choice == 1)
-                    drawNVline(comboD, '#graph');
+                    drawLineScope(comboD, '#graph');
+                    //drawNVline(comboD, '#graph');
                   else if(choice == 2)
                     drawScatter(comboD, '#graph');
                 }
@@ -122,7 +116,8 @@ var graphModal = function(eventId0, eventId1, title0, title1){
                   if(choice != 1){
                     clearDrawing();
                     choice = 1;
-                    drawNVline(comboD, '#graph');
+                    drawLineScope(comboD, '#graph');
+                    //drawNVline(comboD, '#graph');
                   }
               });
 
@@ -146,39 +141,71 @@ var graphModal = function(eventId0, eventId1, title0, title1){
 
    }
 
+  function clearSvg(){
+    $("#heatmap-chart").empty();
+  }
+
   function clearDrawing(){
     $("#graph").empty();
   }
 
-    function drawScatter(data, graph_name){
-  var chart = nv.models.scatterChart()
+  function drawScatter(data, graph_name){
+    var chart = nv.models.scatterChart()
                 .margin({top:50})
                 .showDistX(true)    //showDist, when true, will display those little distribution lines on the axis.
                 .showDistY(true)
                 //.transitionDuration(350)
                 .color(d3.scale.category10().range());
 
-  //Configure how the tooltip looks.
-  chart.tooltipContent(function(key) {
-      return '<h3>' + key + '</h3>';
-  });
+    //Configure how the tooltip looks.
+    chart.tooltipContent(function(key) {
+        return '<h3>' + key + '</h3>';
+    });
 
-  //Axis settings
-  chart.xAxis.tickFormat(d3.format('.02f'));
-  chart.yAxis.tickFormat(d3.format('.02f'));
+    //Axis settings
+    chart.xAxis.tickFormat(d3.format('.02f'));
+    chart.yAxis.tickFormat(d3.format(",.3f"));
 
-  //We want to show shapes other than circles.
-  //chart.scatter.onlyCircles(false);
+    //We want to show shapes other than circles.
+    //chart.scatter.onlyCircles(false);
 
-  //var myData = randomData(4,40);
+    //var myData = randomData(4,40);
+    d3.select(graph_name)
+        .datum(data)
+        .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+}
+
+function drawLineScope(data, graph_name) {
+  var chart = nv.models.lineWithFocusChart()
+                .margin({left: 100, top: 50})  //Adjust chart margins to give the x-axis some breathing room.
+                //.useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
+                //.transitionDuration(350)  //how fast do you want the lines to transition?
+                .showLegend(true);
+
+  chart.xAxis
+    .axisLabel('Time (Years)')
+    .tickFormat(d3.format('r'));
+
+  chart.yAxis
+    .axisLabel('Amount')
+    .tickFormat(d3.format(',.3f'));
+
+  chart.y2Axis
+    .tickFormat(d3.format(',.3f'));
+
   d3.select(graph_name)
-      .datum(data)
-      .call(chart);
+    .datum(data)
+    .transition().duration(500)
+    .call(chart);
 
-  nv.utils.windowResize(chart.update);
+  nv.utils.windowResize(chart.update() );
 
   return chart;
-}
+};
 
 function drawNVline(data, graph_name) {
   var chart = nv.models.lineChart()
@@ -195,7 +222,7 @@ function drawNVline(data, graph_name) {
 
           chart.yAxis     //Chart y-axis settings
               .axisLabel('Amount')
-              .tickFormat(d3.format(',1000fM'));
+              .tickFormat(d3.format(",.5f"));
 
           d3.select(graph_name)    //Select the <svg> element you want to render the chart in.   
               .datum(data)         //Populate the <svg> element with chart data...
@@ -218,7 +245,7 @@ function drawNVline(data, graph_name) {
         .tickFormat(d3.format('f'));
 
     chart.yAxis
-        .tickFormat(d3.format(',1000000000f'));
+        .tickFormat(d3.format(",.3f"));
 
     d3.select(graph_name)
         .datum(data)
@@ -314,7 +341,6 @@ function compare(a,b) {
    var nvd3Format = function(data, dt, colr, yearRange){
       var x_y = [];
       data.sort(compare);
-      debugger
       data.map(function(item){
         if(item.x >= yearRange[0] && item.x <= yearRange[yearRange.length-1]){
           x_y.push({x: item.x, y: item.y})

@@ -1,5 +1,5 @@
 class DataTypesController < ApplicationController
-  before_action :set_data_type, only: [:show, :edit, :update, :destroy]
+  before_action :set_data_type, only: [:show]
 
   # GET /data_types
   # GET /data_types.json
