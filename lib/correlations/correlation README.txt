@@ -17,6 +17,7 @@ Correlation Algorithms (for Explore):
 
 	* pearson2.rb - linear correlation algorithm 
 	* spearman2.rb - linear correlation algorithm 
+	* kendall2.rb - linear correlation algorithm
 	
 
 
