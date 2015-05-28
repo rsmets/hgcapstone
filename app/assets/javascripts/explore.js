@@ -41,7 +41,6 @@ var spinner = new Spinner(opts).spin(target);
 
   var findSelectedOptionFromSelectAndStartGraphGeneration = function(htmlSelectElement){
     coeffType = $(htmlSelectElement).find('option:selected').val();
-    //debugger
     request = $.ajax({
          url: "/data_types/correlations",
          method: "POST",

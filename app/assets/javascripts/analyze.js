@@ -48,7 +48,7 @@ $( document ).ready(function() {
        legendElementWidth = gridSize*2,
        buckets = 9,
        colors = ["#660000", "#8B0000", "#b20000", "#ff6666", "#e4e4e4","#9595cf","#5a6890","#314374", "#081d58"], // alternatively colorbrewer.YlGnBu[9]
-       coeffs = ["Spearman", "Pearson"],
+       coeffs = ["Spearman", "Pearson", "Kendall"],
        setNames = [],
        title0 = "";
 
@@ -59,25 +59,26 @@ $( document ).ready(function() {
     var dataTCName = [];
     var pcoeffVal = []; // Pearson's coefficients
     var scoeffVal = []; // Spearman's coefficients
+    var kcoeffVal = []; // Kendall's coefficients
     var newFormattedData = [];
     setNames = [];
 
     while(i < oldData.length){
-      console.log(oldData[i].data_type2.name);
+      //console.log(oldData[i].data_type2.name);
       dataToCompare.push(oldData[i].event2_id);
       setNames.push(oldData[i].data_type2.name);//.substring(0,25));
       pcoeffVal.push(oldData[i].p_coeff);
       scoeffVal.push(oldData[i].s_coeff);
-      //console.log(oldData[i].data_type2.name);
+      kcoeffVal.push(oldData[i].k_coeff);
       i++;
     }
 
     title0 = oldData[0].data_type1.name;
 
-    for(i = 0; i < 2; i++){
+    for(i = 0; i < 3; i++){
       var flag = 0;
       for(j = 0; j < dataToCompare.length; j++){
-        var set = { coeff: "", Id: "", value: "", xPos: ""};
+        var set = { coeff: "", Id: "", value: "", xPos: "", yPos: ""};
 
         if(j+1 == selectedId) // This fixes the possibility of D3 rendering a blank box at selected Id's location
           flag = 1;
@@ -93,6 +94,10 @@ $( document ).ready(function() {
           set.coeff = 2;
           set.value = scoeffVal[j];
         }
+        if(i == 2){
+          set.coeff = 3;
+          set.value = kcoeffVal[j];
+        }
         set.xPos = j+1;
         newFormattedData.push(set);
       }
@@ -103,8 +108,9 @@ $( document ).ready(function() {
   }
   //  How to make that nasty map
   var makeheatMap = function(data) {
+    debugger
     transformed = dataTransformation(data)
-    console.log(transformed);
+    //console.log(transformed);
     var colorScale = d3.scale.quantile()
        .domain([-1.0, 1.0])
        .range(colors);
@@ -219,6 +225,7 @@ $( document ).ready(function() {
     // Upon success, make a new map!
     successCallback = function(dataTypeCorrelations){
       makeheatMap(dataTypeCorrelations['data_types_correlations']);
+      debugger  
     }
 
     request.done(successCallback);

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150515234736) do
+ActiveRecord::Schema.define(version: 20150528210732) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20150515234736) do
     t.float   "p_coeff"
     t.integer "event1_id"
     t.integer "event2_id"
+    t.float   "k_coeff"
   end
 
   create_table "data_files", force: true do |t|

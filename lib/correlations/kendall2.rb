@@ -1,14 +1,7 @@
-# Input: 2 matrices
-#        arrays1: each row corresponds to a dataset on the left side of the Explore map
-#        arrays2: each row corresponds to a dataset on the top side of the Explore map
-# Output: 1 matrix
-#         where each entry[i][j] is the correlation of the ith dataset on the left side
-#           with the jth dataset on the top side
-
 require 'statsample'
 
 # the following ruby_pearson was altered and copied from http://blog.chrislowis.co.uk/2008/11/24/ruby-gsl-pearson.html
-def spearman2(arrays1, arrays2)
+def kendall2(arrays1, arrays2)
 
   # the following 3 lines were altered and copied from http://stackoverflow.com/questions/5372701/how-to-declare-an-empty-2-dimensional-array-in-ruby
   width = arrays1.length
@@ -36,12 +29,9 @@ def spearman2(arrays1, arrays2)
         else
           x[index] = point
           y[index] = array2[k]
-          #puts x[index]
           index +=1
         end
       }
-      #puts " x[#{i}]= #{x}"
-      #puts " y[#{j}]= #{y}"
 
       if numSkipped1 == array1.length
         ans[i][j] = 0.0
@@ -51,24 +41,22 @@ def spearman2(arrays1, arrays2)
         # convert to proper input syntax
         c=x.collect {|point| point }.to_scale
         d=y.collect {|point| point }.to_scale
-        #puts "c= #{c}"
-        #puts "d= #{d}"
 
         # run algorithm
-        ans[i][j]=Statsample::Bivariate.spearman(c,d)
-        if ans[i][j].nan?
-          ans[i][j] = 0
+        output=Statsample::Bivariate.tau_a(c,d)
+        if output.nan?
+          ans[i][j]=0
+        else
+          ans[i][j]=output.real
         end
-        #return output
       end
-      #puts "-ans[#{i}][#{j}]= #{ans[i][j]}"
     }
   }
   return ans
 end
 
 def test(a,b,x,y)
-  puts "corr(#{a},#{b})= #{spearman2(x,y)}"
+	puts "corr(#{a},#{b})= #{kendall2(x,y)}"
 end
 
 if __FILE__ == $0
@@ -88,9 +76,14 @@ if __FILE__ == $0
     a5=[[2,2,3,3,4,3,4,5],[8,7,6,5,4,3,2,1]]
 
     test(4,5,a4,a5) # not totally correlated, inversely correlated
-
-    a6=[[2,2,3,3,4,4],[1,2,3,3,5,4,6,5,7]]
+    
+    a6=[[2,2,3,3,4,4,5,5,6,6],[1,2,3,3,5,4,6,5,7]]
 
     test(4,6,a4,a6) # different length
+
+    a7=[[nil,nil,nil,nil,5,6,7,8]]
+    a8=[[1,2,3,4,nil,nil,nil,nil]]
+
+    test(7,8,a7,a8) # no values to correlate
   end
 end
