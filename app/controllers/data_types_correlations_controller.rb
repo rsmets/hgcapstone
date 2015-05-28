@@ -2,6 +2,7 @@ load Rails.root.join('lib/correlations/pearson.rb')
 load Rails.root.join('lib/correlations/spearman.rb')
 load Rails.root.join('lib/correlations/spearman2.rb')
 load Rails.root.join('lib/correlations/pearson2.rb')
+load Rails.root.join('lib/correlations/kendall.rb')
 
 class DataTypesCorrelationsController < ActionController::Base
   def create
@@ -163,6 +164,7 @@ class DataTypesCorrelationsController < ActionController::Base
           # Performing Pearsons' coefficient on arrays 'input' and 'against'
           p_coeff: pearson(input,against),
           s_coeff: spearman(input,against),
+          k_coeff: kendall(input,against),
           event1_id: input_set_id,
           event2_id: set.id)
         end
