@@ -56,7 +56,7 @@ var spinner = new Spinner(opts).spin(target);
     request.done(successCallback);
 
   }
-  selectElement = $('#explore-algorithm-type')
+  selectElement = $('#correlation-type')
   selectElement.change(function(e){
     findSelectedOptionFromSelectAndStartGraphGeneration(e.target);
   })
