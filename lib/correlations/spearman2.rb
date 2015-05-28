@@ -56,6 +56,9 @@ def spearman2(arrays1, arrays2)
 
         # run algorithm
         ans[i][j]=Statsample::Bivariate.spearman(c,d)
+        if ans[i][j].nan?
+          ans[i][j] = 0
+        end
         #return output
       end
       #puts "-ans[#{i}][#{j}]= #{ans[i][j]}"
@@ -65,7 +68,7 @@ def spearman2(arrays1, arrays2)
 end
 
 def test(a,b,x,y)
-	puts "corr(#{a},#{b})= #{spearman2(x,y)}"
+  puts "corr(#{a},#{b})= #{spearman2(x,y)}"
 end
 
 if __FILE__ == $0
