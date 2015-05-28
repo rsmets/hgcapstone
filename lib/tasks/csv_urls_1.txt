@@ -1,0 +1,405 @@
+USD/BITCOIN Weighted Price
+http://www.quandl.com/BCHARTS/BITSTAMPUSD
+https://www.quandl.com/api/v1/datasets/BAVERAGE/USD.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Markets (bitstampUSD)
+http://www.quandl.com/BCHARTS/BTCEUSD
+https://www.quandl.com/api/v1/datasets/BCHARTS/BITSTAMPUSD.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Markets (btceUSD)
+http://www.quandl.com/BCHARTS/BITFINEXUSD
+https://www.quandl.com/api/v1/datasets/BCHARTS/BTCEUSD.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Markets (bitfinexUSD)
+http://www.quandl.com/BCHARTS/LAKEUSD
+https://www.quandl.com/api/v1/datasets/BCHARTS/BITFINEXUSD.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Markets (lakeUSD)
+http://www.quandl.com/BCHARTS/HITBTCUSD
+https://www.quandl.com/api/v1/datasets/BCHARTS/LAKEUSD.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Markets (hitbtcUSD)
+http://www.quandl.com/BCHARTS/ITBITUSD
+https://www.quandl.com/api/v1/datasets/BCHARTS/HITBTCUSD.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Markets (itbitUSD)
+http://www.quandl.com/BAVERAGE/EUR
+https://www.quandl.com/api/v1/datasets/BCHARTS/ITBITUSD.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+EUR/BITCOIN Weighted Price
+http://www.quandl.com/BCHARTS/KRAKENEUR
+https://www.quandl.com/api/v1/datasets/BAVERAGE/EUR.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Markets (krakenEUR)
+http://www.quandl.com/BCHARTS/BTCEEUR
+https://www.quandl.com/api/v1/datasets/BCHARTS/KRAKENEUR.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Markets (btceEUR)
+http://www.quandl.com/BCHARTS/BTCDEEUR
+https://www.quandl.com/api/v1/datasets/BCHARTS/BTCEEUR.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Markets (btcdeEUR)
+http://www.quandl.com/BCHARTS/HITBTCEUR
+https://www.quandl.com/api/v1/datasets/BCHARTS/BTCDEEUR.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Markets (hitbtcEUR)
+http://www.quandl.com/BCHARTS/ITBITEUR
+https://www.quandl.com/api/v1/datasets/BCHARTS/HITBTCEUR.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Markets (itbitEUR)
+http://www.quandl.com/BAVERAGE/CNY
+https://www.quandl.com/api/v1/datasets/BCHARTS/ITBITEUR.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+CNY/BITCOIN Weighted Price
+http://www.quandl.com/BAVERAGE/BTCCHINACNY
+https://www.quandl.com/api/v1/datasets/BAVERAGE/CNY.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+CNY/BITCOIN Prices, btcchina
+http://www.quandl.com/BAVERAGE/FXBTCCNY
+https://www.quandl.com/api/v1/datasets/BAVERAGE/BTCCHINACNY.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+CNY/BITCOIN Prices, fxbtc
+http://www.quandl.com/BAVERAGE/BTERCNY
+https://www.quandl.com/api/v1/datasets/BAVERAGE/FXBTCCNY.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+CNY/BITCOIN Prices, bter
+http://www.quandl.com/BAVERAGE/BTC38CNY
+https://www.quandl.com/api/v1/datasets/BAVERAGE/BTERCNY.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+CNY/BITCOIN Prices, btc38
+http://www.quandl.com/BAVERAGE/AUD
+https://www.quandl.com/api/v1/datasets/BAVERAGE/BTC38CNY.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+AUD/BITCOIN Weighted Price
+http://www.quandl.com/BAVERAGE/BRL
+https://www.quandl.com/api/v1/datasets/BAVERAGE/AUD.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+BRL/BITCOIN Weighted Price
+http://www.quandl.com/BAVERAGE/CHF
+https://www.quandl.com/api/v1/datasets/BAVERAGE/BRL.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+CHF/BITCOIN Weighted Price
+http://www.quandl.com/BAVERAGE/GBP
+https://www.quandl.com/api/v1/datasets/BAVERAGE/CHF.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+GBP/BITCOIN Weighted Price
+http://www.quandl.com/BAVERAGE/HKD
+https://www.quandl.com/api/v1/datasets/BAVERAGE/GBP.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+HKD/BITCOIN Weighted Price
+http://www.quandl.com/BAVERAGE/ILS
+https://www.quandl.com/api/v1/datasets/BAVERAGE/HKD.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+ILS/BITCOIN Weighted Price
+http://www.quandl.com/BAVERAGE/JPY
+https://www.quandl.com/api/v1/datasets/BAVERAGE/ILS.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+JPY/BITCOIN Weighted Price
+http://www.quandl.com/BTCE/BTCLTC
+https://www.quandl.com/api/v1/datasets/BAVERAGE/JPY.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+BTC/LTC Exchange Rate
+http://www.quandl.com/BAVERAGE/NOK
+https://www.quandl.com/api/v1/datasets/BTCE/BTCLTC.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+NOK/BITCOIN Weighted Price
+http://www.quandl.com/BAVERAGE/NZD
+https://www.quandl.com/api/v1/datasets/BAVERAGE/NOK.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+NZD/BITCOIN Weighted Price
+http://www.quandl.com/BAVERAGE/PLN
+https://www.quandl.com/api/v1/datasets/BAVERAGE/NZD.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+PLN/BITCOIN Weighted Price
+http://www.quandl.com/BAVERAGE/RUB
+https://www.quandl.com/api/v1/datasets/BAVERAGE/PLN.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+RUB/BITCOIN Weighted Price
+http://www.quandl.com/BAVERAGE/SEK
+https://www.quandl.com/api/v1/datasets/BAVERAGE/RUB.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+SEK/BITCOIN Weighted Price
+http://www.quandl.com/BAVERAGE/SGD
+https://www.quandl.com/api/v1/datasets/BAVERAGE/SEK.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+SGD/BITCOIN Weighted Price
+http://www.quandl.com/BAVERAGE/TRY
+https://www.quandl.com/api/v1/datasets/BAVERAGE/SGD.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+TRY/BITCOIN Weighted Price
+http://www.quandl.com/BAVERAGE/ZAR
+https://www.quandl.com/api/v1/datasets/BAVERAGE/TRY.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+ZAR/BITCOIN Weighted Price
+http://www.quandl.com/BCHAIN/TOTBC
+https://www.quandl.com/api/v1/datasets/BAVERAGE/ZAR.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Total Bitcoins
+http://www.quandl.com/BCHAIN/MKTCP
+https://www.quandl.com/api/v1/datasets/BCHAIN/TOTBC.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Market Capitalization
+http://www.quandl.com/BCHAIN/NADDU
+https://www.quandl.com/api/v1/datasets/BCHAIN/MKTCP.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Number of Unique Bitcoin Addresses Used
+http://www.quandl.com/BCHAIN/ETRAV
+https://www.quandl.com/api/v1/datasets/BCHAIN/NADDU.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Estimated Transaction Volume
+http://www.quandl.com/BCHAIN/ETRVU
+https://www.quandl.com/api/v1/datasets/BCHAIN/ETRAV.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Estimated Transaction Volume USD
+http://www.quandl.com/BCHAIN/TRVOU
+https://www.quandl.com/api/v1/datasets/BCHAIN/ETRVU.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin USD Exchange Trade Volume
+http://www.quandl.com/BCHAIN/NTRAN
+https://www.quandl.com/api/v1/datasets/BCHAIN/TRVOU.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Number of Transactions
+http://www.quandl.com/BCHAIN/NTRAT
+https://www.quandl.com/api/v1/datasets/BCHAIN/NTRAN.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Total Number of Transactions
+http://www.quandl.com/BCHAIN/NTREP
+https://www.quandl.com/api/v1/datasets/BCHAIN/NTRAT.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Number of Transactions Excluding Popular Addresses
+http://www.quandl.com/BCHAIN/NTRBL
+https://www.quandl.com/api/v1/datasets/BCHAIN/NTREP.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Number of Transaction per Block
+http://www.quandl.com/BCHAIN/ATRCT
+https://www.quandl.com/api/v1/datasets/BCHAIN/NTRBL.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Average Transaction Confirmation Time
+http://www.quandl.com/BCHAIN/TRFEE
+https://www.quandl.com/api/v1/datasets/BCHAIN/ATRCT.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Total Transaction Fees
+http://www.quandl.com/BCHAIN/TRFUS
+https://www.quandl.com/api/v1/datasets/BCHAIN/TRFEE.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Total Transaction Fees USD
+http://www.quandl.com/BCHAIN/CPTRA
+https://www.quandl.com/api/v1/datasets/BCHAIN/TRFUS.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Cost Per Transaction
+http://www.quandl.com/BCHAIN/CPTRV
+https://www.quandl.com/api/v1/datasets/BCHAIN/CPTRA.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Cost % of Transaction Volume
+http://www.quandl.com/BCHAIN/TVTVR
+https://www.quandl.com/api/v1/datasets/BCHAIN/CPTRV.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Trade Volume vs Transaction Volume Ratio
+http://www.quandl.com/BCHAIN/BLCHS
+https://www.quandl.com/api/v1/datasets/BCHAIN/TVTVR.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Blockchain Size
+http://www.quandl.com/BCHAIN/AVBLS
+https://www.quandl.com/api/v1/datasets/BCHAIN/BLCHS.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Average Block Size
+http://www.quandl.com/BCHAIN/TOUTV
+https://www.quandl.com/api/v1/datasets/BCHAIN/AVBLS.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Total Output Volume
+http://www.quandl.com/BCHAIN/HRATE
+https://www.quandl.com/api/v1/datasets/BCHAIN/TOUTV.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Hash Rate
+http://www.quandl.com/BCHAIN/MIREV
+https://www.quandl.com/api/v1/datasets/BCHAIN/HRATE.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Miners Revenue
+http://www.quandl.com/BCHAIN/MIOPM
+https://www.quandl.com/api/v1/datasets/BCHAIN/MIREV.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Mining Operating Margin
+http://www.quandl.com/BCHAIN/NETDF
+https://www.quandl.com/api/v1/datasets/BCHAIN/MIOPM.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Network Deficit
+http://www.quandl.com/BCHAIN/BCDDE
+https://www.quandl.com/api/v1/datasets/BCHAIN/NETDF.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Days Destroyed
+http://www.quandl.com/BCHAIN/BCDDW
+https://www.quandl.com/api/v1/datasets/BCHAIN/BCDDE.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Days Destroyed (Minimum Age 1 Week)
+http://www.quandl.com/BCHAIN/BCDDM
+https://www.quandl.com/api/v1/datasets/BCHAIN/BCDDW.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Days Destroyed (Minimum Age 1 Month)
+http://www.quandl.com/BCHAIN/BCDDY
+https://www.quandl.com/api/v1/datasets/BCHAIN/BCDDM.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Days Destroyed (Minimum Age 1 Year)
+http://www.quandl.com/BCHAIN/BCDDC
+https://www.quandl.com/api/v1/datasets/BCHAIN/BCDDY.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Days Destroyed Cumulative
+http://www.quandl.com/BCHARTS/MTGOXUSD
+https://www.quandl.com/api/v1/datasets/BCHAIN/BCDDC.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Markets (mtgoxUSD)
+http://www.quandl.com/BCHARTS/MTGOXEUR
+https://www.quandl.com/api/v1/datasets/BCHARTS/MTGOXUSD.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Markets (mtgoxEUR)
+http://www.quandl.com/BCHARTS/MTGOXCAD
+https://www.quandl.com/api/v1/datasets/BCHARTS/MTGOXEUR.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Markets (mtgoxCAD)
+http://www.quandl.com/BCHARTS/MTGOXAUD
+https://www.quandl.com/api/v1/datasets/BCHARTS/MTGOXCAD.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Markets (mtgoxAUD)
+http://www.quandl.com/BCHARTS/MTGOXGBP
+https://www.quandl.com/api/v1/datasets/BCHARTS/MTGOXAUD.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Markets (mtgoxGBP)
+http://www.quandl.com/BCHARTS/MTGOXJPY
+https://www.quandl.com/api/v1/datasets/BCHARTS/MTGOXGBP.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Bitcoin Markets (mtgoxJPY)
+http://www.quandl.com/BCHARTS/MTGOXPLN
+https://www.quandl.com/api/v1/datasets/BCHARTS/MTGOXJPY.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Aluminium Price: Cash
+http://www.quandl.com/OFDP/ALUMINIUM_25
+https://www.quandl.com/api/v1/datasets/OFDP/ALUMINIUM_21.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Aluminium Price: December 3
+http://www.quandl.com/OFDP/ALUMINIUM_24
+https://www.quandl.com/api/v1/datasets/OFDP/ALUMINIUM_25.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Aluminium Price: December 2
+http://www.quandl.com/OFDP/ALUMINIUM_23
+https://www.quandl.com/api/v1/datasets/OFDP/ALUMINIUM_24.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Aluminium Price: December 1
+http://www.quandl.com/OFDP/ALUMINIUM_22
+https://www.quandl.com/api/v1/datasets/OFDP/ALUMINIUM_23.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Aluminium Price: 3-Months
+http://www.quandl.com/OFDP/ALUMINIUMALLOY_11
+https://www.quandl.com/api/v1/datasets/OFDP/ALUMINIUM_22.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Aluminium Alloy Price: Cash
+http://www.quandl.com/OFDP/ALUMINIUMALLOY_13
+https://www.quandl.com/api/v1/datasets/OFDP/ALUMINIUMALLOY_11.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Aluminium Alloy Price: December 1
+http://www.quandl.com/OFDP/ALUMINIUMALLOY_12
+https://www.quandl.com/api/v1/datasets/OFDP/ALUMINIUMALLOY_13.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Aluminium Alloy Price: 3-Months
+http://www.quandl.com/CHRIS/MCX_AL1
+https://www.quandl.com/api/v1/datasets/OFDP/ALUMINIUMALLOY_12.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Aluminium Futures, May 2015, ALK2015, Continuous Contract #1 (AL1) (Front Month)
+http://www.quandl.com/CHRIS/MCX_ALM1
+https://www.quandl.com/api/v1/datasets/CHRIS/MCX_AL1.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Aluminium Mini Futures, May 2015, ALMK2015, Continuous Contract #1 (ALM1) (Front Month)
+http://www.quandl.com/GOOG/NYSE_JJC
+https://www.quandl.com/api/v1/datasets/CHRIS/MCX_ALM1.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Dow Jones-AIG Copper Total Return ETN (JJC)
+http://www.quandl.com/GOOG/AMEX_CUPM
+https://www.quandl.com/api/v1/datasets/GOOG/NYSE_JJC.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+iPath Pure Beta Copper ETN (CUPM)
+http://www.quandl.com/GOOG/NYSE_BHP
+https://www.quandl.com/api/v1/datasets/GOOG/AMEX_CUPM.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+BHP Billiton Limited (ADR) (BHP)
+http://www.quandl.com/GOOG/NYSE_RIO
+https://www.quandl.com/api/v1/datasets/GOOG/NYSE_BHP.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Rio Tinto plc (ADR) (RIO)
+http://www.quandl.com/YAHOO/NOR
+https://www.quandl.com/api/v1/datasets/GOOG/NYSE_RIO.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+NOR: Noranda Aluminum Holding Corpor -
+http://www.quandl.com/GOOG/LON_AAL
+https://www.quandl.com/api/v1/datasets/YAHOO/NOR.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Anglo American plc (AAL)
+http://www.quandl.com/GOOG/LON_FQM
+https://www.quandl.com/api/v1/datasets/GOOG/LON_AAL.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+US Coal Prices by Region
+http://www.quandl.com/DOE/COAL
+https://www.quandl.com/api/v1/datasets/DOE/COAL.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+US Coal Prices by Region
+http://www.quandl.com/DOE/COAL
+https://www.quandl.com/api/v1/datasets/DOE/COAL.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+US Coal Prices by Region
+http://www.quandl.com/DOE/COAL
+https://www.quandl.com/api/v1/datasets/DOE/COAL.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+US Coal Prices by Region
+http://www.quandl.com/DOE/COAL
+https://www.quandl.com/api/v1/datasets/DOE/COAL.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+US Coal Prices by Region
+http://www.quandl.com/INDEXMUNDI/COMMODITY_COALSOUTHAFRICANEXPORTPRICE
+https://www.quandl.com/api/v1/datasets/DOE/COAL.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Coal, South African export price Monthly Price
+http://www.quandl.com/ODA/PCOALAU_USD
+https://www.quandl.com/api/v1/datasets/INDEXMUNDI/COMMODITY_COALSOUTHAFRICANEXPORTPRICE.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Coal Price
+http://www.quandl.com/EPI/152
+https://www.quandl.com/api/v1/datasets/ODA/PCOALAU_USD.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+U.S. Coal Prices, 1949-2005
+http://www.quandl.com/BP/COAL_PRICES
+https://www.quandl.com/api/v1/datasets/EPI/152.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Coal Prices
+http://www.quandl.com/BP/COAL_PRICES
+https://www.quandl.com/api/v1/datasets/BP/COAL_PRICES.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Coal Prices
+http://www.quandl.com/BP/COAL_PRICES
+https://www.quandl.com/api/v1/datasets/BP/COAL_PRICES.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Coal Prices
+http://www.quandl.com/EIA/IES_1_7_1_CHN
+https://www.quandl.com/api/v1/datasets/BP/COAL_PRICES.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Total Primary Coal Production - China
+http://www.quandl.com/EIA/IES_1_7_1_USA
+https://www.quandl.com/api/v1/datasets/EIA/IES_1_7_1_CHN.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Total Primary Coal Production - United States
+http://www.quandl.com/EIA/IES_1_7_1_AUS
+https://www.quandl.com/api/v1/datasets/EIA/IES_1_7_1_USA.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Total Primary Coal Production - Australia
+http://www.quandl.com/EIA/IES_1_7_1_RUS
+https://www.quandl.com/api/v1/datasets/EIA/IES_1_7_1_AUS.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Total Primary Coal Production - Russia
+http://www.quandl.com/EIA/IES_1_7_1_IDN
+https://www.quandl.com/api/v1/datasets/EIA/IES_1_7_1_RUS.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Total Primary Coal Production - Indonesia
+http://www.quandl.com/GOOG/NYSE_TCK
+https://www.quandl.com/api/v1/datasets/EIA/IES_1_7_1_IDN.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Teck Resources Ltd (USA) (TCK)
+http://www.quandl.com/GOOG/NYSE_CNX
+https://www.quandl.com/api/v1/datasets/GOOG/NYSE_TCK.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+CONSOL Energy Inc. (CNX)
+http://www.quandl.com/GOOG/NYSE_BTU
+https://www.quandl.com/api/v1/datasets/GOOG/NYSE_CNX.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Peabody Energy Corporation (BTU)
+http://www.quandl.com/GOOG/NASDAQ_AHGP
+https://www.quandl.com/api/v1/datasets/GOOG/NYSE_BTU.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Alliance Holdings GP, L.P. (AHGP)
+http://www.quandl.com/GOOG/NYSE_PVR
+https://www.quandl.com/api/v1/datasets/GOOG/NASDAQ_AHGP.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+PVR Partners LP (PVR)
+http://www.quandl.com/GOOG/NYSE_KOL
+https://www.quandl.com/api/v1/datasets/GOOG/NYSE_PVR.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Market Vectors Coal ETF (KOL)
+http://www.quandl.com/GOOG/NYSE_PKOL
+https://www.quandl.com/api/v1/datasets/GOOG/NYSE_KOL.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Copper Price: Cash
+http://www.quandl.com/OFDP/COPPER_9
+https://www.quandl.com/api/v1/datasets/OFDP/COPPER_6.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Copper Price: December 2
+http://www.quandl.com/OFDP/COPPER_8
+https://www.quandl.com/api/v1/datasets/OFDP/COPPER_9.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Copper Price: December 1
+http://www.quandl.com/OFDP/COPPER_7
+https://www.quandl.com/api/v1/datasets/OFDP/COPPER_8.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Copper Price: 3-Months
+http://www.quandl.com/CHRIS/MCX_CU1
+https://www.quandl.com/api/v1/datasets/OFDP/COPPER_7.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Copper Futures, June 2015, CUM2015, Continuous Contract #1 (CU1) (Front Month)
+http://www.quandl.com/CHRIS/MCX_CUM1
+https://www.quandl.com/api/v1/datasets/CHRIS/MCX_CU1.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Copper Mini Futures, June 2015, CUMM2015, Continuous Contract #1 (CUM1) (Front Month)
+http://www.quandl.com/GOOG/NYSE_JJC
+https://www.quandl.com/api/v1/datasets/CHRIS/MCX_CUM1.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Dow Jones-AIG Copper Total Return ETN (JJC)
+http://www.quandl.com/GOOG/AMEX_CPER
+https://www.quandl.com/api/v1/datasets/GOOG/NYSE_JJC.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+United States Copper Index Fund ETV (CPER)
+http://www.quandl.com/GOOG/AMEX_CUPM
+https://www.quandl.com/api/v1/datasets/GOOG/AMEX_CPER.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+iPath Pure Beta Copper ETN (CUPM)
+http://www.quandl.com/GOOG/NYSE_BHP
+https://www.quandl.com/api/v1/datasets/GOOG/AMEX_CUPM.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+BHP Billiton Limited (ADR) (BHP)
+http://www.quandl.com/GOOG/NYSE_RIO
+https://www.quandl.com/api/v1/datasets/GOOG/NYSE_BHP.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Rio Tinto plc (ADR) (RIO)
+http://www.quandl.com/GOOG/NYSE_FCX
+https://www.quandl.com/api/v1/datasets/GOOG/NYSE_RIO.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Freeport-McMoRan Copper &amp; Gold Inc. (FCX)
+http://www.quandl.com/GOOG/LON_AAL
+https://www.quandl.com/api/v1/datasets/GOOG/NYSE_FCX.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Anglo American plc (AAL)
+http://www.quandl.com/GOOG/NYSE_SCCO
+https://www.quandl.com/api/v1/datasets/GOOG/LON_AAL.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Southern Copper Corp (SCCO)
+http://www.quandl.com/GOOG/LON_FQM
+https://www.quandl.com/api/v1/datasets/GOOG/NYSE_SCCO.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+First Quantum Minerals Limited (FQM)
+http://www.quandl.com/CHRIS/CME_HG1
+https://www.quandl.com/api/v1/datasets/GOOG/LON_FQM.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Copper Futures, Continuous Contract #1 (HG1) (Front Month)
+http://www.quandl.com/CHRIS/SHFE_CU1
+https://www.quandl.com/api/v1/datasets/CHRIS/CME_HG1.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Crude Oil Futures, Continuous Contract #1 (CL1) (Front Month)
+http://www.quandl.com/DOE/RWTC
+https://www.quandl.com/api/v1/datasets/CHRIS/CME_CL1.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+WTI Crude Oil Spot Price Cushing, OK FOB
+http://www.quandl.com/CHRIS/ICE_T1
+https://www.quandl.com/api/v1/datasets/DOE/RWTC.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+WTI Crude Futures, Continuous Contract #1 (T1) (Front Month)
+http://www.quandl.com/ODA/POILWTI_USD
+https://www.quandl.com/api/v1/datasets/CHRIS/ICE_T1.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+WTI Crude Oil Price
+http://www.quandl.com/CHRIS/ICE_B1
+https://www.quandl.com/api/v1/datasets/ODA/POILWTI_USD.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Brent Crude Futures, Continuous Contract #1 (B1) (Front Month)
+http://www.quandl.com/DOE/RBRTE
+https://www.quandl.com/api/v1/datasets/CHRIS/ICE_B1.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Europe Brent Crude Oil Spot Price FOB
+http://www.quandl.com/CHRIS/CME_BZ1
+https://www.quandl.com/api/v1/datasets/DOE/RBRTE.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Brent Crude Oil Financial Futures, Continuous Contract #1 (BZ1) (Front Month)
+http://www.quandl.com/ODA/POILBRE_USD
+https://www.quandl.com/api/v1/datasets/CHRIS/CME_BZ1.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Brent Crude Oil Price
+http://www.quandl.com/OPEC/ORB
+https://www.quandl.com/api/v1/datasets/ODA/POILBRE_USD.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+OPEC Crude Oil Price
+http://www.quandl.com/DOE/I19263000008
+https://www.quandl.com/api/v1/datasets/OPEC/ORB.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+U.S. Landed Costs of Canadian Light Sour Blend Crude Oil
+http://www.quandl.com/ODA/POILDUB_USD
+https://www.quandl.com/api/v1/datasets/DOE/I19263000008.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+Dubai Crude Oil Price
+http://www.quandl.com/DOE/I060000004
+https://www.quandl.com/api/v1/datasets/ODA/POILDUB_USD.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+U.S. FOB Costs of OPEC Countries Crude Oil
+http://www.quandl.com/DOE/I070000004
+https://www.quandl.com/api/v1/datasets/DOE/I060000004.csv?auth_token=YfQsW7NfpRMVWynRNbXT
+U.S. FOB Costs of Non-OPEC Countries Crude Oil
+http://www.quandl.com/EIA/IES_5_57_6_VEN
+https://www.quandl.com/api/v1/datasets/DOE/I070000004.csv?auth_token=YfQsW7NfpRMVWynRNbXT
