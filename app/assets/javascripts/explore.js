@@ -45,7 +45,7 @@ var spinner = new Spinner(opts).spin(target);
          url: "/data_types/correlations",
          method: "POST",
          dataType: "json",
-         data: Object.keys(exclusionSet)
+         data: { exclusionIds: Object.keys(exclusionSet)}
         });
     spinner.spin(target);
 
@@ -117,6 +117,7 @@ var spinner = new Spinner(opts).spin(target);
   }
 
   var removeFromExclusionSet = function(id, name){
+    console.log(exclusionSet);
     delete exclusionSet[id];
     $("#exclusion-set-"+id).remove();
   }
@@ -142,7 +143,7 @@ var spinner = new Spinner(opts).spin(target);
       dataTypesByName[oldData[i].data_type1.name] = oldData[i].data_type1.id;
       dataTypesByName[oldData[i].data_type2.name] = oldData[i].data_type2.id;
 
-      console.log("yID: " + oldData[i].event1_id);
+      //console.log("yID: " + oldData[i].event1_id);
       yDataIds.push(oldData[i].event1_id);
       xDataIds.push(oldData[i].event2_id);
       if(i < Math.sqrt(oldData.length)){

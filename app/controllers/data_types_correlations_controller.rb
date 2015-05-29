@@ -36,6 +36,7 @@ class DataTypesCorrelationsController < ActionController::Base
     x_data_set_nums = Array.new
     #y_data_set_nums = [*1..8] 
     random_sets = (1...maximum).sort_by{ rand() } #Upper bound is hardcoded right now - needs fix
+    random_sets = random_sets.select{|num| !(params[:exclusionIds]||[]).include?num}
     # Sometimes this ^^ seems to create a exception in ruby. Error occurs in createMatrix function
     #y_data_set_nums = (1...20).sort_by{ rand } #Upper bound is hardcoded right now - needs fix
     x_data_set_nums = random_sets.take(8)
