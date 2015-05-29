@@ -4,7 +4,7 @@ $( document ).ready(function() {
 //copied over the analyze js file and replaced the coeffType with a hard coded 1 for now. 
 //need to make a random num gnerator eventually and call docorrelations on each random num.
 //made some minor changes to the copied code, obviously.
-
+  var exclusionSet = {};
   var opts = {
   lines: 5, // The number of lines to draw
   length: 0, // The length of each line
@@ -44,7 +44,8 @@ var spinner = new Spinner(opts).spin(target);
     request = $.ajax({
          url: "/data_types/correlations",
          method: "POST",
-         dataType: "json"
+         dataType: "json",
+         data: Object.keys(exclusionSet)
         });
     spinner.spin(target);
 
@@ -99,14 +100,20 @@ var spinner = new Spinner(opts).spin(target);
          ysetNames = [], //populate for axis label
          xsetNames = [],
          ynames = [],
-         xnames = [],
-         exclusionSet = {};
+         xnames = [];
+
 
   var addToExclusionSet = function(id, name){
-    debugger
-    exclusionSet[id] = name;
-    var excl = "<span class='exclusion' id='exlusion-set-"+id+"'>"+ name +"</span>";
-    $("#exclusion-set").append(excl)
+    if(exclusionSet[id] == null){
+      exclusionSet[id] = name;
+      var excl = "<span class='exclusion' id='exclusion-set-"+id+"'>"+ name 
+      + "<span class='glyphicon glyphicon-remove'>  </span>" +"</span>";
+      $("#exclusion-set").append(excl);
+      var exclusionItem = $("#exclusion-set-"+id);
+      exclusionItem.click(function(){
+        removeFromExclusionSet(id, name);
+      })
+    }
   }
 
   var removeFromExclusionSet = function(id, name){
