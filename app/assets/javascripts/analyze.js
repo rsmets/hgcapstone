@@ -78,7 +78,7 @@ $( document ).ready(function() {
     for(i = 0; i < 3; i++){
       var flag = 0;
       for(j = 0; j < dataToCompare.length; j++){
-        var set = { coeff: "", Id: "", value: "", xPos: "", yPos: ""};
+        var set = { coeff: "", Id: "", value: "", xPos: ""};
 
         if(j+1 == selectedId) // This fixes the possibility of D3 rendering a blank box at selected Id's location
           flag = 1;

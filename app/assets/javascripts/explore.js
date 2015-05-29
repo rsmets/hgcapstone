@@ -19,7 +19,7 @@ $( document ).ready(function() {
   shadow: false, // Whether to render a shadow
   hwaccel: false, // Whether to use hardware acceleration
   className: 'spinner', // The CSS class to assign to the spinner
-  zIndex: 2e9, // The z-index (defaults to 2000000000)
+  zIndex: 2e9, // ThfindSelectedOptionFromSelectAndStartGraphGeneration(selectElement)findSelectedOptionFromSelectAndStartGraphGeneration(selectElement)findSelectedOptionFromSelectAndStartGraphGeneration(selectElement)e z-index (defaults to 2000000000)
   top: '50%', // Top position relative to parent
   left: '50%' // Left position relative to parent
 };
@@ -56,7 +56,12 @@ var spinner = new Spinner(opts).spin(target);
     request.done(successCallback);
 
   }
-  selectElement = $('#correlation-type')
+  selectElement = $('#correlation-type');
+  refreshElement = $('#random-refresh');
+  refreshElement.click(function(){
+    findSelectedOptionFromSelectAndStartGraphGeneration(selectElement);
+  })
+
   selectElement.change(function(e){
     findSelectedOptionFromSelectAndStartGraphGeneration(e.target);
   })
@@ -92,26 +97,50 @@ var spinner = new Spinner(opts).spin(target);
          //         "#000000",
          //         "#1A0500", "#330A00", "#4C0F00", "#661400", "#801A00", "#991F00", "#B22400", "#CC2900", "#E62E00", "#FF3300"]
          ysetNames = [], //populate for axis label
-         xsetNames = [];
-         ynames = {};
-         xnames = [];
+         xsetNames = [],
+         ynames = [],
+         xnames = [],
+         exclusionSet = {};
+
+  var addToExclusionSet = function(id, name){
+    debugger
+    exclusionSet[id] = name;
+    var excl = "<span class='exclusion' id='exlusion-set-"+id+"'>"+ name +"</span>";
+    $("#exclusion-set").append(excl)
+  }
+
+  var removeFromExclusionSet = function(id, name){
+    delete exclusionSet[id];
+    $("#exclusion-set-"+id).remove();
+  }
 
   var dataTransformation = function(oldData){
+    console.log(oldData);
     d3.select('svg').text('')
     var i = 0;
     var xDataIds = [];
     var yDataIds = [];
     var pcoeffVal = []; // Pearson's coefficients
     var scoeffVal = []; // Spearman's coefficients
-    var newFormattedData = []; 
+    var newFormattedData = [];
     var coeffObjs = [];
+    ysetNames = [];
+    xsetNames = [];
+    ynames = [];
+    xnames = [];
+
+    dataTypesByName = {};
+
     while(i < oldData.length){
+      dataTypesByName[oldData[i].data_type1.name] = oldData[i].data_type1.id;
+      dataTypesByName[oldData[i].data_type2.name] = oldData[i].data_type2.id;
+
       console.log("yID: " + oldData[i].event1_id);
       yDataIds.push(oldData[i].event1_id);
       xDataIds.push(oldData[i].event2_id);
-      xnames.push(oldData[i].data_type2.name);
       if(i < Math.sqrt(oldData.length)){
         xsetNames.push(oldData[i].data_type2.name);//.substring(0,25));
+        xnames[oldData[i].event2_id] = oldData[i].data_type2.name;
       }
       if(i % Math.sqrt(oldData.length) == 0){
         ysetNames.push(oldData[i].data_type1.name);
@@ -135,7 +164,6 @@ var spinner = new Spinner(opts).spin(target);
       else if(coeffType == "Pearson")
         set.value = pcoeffVal[i];
 
-      //console.log("xId: " + set.xId + "\tyId: " + set.yId);
 
       newFormattedData.push(set);
     }
@@ -146,7 +174,6 @@ var spinner = new Spinner(opts).spin(target);
   //  How to make that nasty map
   var makeheatMap = function(data) {
     transformed = dataTransformation(data)
-    console.log(coeffType);
     var colorScale = d3.scale.quantile()
        .domain([-1.0, 1.0])
        .range(colors);
@@ -156,29 +183,41 @@ var spinner = new Spinner(opts).spin(target);
        .append("g")
        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    coeffLabels = svg.selectAll(".coeffLabel")
-         .data(ysetNames)
-         .enter().append("text")
+    coeffData = svg.selectAll(".coeffLabel")
+         .data(ysetNames);
+    
+    coeffLabels = coeffData.enter().append("text")
            .text(function (d, i) { 
-              if(i <= 7)
                 return d; 
-              else
-                return;
+            })
+           .attr("x", -30)
+           .attr("y", function (d, i) { return i * gridSize * 1.09; })
+           .style("text-anchor", "end")
+           .attr("transform", "translate(+310," + ((gridSize / 1.5) + 50) +")")
+           .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "coeffLabel mono axis axis-workweek" : "coeffLabel mono axis"); });
+    
+    coeffData.enter().append("text").text(function (d, i) { 
+                return " [x] "; 
             })
            .attr("x", -10)
            .attr("y", function (d, i) { return i * gridSize * 1.09; })
            .style("text-anchor", "end")
            .attr("transform", "translate(+310," + ((gridSize / 1.5) + 50) +")")
-           .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "coeffLabel mono axis axis-workweek" : "coeffLabel mono axis"); });
+           .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "coeffLabel mono axis axis-workweek" : "coeffLabel mono axis"); })
+           .style("fill", "red")
+           .on('mouseover', function(d,i){
+              d3.select(coeffData[0][i]).style("cursor", "pointer");
+           })
+           .on("click", function(d, i){
+              addToExclusionSet(dataTypesByName[d], d);
+           })
+           ;
 
     timeLabels = svg.selectAll(".timeLabel") // data set label
        .data(xsetNames)
        .enter().append("text")
          .text(function(d, i) { 
-          if(i <= 7)
-            return d + " - "; 
-          else
-            return;
+            return d + " - ";
           })
          .style("text-anchor", "end")
          .attr("transform", function(d, i){
@@ -206,8 +245,8 @@ var spinner = new Spinner(opts).spin(target);
        .on("click", function(d){
           clearDrawing();
           $("#myModalLabel").empty();
-          generateGraphInModal(d.yId, d.xId, ynames[d.yId], xnames[d.xId-1] );
-
+          console.log(d.yId + " " + d.xId + " " + ynames[d.yId] + " " + xnames[d.xId])
+          generateGraphInModal(d.yId, d.xId, ynames[d.yId], xnames[d.xId] );
        });
 
     heatMap.transition().duration(1000)

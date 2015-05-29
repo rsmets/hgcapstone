@@ -31,12 +31,15 @@ class DataTypesCorrelationsController < ActionController::Base
     maximum = DataPoint.maximum("data_type_id")
 
     # CURRENTLY USING ONLY THE FIRST ~4 DATA SETS
+    random_sets = Array.new
     y_data_set_nums = Array.new
-    y_data_set_nums = [*1..8] 
-    #y_data_set_nums = (1...maximum).sort_by{ rand() } #Upper bound is hardcoded right now - needs fix
+    x_data_set_nums = Array.new
+    #y_data_set_nums = [*1..8] 
+    random_sets = (1...maximum).sort_by{ rand() } #Upper bound is hardcoded right now - needs fix
     # Sometimes this ^^ seems to create a exception in ruby. Error occurs in createMatrix function
     #y_data_set_nums = (1...20).sort_by{ rand } #Upper bound is hardcoded right now - needs fix
-    #y_data_set_nums = y_data_set_nums.take(8);
+    x_data_set_nums = random_sets.take(8)
+    y_data_set_nums = random_sets.drop(maximum-9)
     # (min..max).sortby(value)
     y_data_set_nums.each do |data_set_num|
       time1 = DataPoint.where(data_type_id: data_set_num).first.value_1
@@ -65,16 +68,16 @@ class DataTypesCorrelationsController < ActionController::Base
     # Creating arrays for all other data sets corresponding to each year in a specified year-range
     # ([] placed in array if no value for a year)
 
-    x_data_set_nums = Array.new
+    x_data_set_nums2 = Array.new
     data_sets_x = Array.new
 
     DataType.find_each do |set|
-      if x_data_set_nums.size >= y_data_set_nums.size
+      if x_data_set_nums2.size >= y_data_set_nums.size
         break;
       end
       #if found a data set not in the y column data sets
-      if !(y_data_set_nums.include? set.id)
-        x_data_set_nums.push(set.id)
+      if (x_data_set_nums.include? set.id)
+        x_data_set_nums2.push(set.id)
         against = Array.new
         (time_param[0].to_i..time_param[1].to_i).each do |time|
           event = DataPoint.where(data_type_id:set.id,value_1:time).take
