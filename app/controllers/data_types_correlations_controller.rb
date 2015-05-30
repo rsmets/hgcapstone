@@ -14,7 +14,7 @@ class DataTypesCorrelationsController < ActionController::Base
     do_correlations_matrix()
     render json: DataCorrelation.all
   end
-  
+
   private
 
   # Makes a random matrix of data sets with corresponding corelation values.
@@ -60,12 +60,12 @@ class DataTypesCorrelationsController < ActionController::Base
       time2 = DataPoint.where(data_type_id: data_set_num).last.value_1
       time_param[0] = [time1, time2].min
       time_param[1] = [time1, time2].max
-    
+
 
       # Creating array for input data set with values corresponding to each time
       # ([] placed in array if no value for a year)
       data_set_points = Array.new
-      
+
       (time_param[0].to_i..time_param[1].to_i).each do |time|
         event= DataPoint.where(data_type_id:data_set_num,value_1:time).take
         if event == nil
@@ -130,7 +130,7 @@ class DataTypesCorrelationsController < ActionController::Base
         end
       end
     end
-    
+
   end
 
   # Params:
@@ -167,7 +167,13 @@ class DataTypesCorrelationsController < ActionController::Base
     # Creating arrays for all other data sets corresponding to each year in a specified year-range
     # ([] placed in array if no value for a year)
     #if !DataCorrelation.exists?(:event1_id => input_set_id)
-      DataType.find_each do |set|
+      data_types = if params[:tag_id].blank?
+        DataType.all
+      else
+        Tag.find(params[:tag_id]).data_types
+      end
+
+      data_types.find_each do |set|
         if set.id != input_set_id
           against = Array.new
           (year_param[0].to_i..year_param[1].to_i).each do |year|
