@@ -1,7 +1,7 @@
 def dCorr(a,b)
 
   # Initialize testing mode
-  tests = 1
+  tests = 0
 
   # Sift out empty values
   x2 = [0.0]
@@ -150,7 +150,7 @@ end
 
 if __FILE__ == $0
 
-  tests = 1
+  tests = 0
   if tests == 1
   	a1 = [1,2,3,4,5,6,7,8]
   	a2 = [2,3,4,5,6,7,8,9]   # directly correlated with a1
