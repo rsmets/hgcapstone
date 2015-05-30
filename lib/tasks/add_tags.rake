@@ -54,7 +54,7 @@ task :add_tags => :environment do
 		name ILIKE '%growth%' OR
 		name ILIKE '%employ%' OR
 		name ILIKE '%export%' OR
-		name ILIKE '%inport%' OR
+		name ILIKE '%import%' OR
 		name ILIKE '%inflat%' OR
 		name ILIKE '%deflat%' OR
 		name ILIKE '%cpi%' OR

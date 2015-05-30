@@ -106,10 +106,12 @@ var spinner = new Spinner(opts).spin(target);
   var addToExclusionSet = function(id, name){
     if(exclusionSet[id] == null){
       exclusionSet[id] = name;
-      var excl = "<span class='exclusion' id='exclusion-set-"+id+"'>"+ name 
-      + "<span class='glyphicon glyphicon-remove'>  </span>" +"</span>";
+      var excl = "<span class='exclusion' id='exclusion-set-"+id+"'>" +
+        "<span class='exclusion-remove'></span>" +
+        name + 
+        "</span>";
       $("#exclusion-set").append(excl);
-      var exclusionItem = $("#exclusion-set-"+id);
+      var exclusionItem = $("#exclusion-set-"+id).find('span');
       exclusionItem.click(function(){
         removeFromExclusionSet(id, name);
       })
@@ -204,15 +206,16 @@ var spinner = new Spinner(opts).spin(target);
            .attr("transform", "translate(+310," + ((gridSize / 1.5) + 50) +")")
            .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "coeffLabel mono axis axis-workweek" : "coeffLabel mono axis"); });
     
-    coeffData.enter().append("text").text(function (d, i) { 
-                return " [x] "; 
-            })
-           .attr("x", -10)
+    // This adds the X that can be clicked to add the data set to the exclusion list.
+    coeffData.enter().append("svg:foreignObject")
+            .attr("width", 20)
+            .attr("height", 20)
            .attr("y", function (d, i) { return i * gridSize * 1.09; })
            .style("text-anchor", "end")
-           .attr("transform", "translate(+310," + ((gridSize / 1.5) + 50) +")")
-           .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "coeffLabel mono axis axis-workweek" : "coeffLabel mono axis"); })
-           .style("fill", "red")
+           .attr("transform", "translate(+287," + ((gridSize / 1.5) + 37) +")")
+           .append("xhtml:span")
+           //.attr("class", "d3-exclusion-remove")
+           .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "d3-exclusion-remove coeffLabel mono axis axis-workweek" : "d3-exclusion-remove coeffLabel mono axis"); })
            .on('mouseover', function(d,i){
               d3.select(coeffData[0][i]).style("cursor", "pointer");
            })
