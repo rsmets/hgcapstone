@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+
   get 'range_menu/index'
 
   resources :data_correlations
@@ -10,17 +11,19 @@ Rails.application.routes.draw do
 
   get 'data_menu/index'
 
-  resources :time_slices
-
-  resources :states
-
-  resources :posts
-
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-   root 'welcome#index'
+  root 'welcome#index'
+  get 'dig' => 'dig#index'
+  get 'explore' => 'explore#index'
+  get 'analyze' => 'analyze#index'
+  get 'analyze/graph/:id0,:id1' => 'analyze#graph'
+  post 'data_types/:id/correlations/' => 'data_types_correlations#create'
+  post 'data_types/correlations/' => 'data_types_correlations#createMatrix'
+
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

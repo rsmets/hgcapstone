@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150502002928) do
+ActiveRecord::Schema.define(version: 20150528210732) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20150502002928) do
     t.float   "p_coeff"
     t.integer "event1_id"
     t.integer "event2_id"
+    t.float   "k_coeff"
   end
 
   create_table "data_files", force: true do |t|
@@ -36,6 +37,13 @@ ActiveRecord::Schema.define(version: 20150502002928) do
     t.datetime "updated_at",   null: false
     t.integer  "value_1_id"
     t.integer  "data_type_id"
+  end
+
+  create_table "data_type_tags", force: true do |t|
+    t.integer  "tag_id"
+    t.integer  "data_type_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "data_types", force: true do |t|
@@ -65,6 +73,10 @@ ActiveRecord::Schema.define(version: 20150502002928) do
     t.integer  "pop"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "tags", force: true do |t|
+    t.string "name"
   end
 
   create_table "time_slices", force: true do |t|

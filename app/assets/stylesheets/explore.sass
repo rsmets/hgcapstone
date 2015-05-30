@@ -1,0 +1,24 @@
+// Place all the styles related to the Explore controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "bootstrap"
+
+.bg-explore
+	background-image: url(image_path('dwarf_explore.png'))
+
+.exclusion
+	@extend .label
+	@extend .label-danger	
+	margin-right: 10px
+	padding-top: 4px
+
+.exclusion-remove
+	@extend .glyphicon
+	@extend .glyphicon-remove
+	padding-right: 3px
+	cursor: pointer
+
+.d3-exclusion-remove
+	@extend .exclusion-remove
+	position: static

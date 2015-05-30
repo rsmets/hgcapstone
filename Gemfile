@@ -43,6 +43,11 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# gems 'nokogiri', 'open_uri_redirections', and 'json' needed for Quandl webpage parsing
+gem 'nokogiri'
+gem 'open_uri_redirections'
+gem 'json'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
