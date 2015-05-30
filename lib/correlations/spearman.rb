@@ -33,8 +33,6 @@ def spearman(a,b)
   # convert to proper input syntax
   c=x.collect {|point| point }.to_scale
   d=y.collect {|point| point }.to_scale
-  #puts "c= #{c}"
-  #puts "d= #{d}"
 
   # run algorithm
   output=Statsample::Bivariate.spearman(c,d)
@@ -99,6 +97,8 @@ if __FILE__ == $0
 
     # test(12,13,a12,13)
 
+
+    # Primary Surplus or Deficit by Country.csv
     a20=[
  -272.357,
 -259.619,
@@ -161,6 +161,7 @@ nil,
 nil,
 nil
 ]
+    # Arms Import - USA.csv
     a21=[
 nil,
 nil,
@@ -223,7 +224,71 @@ nil,
 238000000.0,
 219000000.0
 ]
+    # Armed Forces Personnel - USA.csv
+    a22=[
+nil,
+nil,
+nil,
+nil,
+nil,
+nil,
+nil,
+1492200.0,
+1520100.0,
+1569417.0,
+1563996.0,
+1540000.0,
+1555000.0,
+1498000.0,
+1546000.0,
+1473000.0,
+1480000.0,
+1467000.0,
+1420700.0,
+1454800.0,
+1575000.0,
+1594000.0,
+1533300.0,
+1572100.0,
+1635600.0,
+1720000.0,
+1820000.0,
+1920000.0,
+2120000.0,
+2180000.0,
+2240000.0,
+nil,
+nil,
+nil,
+2151600.0,
+nil,
+nil,
+nil,
+nil,
+nil,
+nil,
+nil,
+nil,
+nil,
+nil,
+nil,
+nil,
+nil,
+nil,
+nil,
+nil,
+nil,
+nil,
+nil,
+nil,
+nil,
+nil,
+nil,
+nil,
+nil
+]
 
     test(20,21,a20,a21)
+    test(20,22,a20,a22)
   end
 end
