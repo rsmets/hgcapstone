@@ -1,11 +1,11 @@
 def dCorr(a,b)
 
   # Initialize testing mode
-  tests = 0
+  tests = 1
 
   # Sift out empty values
-  x = [0.0]
-  y = [0.0]
+  x2 = [0.0]
+  y2 = [0.0]
   idx = 0
   a.each_with_index{|point, i|
     if point.nil?
@@ -13,12 +13,23 @@ def dCorr(a,b)
     elsif b[i].nil?
       #puts "    skipped y[#{i}]"
     else
-      x[idx] = point
-      y[idx] = b[i]
+      x2[idx] = point
+      y2[idx] = b[i]
       idx += 1
     end
   }
 
+  # Sample values
+  x = [0.0]
+  y = [0.0]
+  idx = 0
+  x2.each_with_index{|point, i|
+    if i%1 == 0 # 3 works pretty good
+      x[idx] = point
+      y[idx] = y2[i]
+      idx += 1
+    end
+  }
 
   # Begin algorithm
   if tests==1
@@ -30,31 +41,26 @@ def dCorr(a,b)
 
   # Generate matrix of distances for x
   xDist = Array.new(n){Array.new(n)}
-  xRMean = Array.new(n,-1.0) # the mean of each row in x
-  xCMean = Array.new(n,-1.0) # the mean of each column in x
-  xColSum = Array.new(n, 0.0)
+  xRMean = Array.new(n, -1.0) # the mean of each row in x
 
   x.each_with_index{|point, i|
   	sum = 0.0
   	x.each_with_index{|point2, i2|
-  	  pythag = (i2-i)**2 + (point2-point)**2
-  	  if pythag==0
-  	  	xDist[i][i2] = 0
+  	  if i==i2
+  	  	xDist[i][i2] = 0.0
+      elsif i > i2
+        tmp = xDist[i2][i]
+        xDist[i][i2] = tmp
+        sum += tmp
   	  else
-  	  	tmp = Math.sqrt(pythag)
+  	  	tmp = Math.sqrt((i2-i)**2 + (point2-point)**2)
   	  	xDist[i][i2] = tmp
   	  	sum += tmp
-  	    xColSum[i2] += tmp
   	  end
   	}
 
   	# Find mean of each row of x
   	xRMean[i] = sum / n
-  }
-
-  # Find mean of each column of x
-  xColSum.each_with_index{|point, i|
-    xCMean[i] = point / n
   }
 
   if tests==1
@@ -63,13 +69,13 @@ def dCorr(a,b)
   end
 
   # Calculate matrix mX
-  xAvgCMean = xCMean.inject(:+).to_f / n # this line was altered and copied from http://stackoverflow.com/questions/1341271/how-do-i-create-an-average-from-a-ruby-array
+  xAvgRMean = xRMean.inject(:+).to_f / n # this line was altered and copied from http://stackoverflow.com/questions/1341271/how-do-i-create-an-average-from-a-ruby-array
   
   sumAA = 0.0 # used later
   mX = Array.new(n){Array.new(n, 0.0)}
   xDist.each_with_index{|point, row|
   	point.each_with_index{|point2, col|
-  	  tmp = point2 - xCMean[col] - xRMean[row] + xAvgCMean
+  	  tmp = point2 - xRMean[col] - xRMean[row] + xAvgRMean
       mX[row][col] = tmp
       sumAA += tmp**2
   	}
@@ -82,31 +88,26 @@ def dCorr(a,b)
 
   # Generate matrix of distances for y
   yDist = Array.new(n){Array.new(n)}
-  yRMean = Array.new(n,-1.0) # the mean of each row in y
-  yCMean = Array.new(n,-1.0) # the mean of each column in y
-  yColSum = Array.new(n, 0.0)
+  yRMean = Array.new(n, -1.0) # the mean of each row in y
 
   y.each_with_index{|point, i|
   	sum = 0.0
   	y.each_with_index{|point2, i2|
-  	  pythag = (i2-i)**2 + (point2-point)**2
-  	  if pythag==0
+  	  if i==i2
   	  	yDist[i][i2] = 0
+      elsif i > i2
+        tmp = yDist[i2][i]
+        yDist[i][i2] = tmp
+        sum += tmp
   	  else
-  	  	tmp = Math.sqrt(pythag)
+  	  	tmp = Math.sqrt((i2-i)**2 + (point2-point)**2)
   	  	yDist[i][i2] = tmp
   	  	sum += tmp
-  	  	yColSum[i2] += tmp
   	  end
   	}
 
   	# Find mean of each row of y
   	yRMean[i] = sum / n
-  }
-
-  # Find mean of each column of y
-  yColSum.each_with_index{|point, i|
-    yCMean[i] = point / n
   }
 
   if tests==1
@@ -115,14 +116,14 @@ def dCorr(a,b)
   end
 
   # Calculate matrix mY
-  yAvgCMean = yCMean.inject(:+).to_f / n # this line was altered and copied from http://stackoverflow.com/questions/1341271/how-do-i-create-an-average-from-a-ruby-array
+  yAvgRMean = yRMean.inject(:+).to_f / n # this line was altered and copied from http://stackoverflow.com/questions/1341271/how-do-i-create-an-average-from-a-ruby-array
 
   sumAB = 0.0
   sumBB = 0.0
-  mY = Array.new(n){Array.new(n, 0.0)}
+  mY = Array.new(n){Array.new(n)}
   yDist.each_with_index{|point, row|
   	point.each_with_index{|point2, col|
-  	  tmp = point2 - yCMean[col] - yRMean[row] + yAvgCMean
+  	  tmp = point2 - yRMean[col] - yRMean[row] + yAvgRMean
       mY[row][col] = tmp
       sumBB += tmp**2
       sumAB += mX[row][col] * tmp
@@ -149,12 +150,12 @@ end
 
 if __FILE__ == $0
 
-  tests = 0
+  tests = 1
   if tests == 1
-  	# a1 = [1,2,3,4,5,6,7,8]
-  	# a2 = [2,3,4,5,6,7,8,9]   # directly correlated with a1
+  	a1 = [1,2,3,4,5,6,7,8]
+  	a2 = [2,3,4,5,6,7,8,9]   # directly correlated with a1
 
-  	# #test(1,2,a1,a2)
+  	# test(1,2,a1,a2)
 
   	# a3=[1,2,3,4,5,6]
   	# a4=[1,2,3,4,5,6,7,8]   # different size
@@ -185,7 +186,7 @@ if __FILE__ == $0
     a12=[]
     a13=[]
  
-	numDataSets = 1 # number of datasets to run algorithm on 
+	numDataSets = 3 # number of datasets to run algorithm on 
 
 	start2 = Time.now   
     (0..numDataSets-1).each do |i2|
