@@ -162,8 +162,8 @@ var spinner = new Spinner(opts).spin(target);
     }
 
     for(i = 0; i < yDataIds.length; i++){
-      
-      var set = { yId: "", xId: "", value: "" , xPos: (i%8 + 1), yPos: (Math.floor(i/8) + 1)};
+      var matrixDimension = Math.sqrt(oldData.length);  
+      var set = { yId: "", xId: "", value: "" , xPos: (i%matrixDimension + 1), yPos: (Math.floor(i/matrixDimension) + 1)};
 
       set.xId = xDataIds[i];
       set.yId = yDataIds[i];
@@ -221,17 +221,34 @@ var spinner = new Spinner(opts).spin(target);
            })
            ;
 
-    timeLabels = svg.selectAll(".timeLabel") // data set label
-       .data(xsetNames)
-       .enter().append("text")
+    timeData = svg.selectAll(".timeLabel").data(xsetNames);
+
+    timeLabels =  timeData.enter().append("text")
          .text(function(d, i) { 
             return d + " - ";
           })
          .style("text-anchor", "end")
          .attr("transform", function(d, i){
-            return "translate(" + (i*1.09 * gridSize + 320) +", +50)" + "rotate(20)"
+            return "translate(" + (i*1.09 * gridSize + 320) +", +35)" + "rotate(20)"
          })
          .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
+
+    timeData.enter().append("text")
+         .text(function(d, i) { 
+            return " [x] ";
+          })
+         .style("text-anchor", "end")
+         .attr("transform", function(d, i){
+            return "translate(" + (i*1.09 * gridSize + 330) +", +45)"
+         })
+         .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); })
+         .style("fill", "red")
+         .on('mouseover', function(d,i){
+            d3.select(timeData[0][i]).style("cursor", "pointer");
+           })
+         .on("click", function(d, i){
+            addToExclusionSet(dataTypesByName[d], d);
+         });
 
     //// Make Da Heat ////
     var heatMap = svg.selectAll(".Id")

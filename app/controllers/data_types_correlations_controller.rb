@@ -36,11 +36,24 @@ class DataTypesCorrelationsController < ActionController::Base
     x_data_set_nums = Array.new
     #y_data_set_nums = [*1..8] 
     random_sets = (1...maximum).sort_by{ rand() } #Upper bound is hardcoded right now - needs fix
-    random_sets = random_sets.select{|num| !(params[:exclusionIds]||[]).include?num}
+
+    if(!params[:exclusionIds].nil?)
+      exclusion_ids_list = params[:exclusionIds].map { |e| e.to_i }
+      random_sets = random_sets.select{|num| !exclusion_ids_list.include?(num.to_i)}
+    end
+
     # Sometimes this ^^ seems to create a exception in ruby. Error occurs in createMatrix function
     #y_data_set_nums = (1...20).sort_by{ rand } #Upper bound is hardcoded right now - needs fix
-    x_data_set_nums = random_sets.take(8)
-    y_data_set_nums = random_sets.drop(maximum-9)
+    
+    dimension = 8
+    if(random_sets.size-dimension*2 < 0)
+      dimension = ((random_sets.size)/2).to_i
+    end
+
+    x_data_set_nums = random_sets.take(dimension)
+    random_sets = random_sets.drop(dimension)
+    y_data_set_nums = random_sets.take(dimension)
+
     # (min..max).sortby(value)
     y_data_set_nums.each do |data_set_num|
       time1 = DataPoint.where(data_type_id: data_set_num).first.value_1
@@ -93,6 +106,7 @@ class DataTypesCorrelationsController < ActionController::Base
     end
 
     #at this point theres equal num of data sets in x and y data set arrays
+    
     p_out = pearson2(data_sets_y,data_sets_x)
     s_out = spearman2(data_sets_y,data_sets_x)
 
