@@ -212,9 +212,8 @@ var spinner = new Spinner(opts).spin(target);
             .attr("height", 20)
            .attr("y", function (d, i) { return i * gridSize * 1.09; })
            .style("text-anchor", "end")
-           .attr("transform", "translate(+287," + ((gridSize / 1.5) + 37) +")")
+           .attr("transform", "translate(+287," + ((gridSize / 1.5) + 38) +")")
            .append("xhtml:span")
-           //.attr("class", "d3-exclusion-remove")
            .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "d3-exclusion-remove coeffLabel mono axis axis-workweek" : "d3-exclusion-remove coeffLabel mono axis"); })
            .on('mouseover', function(d,i){
               d3.select(coeffData[0][i]).style("cursor", "pointer");
@@ -236,16 +235,15 @@ var spinner = new Spinner(opts).spin(target);
          })
          .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
 
-    timeData.enter().append("text")
-         .text(function(d, i) { 
-            return " [x] ";
-          })
+    timeData.enter().append("svg:foreignObject")
+         .attr("width", 20)
+         .attr("height", 20)
          .style("text-anchor", "end")
          .attr("transform", function(d, i){
-            return "translate(" + (i*1.09 * gridSize + 330) +", +45)"
-         })
-         .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); })
-         .style("fill", "red")
+            return "translate(" + (i*1.09 * gridSize + 320) +", +35)"
+          })
+         .append("xhtml:span")
+         .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "d3-exclusion-remove timeLabel mono axis axis-worktime" : "d3-exclusion-remove timeLabel mono axis"); })
          .on('mouseover', function(d,i){
             d3.select(timeData[0][i]).style("cursor", "pointer");
            })
