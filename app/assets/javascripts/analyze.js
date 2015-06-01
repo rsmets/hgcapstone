@@ -29,14 +29,14 @@ $( document ).ready(function() {
   
   var mouseover = function(d){
     //console.log("timelabel: " + timeLabels[0][d.Id]);
-    d3.select(timeLabels[0][d.Id-1]).style({'fill': 'none', 'stroke': 'blue', 'stroke-width': 0.5});
+    d3.select(timeLabels[0][d.xPos-1]).style({'fill': 'none', 'stroke': 'blue', 'stroke-width': 0.5});
     //d3.select(coeffLabels[0][d.Id-1]).style("fill", "yellow");
     tip.show(d);
     d3.select(this).style({'stroke': '#636F57', 'stroke-width': 4.5}).style("cursor","pointer");
   }
 
   var mouseouttie = function(d, i){
-    d3.select(timeLabels[0][d.Id-1]).style({'fill': 'black', 'stroke': 'none', 'stroke-width': 1.0});
+    d3.select(timeLabels[0][d.xPos-1]).style({'fill': 'black', 'stroke': 'none', 'stroke-width': 1.0});
     tip.hide(d);
     d3.select(this).style({'stroke': '#7e7e7e', 'stroke-width': 1.0});
   }
@@ -53,6 +53,7 @@ $( document ).ready(function() {
        title0 = "";
 
   var dataTransformation = function(oldData){
+    console.log(oldData);
     d3.select('svg').text('')
     var i = 0;
     var dataToCompare = []; // Event ID's to be compared against
@@ -74,7 +75,7 @@ $( document ).ready(function() {
     }
 
     title0 = oldData[0].data_type1.name;
-
+    console.log(setNames);
     for(i = 0; i < 3; i++){
       var flag = 0;
       for(j = 0; j < dataToCompare.length; j++){
@@ -107,7 +108,6 @@ $( document ).ready(function() {
   }
   //  How to make that nasty map
   var makeheatMap = function(data) {
-    debugger
     transformed = dataTransformation(data)
     //console.log(transformed);
     var colorScale = d3.scale.quantile()
@@ -161,10 +161,10 @@ $( document ).ready(function() {
           clearDrawing();
           if(d.Id < selectedId){
             $("#myModalLabel").empty();
-            generateGraphInModal(selectedId, d.Id, title0, setNames[d.Id-1] );
+            generateGraphInModal(selectedId, d.Id, title0, setNames[d.xPos-1] );
           } else {
             $("#myModalLabel").empty();
-            generateGraphInModal(selectedId, d.Id+1, title0, setNames[d.Id-1] );
+            generateGraphInModal(selectedId, d.Id+1, title0, setNames[d.xPos-1] );
           }
           //$('#myModal').modal('hide');
        });
@@ -226,7 +226,7 @@ $( document ).ready(function() {
     // Upon success, make a new map!
     successCallback = function(dataTypeCorrelations){
       makeheatMap(dataTypeCorrelations['data_types_correlations']);
-      debugger  
+        
     }
 
     request.done(successCallback);
