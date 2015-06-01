@@ -50,6 +50,7 @@ $( document ).ready(function() {
        colors = ["#660000", "#8B0000", "#b20000", "#ff6666", "#e4e4e4","#9595cf","#5a6890","#314374", "#081d58"], // alternatively colorbrewer.YlGnBu[9]
        coeffs = ["Spearman", "Pearson", "Kendall"],
        setNames = [],
+       dataLinks = [],
        title0 = "";
 
   var dataTransformation = function(oldData){
@@ -63,6 +64,7 @@ $( document ).ready(function() {
     var kcoeffVal = []; // Kendall's coefficients
     var newFormattedData = [];
     setNames = [];
+    dataLinks = [];
 
     while(i < oldData.length){
       //console.log(oldData[i].data_type2.name);
@@ -71,6 +73,7 @@ $( document ).ready(function() {
       pcoeffVal.push(oldData[i].p_coeff);
       scoeffVal.push(oldData[i].s_coeff);
       kcoeffVal.push(oldData[i].k_coeff);
+      dataLinks.push(oldData[i].data_type2.url);
       i++;
     }
 
@@ -79,7 +82,7 @@ $( document ).ready(function() {
     for(i = 0; i < 3; i++){
       var flag = 0;
       for(j = 0; j < dataToCompare.length; j++){
-        var set = { coeff: "", Id: "", value: "", xPos: ""};
+        var set = { coeff: "", Id: "", value: "", xPos: "", origin: ""};
         if(j+1 == selectedId) // This fixes the possibility of D3 rendering a blank box at selected Id's location
           flag = 1;
         if(flag == 0)
@@ -99,6 +102,8 @@ $( document ).ready(function() {
           set.value = kcoeffVal[j];
         }
         set.xPos = j+1;
+        set.origin = dataLinks[j];
+        console.log(dataLinks[j])
         newFormattedData.push(set);
       }
 
@@ -121,9 +126,13 @@ $( document ).ready(function() {
        .append("g")
        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    timeLabels = svg.selectAll(".timeLabel") // data set label
-     .data(setNames)
-     .enter().append("text")
+    timeData = svg.selectAll(".timeLabel").data(setNames);
+
+    timeLabels = timeData.enter().append("a")
+       .attr("xlink:href", function(d, i){
+          console.log(i);
+          return dataLinks[i];})
+       .append("text")
        .text(function(d) { return d +" - "; })
        .style("text-anchor", "end")
        .attr("transform", function(d, i){
