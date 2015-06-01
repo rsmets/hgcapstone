@@ -8,20 +8,24 @@
 
 <div id="spinner"></div>
 
+
 <label for="correlation-type">Correlation Type</label>
 <select name="correlation-type" id="correlation-type">
   <option value="Spearman">Spearman</option>
   <option value="Pearson">Pearson</option>
   <option value="Kendall">Kendall (NOT IMPLEMENTED)</option>
 </select>
+<br>
 
-<button name="Randomize" id="random-refresh"> 
-  Randomize
+<label for="randomize"></label>
+<button name="randomize" id="random-refresh"> 
+  Randomize data sets
 </button>
+<br>
 
-<div id="exclusion-set">
-
-</div>
+Excluded data sets:
+<!-- #exclusion-set holds all the data sets that get excluded from the heatmap -->
+<div id="exclusion-set"></div>
 
 <svg id="heatmap-chart" width="1000" height="500"></svg>
 

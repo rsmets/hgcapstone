@@ -1,6 +1,7 @@
 <h2 class="bg-dwarf bg-analyze">Pick a data set</h2>
 
 <%= select_tag(:data_type_id, option_groups_from_collection_for_select(@tags, :data_types, 'name','id','name', @selected_data_type), id: 'analyze-data-type') %>
+<%= select_tag(:tag_id, options_from_collection_for_select(@tags, 'id','name', @selected_tag), id: 'analyze-tag') %>
 
 <div id="spinner"></div>
 <div id="scroll-wrapper">

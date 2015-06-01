@@ -79,7 +79,6 @@ $( document ).ready(function() {
       var flag = 0;
       for(j = 0; j < dataToCompare.length; j++){
         var set = { coeff: "", Id: "", value: "", xPos: ""};
-
         if(j+1 == selectedId) // This fixes the possibility of D3 rendering a blank box at selected Id's location
           flag = 1;
         if(flag == 0)
@@ -211,14 +210,16 @@ $( document ).ready(function() {
 
   // When you select stuff, call the JSON correlation API
 
-  var findSelectedOptionFromSelectAndStartGraphGeneration = function(htmlSelectElement){
-    selectedId = $(htmlSelectElement).find('option:selected').val();
+  var findSelectedOptionFromSelectAndStartGraphGeneration = function(dataTypeSelect, tagSelect){
+    selectedId = $(dataTypeSelect).find('option:selected').val();
+    selectedTagId = $(tagSelect).find('option:selected').val();
 
 
     request = $.ajax({
       url: "/data_types/" + selectedId + "/correlations",
       method: "POST",
-      dataType: "json"
+      dataType: "json",
+      data: {tag_id: selectedTagId}
     });
     spinner.spin(target);
 
@@ -231,7 +232,10 @@ $( document ).ready(function() {
     request.done(successCallback);
 
   }
-  selectElement = $('#analyze-data-type')
-  selectElement.change(function(e){findSelectedOptionFromSelectAndStartGraphGeneration(e.target)})
-  findSelectedOptionFromSelectAndStartGraphGeneration(selectElement)
+  selectDataTypeElement = $('#analyze-data-type');
+  selectTagElement = $('#analyze-tag');
+  selectDataTypeElement.change(function(e){findSelectedOptionFromSelectAndStartGraphGeneration(selectDataTypeElement, selectTagElement)})
+  selectTagElement.change(function(e){findSelectedOptionFromSelectAndStartGraphGeneration(selectDataTypeElement, selectTagElement)})
+  findSelectedOptionFromSelectAndStartGraphGeneration(selectDataTypeElement, selectTagElement);
+
 });
