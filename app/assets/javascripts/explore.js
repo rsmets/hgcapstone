@@ -163,6 +163,7 @@ var spinner = new Spinner(opts).spin(target);
 
     for(i = 0; i < yDataIds.length; i++){
       var matrixDimension = Math.sqrt(oldData.length);  
+      debugger
       var set = { yId: "", xId: "", value: "" , xPos: (i%matrixDimension + 1), yPos: (Math.floor(i/matrixDimension) + 1)};
 
       set.xId = xDataIds[i];
