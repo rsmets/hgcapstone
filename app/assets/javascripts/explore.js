@@ -100,7 +100,9 @@ var spinner = new Spinner(opts).spin(target);
          ysetNames = [], //populate for axis label
          xsetNames = [],
          ynames = [],
-         xnames = [];
+         xnames = [],
+         xLinks = [],
+         yLinkes = [];
 
 
   var addToExclusionSet = function(id, name){
@@ -119,13 +121,13 @@ var spinner = new Spinner(opts).spin(target);
   }
 
   var removeFromExclusionSet = function(id, name){
-    console.log(exclusionSet);
+    //console.log(exclusionSet);
     delete exclusionSet[id];
     $("#exclusion-set-"+id).remove();
   }
 
   var dataTransformation = function(oldData){
-    console.log(oldData);
+    //console.log(oldData);
     d3.select('svg').text('')
     var i = 0;
     var xDataIds = [];
@@ -134,6 +136,8 @@ var spinner = new Spinner(opts).spin(target);
     var scoeffVal = []; // Spearman's coefficients
     var newFormattedData = [];
     var coeffObjs = [];
+    yLinks = [];
+    xLinks = [];
     ysetNames = [];
     xsetNames = [];
     ynames = [];
@@ -151,10 +155,14 @@ var spinner = new Spinner(opts).spin(target);
       if(i < Math.sqrt(oldData.length)){
         xsetNames.push(oldData[i].data_type2.name);//.substring(0,25));
         xnames[oldData[i].event2_id] = oldData[i].data_type2.name;
+        xLinks.push(oldData[i].data_type2.url);
       }
       if(i % Math.sqrt(oldData.length) == 0){
         ysetNames.push(oldData[i].data_type1.name);
         ynames[oldData[i].event1_id] = oldData[i].data_type1.name;
+        yLinks.push(oldData[i].data_type1.url);
+        
+        //console.log(yLinks)
       }
 
       pcoeffVal.push(oldData[i].p_coeff);
@@ -164,8 +172,7 @@ var spinner = new Spinner(opts).spin(target);
     }
 
     for(i = 0; i < yDataIds.length; i++){
-      var matrixDimension = Math.sqrt(oldData.length);  
-      debugger
+      var matrixDimension = Math.sqrt(oldData.length);        
       var set = { yId: "", xId: "", value: "" , xPos: (i%matrixDimension + 1), yPos: (Math.floor(i/matrixDimension) + 1)};
 
       set.xId = xDataIds[i];
@@ -196,8 +203,13 @@ var spinner = new Spinner(opts).spin(target);
 
     coeffData = svg.selectAll(".coeffLabel")
          .data(ysetNames);
-    
-    coeffLabels = coeffData.enter().append("text")
+
+    coeffLabels = coeffData.enter()
+            .append("a")
+           .attr("xlink:href", function(d, i){
+              return yLinks[i];
+            })
+           .append("text")
            .text(function (d, i) { 
                 return d; 
             })
@@ -208,9 +220,10 @@ var spinner = new Spinner(opts).spin(target);
            .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "coeffLabel mono axis axis-workweek" : "coeffLabel mono axis"); });
     
     // This adds the X that can be clicked to add the data set to the exclusion list.
-    coeffData.enter().append("svg:foreignObject")
-            .attr("width", 20)
-            .attr("height", 20)
+    coeffData.enter()
+           .append("svg:foreignObject")
+           .attr("width", 20)
+           .attr("height", 20)
            .attr("y", function (d, i) { return i * gridSize * 1.09; })
            .style("text-anchor", "end")
            .attr("transform", "translate(+287," + ((gridSize / 1.5) + 38) +")")
@@ -226,7 +239,12 @@ var spinner = new Spinner(opts).spin(target);
 
     timeData = svg.selectAll(".timeLabel").data(xsetNames);
 
-    timeLabels =  timeData.enter().append("text")
+    timeLabels =  timeData.enter()
+          .append("a")
+          .attr("xlink:href", function(d, i){
+              return xLinks[i];
+          })
+         .append("text")
          .text(function(d, i) { 
             return d + " - ";
           })
@@ -272,7 +290,7 @@ var spinner = new Spinner(opts).spin(target);
        .on("click", function(d){
           clearDrawing();
           $("#myModalLabel").empty();
-          console.log(d.yId + " " + d.xId + " " + ynames[d.yId] + " " + xnames[d.xId])
+          //console.log(d.yId + " " + d.xId + " " + ynames[d.yId] + " " + xnames[d.xId])
           generateGraphInModal(d.yId, d.xId, ynames[d.yId], xnames[d.xId] );
        });
 
@@ -284,8 +302,7 @@ var spinner = new Spinner(opts).spin(target);
        .enter().append("g")
        .attr("class", "legend");
 
-    legend.append("a")
-     .attr("xlink:href", "http://en.wikipedia.org/wiki/gongoozler")
+    legend
      .append("rect")
      .attr("x", function(d, i) { return legendElementWidth * i + 140; })
      .attr("y", height + 120)

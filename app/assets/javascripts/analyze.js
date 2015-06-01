@@ -102,8 +102,6 @@ $( document ).ready(function() {
           set.value = kcoeffVal[j];
         }
         set.xPos = j+1;
-        set.origin = dataLinks[j];
-        console.log(dataLinks[j])
         newFormattedData.push(set);
       }
 
@@ -130,8 +128,8 @@ $( document ).ready(function() {
 
     timeLabels = timeData.enter().append("a")
        .attr("xlink:href", function(d, i){
-          console.log(i);
           return dataLinks[i];})
+       .attr("xlink:target", "_blank")
        .append("text")
        .text(function(d) { return d +" - "; })
        .style("text-anchor", "end")
