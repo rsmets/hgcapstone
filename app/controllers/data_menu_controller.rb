@@ -137,6 +137,9 @@ class DataMenuController < ApplicationController
 
       new_type= DataType.create(name: @file.original_filename, url:"USER INPUT FILE")
 
+      # Apply User uploaded Tag to new DataType
+      new_type.tags.push(Tag.where("name = ?", "User Uploaded"))
+
       num1= 0
       CSV.foreach(@file.path) do |line|
         num2 = 0

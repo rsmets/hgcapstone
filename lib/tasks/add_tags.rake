@@ -3,6 +3,10 @@ task :add_tags => :environment do
 	DataTypeTag.delete_all
 
 	puts "Current amount of tags: #{Tag.all.length}"
+
+	# Applied to all data uploaded by users
+	Tag.create(name: "User Uploaded")
+
 	alcohol_and_tobacco = Tag.create(name: "Alcohol and Tobacco")
 	alcohol_and_tobacco.data_types.push(DataType.where("
 		name ILIKE '%smok%' OR
