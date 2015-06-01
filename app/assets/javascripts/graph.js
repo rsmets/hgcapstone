@@ -9,7 +9,6 @@ $( document ).ready(function() {
     var year_2 = $("#test").data("year2");
     var dtid = $("#test").data("id");
     var dtid2 = $("#test").data("id2");
-    debugger;
 
     getData(dt, dt2, year_1, year_2, dtid, dtid2)
     return false;});
@@ -146,6 +145,33 @@ function drawNVline(data, graph_name, dt) {
   key: 
   color:
 */
+
+//used to grab the proper data types from the overall data table
+function format(data, dt_id){
+  var out = [];
+  var i = 0;
+  while( i < data.length){
+    if(data[i].data_type_id == dt_id){
+      out.push(data[i]);
+    }i++;
+  }
+  return out;
+}
+
+
+function parse_xy(data){
+  
+  var xymap = data.map(function(item) {
+    return {
+      x: item.value_1,
+      y: item.value_2,
+      data_type_id: item.data_type_id
+    };
+  });
+  //debugger;
+  return xymap;
+}
+
 function format_data(data, dt, colr){
   var x_y = [];
   debugger;
@@ -167,20 +193,28 @@ function format_combined_data(data, data2, dt, dt2, colr, colr2, norm_flag){
   var x_y = [];
   var x_y2 = [];
 
-  data1_total = 1;
-  data2_total = 1;
+  data_1_min = 0;
+  data_1_max = 1;
+  data_2_min = 0;
+  data_2_max = 1;
 
   if(norm_flag == 1){
-    data1_total = normalizeVal(data);
-    data2_total = normalizeVal(data2);
+    data_1_min = Math.min(data);
+    data_1_max = Math.max(data);
+    data_2_min = Math.min(data2);
+    data_2_max = Math.max(data2);
+    console.log("data_1_min: "+data_1_min);
+    console.log("data_1_max: "+data_1_max);
+    console.log("data_2_min: "+data_2_min);
+    console.log("data_2_max: "+data_2_max);
   }
   
   data.map(function(item){
-    x_y.push({x: item.x, y: (item.y / data1_total)})
+    x_y.push({x: item.x, y: ((item.y - data_1_min) / (data_1_max - data_1_min))})
   })
 
   data2.map(function(item){
-    x_y2.push({x: item.x, y: (item.y / data2_total)})
+    x_y2.push({x: item.x, y: ((item.y - data_2_min) / (data_2_max - data_2_min))})
   })
 //debugger;
   return [
@@ -323,33 +357,8 @@ function exampleData() {
   });
 }
 
-//used to grab the proper data types from the overall data table
-function format(data, dt_id){
-  var out = [];
-  var i = 0;
-  while( i < data.length){
-    if(data[i].data_type_id == dt_id){
-      out.push(data[i]);
-    }i++;
-  }
-  return out;
-}
-
 function clearDrawing(){
   d3.selectAll("svg > *").remove();
-}
-
-function parse_xy(data){
-  
-  var xymap = data.map(function(item) {
-    return {
-      x: item.value_1,
-      y: item.value_2,
-      data_type_id: item.data_type_id
-    };
-  });
-  //debugger;
-  return xymap;
 }
 
 function calcAvg(lineData, num){
@@ -380,15 +389,17 @@ function calculateMagDiff(lineData){
   return order;
 }
 
-function normalizeVal(lineData){
+function normalizeVal(point, max, min){
   var i = 0;
   var total = 0;
-  while(lineData[i] != null){
-    total = total + lineData[i].y;
-    i++;
-  }
-  console.log(total/i);
-  return total;
+  //while(lineData[i] != null){
+  //  total = total + lineData[i].y;
+  //  i++;
+  //}
+
+  //console.log(total/i);
+
+  return (point-min)/(max-min);
 }
 
 function drawNormalizedChart(lineData, lineData2, graph_name, dt, dt2){

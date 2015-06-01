@@ -1,0 +1,18 @@
+// Place all the styles related to the Dig controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import bg_image_anim
+
+h3
+	margin-top: 0px
+
+.dig-button
+	display: inline-block
+	width: 128px
+	height: 128px
+
+.analyze-anim
+	+bg-image-anim(analyze-anim, image_path('dwarf_analyze.png'), image_path('dwarf_analyze_sprite.png'), 256px, 2, 0.8s)
+
+.explore-anim
+	+bg-image-anim(explore-anim, image_path('dwarf_explore.png'), image_path('dwarf_explore_sprite.png'), 256px, 2, 0.8s)

@@ -1,0 +1,124 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ *= require nvd3-rails
+ */
+
+@import "bootstrap-sprockets"
+@import "bootstrap"
+@import url(http://fonts.googleapis.com/css?family=Roboto|VT323|Press+Start+2P)
+@import "variables"
+@import "bg_image_anim"
+
+body
+	font-family: 'Roboto', sans-serif
+	color: $dark-brown
+	background-image: url(image_path('diagmonds.png'))
+
+.center 
+	text-align: center
+
+h1, h2
+	font-family: 'VT323'
+	letter-spacing: -1px
+
+h1
+	font-size: 6em
+
+h2
+	font-size: 4em
+
+h3
+	margin-top: 0px
+
+p
+	padding-top: 5%
+
+td
+	padding-right: 20px
+
+/*** Top navbar ***/
+
+nav
+	height: 61px
+
+.nav
+	li
+		a
+			&:link, &:visited
+				text-decoration: none
+				background-color: transparent
+				color: $orange
+			&:hover, &:active
+				text-decoration: none
+				background-color: transparent
+				color: $yellow-white
+
+.navbar-custom-dither
+	//background-image: url(image_path('header-tile.png'))
+	background-color: $dark-brown
+	border-width: 0px 0px 20px 0px
+	border-image: url(image_path('header-tile.png')) 0 0 20 0 repeat
+
+	/* Prevent background color leak outs */
+	-webkit-background-clip: padding-box
+	-moz-background-clip:    padding
+	background-clip:         padding-box
+
+.navbar-brand
+	width: 204px
+	height: 30px
+	margin-top: 8px
+	+bg-image-anim(logo-anim, image_path('datadwarf_logo.png'), image_path('datadwarf_logo_sprite.png'), 408px, 2, 0.8s)
+
+#logo
+	display: block
+	background-image: url(image_path('rs_dwarf.png'))
+	background-size: 70px
+	background-repeat: no-repeat
+	background-position: center
+	height: 85px
+	padding-top: 90px
+	margin-bottom: 30px
+
+/*** Main content container ***/
+
+.bg-dwarf
+	background-repeat: no-repeat
+	background-size: contain
+	background-position: top right
+	/* Render pixel art more cleanly */
+	-ms-interpolation-mode: nearest-neighbor // IE
+	image-rendering: -moz-crisp-edges // Firefox
+	image-rendering: -webkit-optimize-contrast // Safari
+	image-rendering: pixelated // Chrome and Opera
+
+#main-container
+	margin-top: 100px
+
+#main-container
+	a
+		&:link, &:visited
+			text-decoration: none
+			background-color: transparent
+			color: $dark-gray
+		&:hover, &:active
+			text-decoration: none
+			background-color: transparent
+			color: $dark-gray
+
+#heatmap-chart 
+	margin-left:auto 
+	margin-right:auto
+	display:block

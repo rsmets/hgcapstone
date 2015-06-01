@@ -1,0 +1,53 @@
+<h2 class="bg-dwarf bg-explore">Explore</h2>
+<!--<%= content_tag :div, id: 'mycontainer', data: {source: @data_types}%> -->
+
+<%= javascript_include_tag 'explore.js', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'modalGraph.js', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'index.js', 'data-turbolinks-track' => true %>
+
+
+<div id="spinner"></div>
+
+
+<label for="correlation-type">Correlation Type</label>
+<select name="correlation-type" id="correlation-type">
+  <option value="Spearman">Spearman</option>
+  <option value="Pearson">Pearson</option>
+  <option value="Kendall">Kendall (NOT IMPLEMENTED)</option>
+</select>
+<br>
+
+<label for="randomize"></label>
+<button name="randomize" id="random-refresh"> 
+  Randomize data sets
+</button>
+<br>
+
+Excluded data sets:
+<!-- #exclusion-set holds all the data sets that get excluded from the heatmap -->
+<div id="exclusion-set"></div>
+
+<svg id="heatmap-chart" width="1000" height="500"></svg>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Back to heatmap"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+      <div class="modal-body" style="position: relative; display: block;">
+        <div class="btn-group modal-toolbar" role="group" aria-label="..." data-toggle="buttons">
+          <label for="graph-line"><input id="graph-line" type="radio" name="graph-type">Line</label>
+          <label for="graph-bar"><input id="graph-bar" type="radio" name="graph-type">Bar</label>
+          <label for="graph-scatter"><input id="graph-scatter" type="radio" name="graph-type">Scatter</label>
+        </div>
+        <div class="btn-group" role="group" aria-label="..." data-toggle="buttons">
+          <label for="graph-norm"><input id="graph-norm" type="radio" name="graph-norm-type">Normalized</label>
+          <label for="graph-nonnorm"><input id="graph-nonnorm" type="radio" name="graph-norm-type">Non-Normalized</label>
+        </div>
+        <svg id="graph" width="2000" height="1000"></svg>
+      </div>
+    </div>
+  </div>
+</div>

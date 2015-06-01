@@ -16,3 +16,4 @@
 //= require d3
 //= require bootstrap-sprockets
 //= require nv.d3
+//= require spin.min

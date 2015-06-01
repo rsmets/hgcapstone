@@ -34,12 +34,12 @@ File.open(File.join(Rails.root, 'db', 'USGDPByYear.txt')) do |f|
 	end
 end
 
-TimeSlice.delete_all
-for year in startYear..endYear
-	pop = rows[year.to_s][:population]
-	gdp = rows[year.to_s][:gdp]
-	TimeSlice.create(:year => year, :population => pop, :gdp => gdp)
-end
+#TimeSlice.delete_all
+#for year in startYear..endYear
+#	pop = rows[year.to_s][:population]
+#	gdp = rows[year.to_s][:gdp]
+#	TimeSlice.create(:year => year, :population => pop, :gdp => gdp)
+#end
 
 #puts rows
 #Event.delete_all

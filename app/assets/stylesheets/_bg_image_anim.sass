@@ -1,0 +1,66 @@
+/* bg-image-anim
+ * $anim-name - name of animation (must be unique)
+ * $img-path - path to :link image 
+ * $sprite-path - path to :hover animation spritesheet
+ * $sprite-length - total length of spritesheet (e.g. 256px)
+ * $num-frames - number of frames in spritesheet
+ * $anim-length - time period over which the frames should be played (e.g. 0.8s)
+ */
+=bg-image-anim($anim-name, $img-path, $sprite-path, $sprite-length, $num-frames, $anim-length)
+	//background-repeat: no-repeat
+
+	/* Render pixel art more cleanly */
+	-ms-interpolation-mode: nearest-neighbor // IE
+	image-rendering: -moz-crisp-edges // Firefox
+	image-rendering: -webkit-optimize-contrast // Safari
+	image-rendering: pixelated // Chrome and Opera
+
+	-webkit-animation: $anim-name $anim-length steps($num-frames) infinite
+	-moz-animation: $anim-name $anim-length steps($num-frames) infinite
+	-ms-animation: $anim-name $anim-length steps($num-frames) infinite
+	-o-animation: $anim-name $anim-length steps($num-frames) infinite
+	animation: $anim-name $anim-length steps($num-frames) infinite
+
+	&:link, &:visited
+		background-image: url($img-path)
+		background-position: center center //0px 0px
+		-webkit-animation-play-state: paused
+		-moz-animation-play-state: paused
+		-ms-animation-play-state: paused
+		-o-animation-play-state: paused
+		animation-play-state: paused
+
+	&:hover, &:active
+		background-image: url($sprite-path)
+		background-position: center center //0px 0px
+		-webkit-animation-play-state: running
+		-moz-animation-play-state: running
+		-ms-animation-play-state: running
+		-o-animation-play-state: running
+		animation-play-state: running
+
+	@-webkit-keyframes #{$anim-name}
+		from
+			background-position: 0px 0px
+		to 
+			background-position: -$sprite-length 0px
+	@-moz-keyframes #{$anim-name}
+		from 
+			background-position: 0px 0px
+		to 
+			background-position: -$sprite-length 0px
+	@-ms-keyframes #{$anim-name}
+		from 
+			background-position: 0px 0px
+		to 
+			background-position: -$sprite-length 0px
+	@-o-keyframes #{$anim-name}
+		from 
+			background-position: 0px 0px
+		to 
+			background-position: -$sprite-length 0px
+	@keyframes #{$anim-name}
+		from 
+			background-position: 0px  0px
+		to 
+			background-position: -$sprite-length 0px
