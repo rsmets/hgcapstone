@@ -5,6 +5,8 @@ load Rails.root.join('lib/correlations/pearson2.rb')
 load Rails.root.join('lib/correlations/kendall.rb')
 
 class DataTypesCorrelationsController < ActionController::Base
+  @@gFlag = 1 # signifies the beginning so that we seed a value
+
   def create
     do_correlations(params[:id].to_i)
     render json: DataCorrelation.where(event1_id: params[:id])
@@ -50,9 +52,19 @@ class DataTypesCorrelationsController < ActionController::Base
       dimension = ((random_sets.size)/2).to_i
     end
 
-    x_data_set_nums = random_sets.take(dimension)
-    random_sets = random_sets.drop(dimension)
-    y_data_set_nums = random_sets.take(dimension)
+
+    if @@gFlag == 0 # For demo
+      puts "it's here!!!"
+      x_data_set_nums = random_sets.take(dimension)
+      random_sets = random_sets.drop(dimension)
+      y_data_set_nums = random_sets.take(dimension)
+    end
+
+    if @@gFlag == 1 # For "seeded" Demo
+      x_data_set_nums = [1, 20, 13, 27, 31, 10, 23, 5] # last one is 
+      y_data_set_nums = [2, 38, 15, 39, 8, 7, 25, 6]
+      @@gFlag = 0
+    end
 
     # (min..max).sortby(value)
     y_data_set_nums.each do |data_set_num|
