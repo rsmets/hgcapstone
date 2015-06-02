@@ -272,16 +272,42 @@ function compare(a,b) {
     return 1;
   return 0;
 }
-    
+  
+  function getMaxOfArray(numArray) {
+    return Math.max.apply(null, numArray);
+  }
+
+  function getMinOfArray(numArray) {
+    return Math.min.apply(null, numArray);
+  }
+
   var format_combined_data = function(data, data2, dt, dt2, colr, colr2, norm_flag, yearRange){
     var x_y = [];
     var x_y2 = [];
     data1_total = 1;
     data2_total = 1;
 
+    data_1_min = 0;
+    data_1_max = 1;
+    data_2_min = 0;
+    data_2_max = 1;
+
+    var data_array = [];
+    var data2_array = [];
+
+    data.map(function(item){
+      data_array.push(item.y)
+    })
+
+    data2.map(function(item){
+      data2_array.push(item.y)
+    })
+
     if(norm_flag == 1){
-      data1_total = normalizeVal(data);
-      data2_total = normalizeVal(data2);
+      data_1_min = getMinOfArray(data_array);
+      data_1_max = getMaxOfArray(data_array);
+      data_2_min = getMinOfArray(data2_array);
+      data_2_max = getMaxOfArray(data2_array);
     }
 
     data.sort(compare);
@@ -289,14 +315,13 @@ function compare(a,b) {
     
     data.map(function(item){
       if(yearRange.indexOf(item.x) != -1){
-      //if(item.x >= yearRange[0] && item.x <= yearRange[yearRange.length-1]){
-        x_y.push({x: item.x, y: (item.y / data1_total)})
+        x_y.push({x: item.x, y: ((item.y - data_1_min) / (data_1_max - data_1_min))})
       }
     })
 
     data2.map(function(item){
       if(yearRange.indexOf(item.x) != -1){
-       x_y2.push({x: item.x, y: (item.y / data2_total)})
+        x_y2.push({x: item.x, y: ((item.y - data_2_min) / (data_2_max - data_2_min))})
       }
     })
     return [

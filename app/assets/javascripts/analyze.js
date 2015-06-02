@@ -54,7 +54,8 @@ $( document ).ready(function() {
        title0 = "";
 
   var dataTransformation = function(oldData){
-    console.log(oldData);
+    //console.log("oldData: ");
+    //console.log(oldData);
     d3.select('svg').text('')
     var i = 0;
     var dataToCompare = []; // Event ID's to be compared against
@@ -112,6 +113,7 @@ $( document ).ready(function() {
   //  How to make that nasty map
   var makeheatMap = function(data) {
     transformed = dataTransformation(data)
+    //console.log("transformed: ");
     //console.log(transformed);
     var colorScale = d3.scale.quantile()
        .domain([-1.0, 1.0])
@@ -166,13 +168,13 @@ $( document ).ready(function() {
        .on('mouseout', mouseouttie)
        .on("click", function(d){
           clearDrawing();
-          if(d.Id < selectedId){
-            $("#myModalLabel").empty();
-            generateGraphInModal(selectedId, d.Id, title0, setNames[d.xPos-1] );
-          } else {
-            $("#myModalLabel").empty();
-            generateGraphInModal(selectedId, d.Id+1, title0, setNames[d.xPos-1] );
-          }
+          //if(d.Id < selectedId){
+          $("#myModalLabel").empty();
+          generateGraphInModal(selectedId, d.Id, title0, setNames[d.xPos-1] );
+          //} else {
+          //  $("#myModalLabel").empty();
+          //  generateGraphInModal(selectedId, d.Id+1, title0, setNames[d.xPos-1] );
+          //}
           //$('#myModal').modal('hide');
        });
 
