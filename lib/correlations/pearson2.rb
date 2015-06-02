@@ -66,7 +66,7 @@ def pearson2(arrays1, arrays2)
         ans[i][j] = r.real
 
         if ans[i][j].nan?
-          ans[i][j] = 0
+          ans[i][j] = rand() *2 -1
         end
         
       end

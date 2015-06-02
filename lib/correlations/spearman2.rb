@@ -44,7 +44,7 @@ def spearman2(arrays1, arrays2)
       # run algorithm
       ans[i][j]=Statsample::Bivariate.spearman(c,d)
       if ans[i][j].nan?
-        ans[i][j] = 0.00 # this used to be 0
+        ans[i][j] = rand() *2 -1 # this used to be 0
       end
     }
   }
