@@ -12,7 +12,7 @@ task :adddatapoints => :environment do
   percentage_value_type = ValueType.create(name:"Percentage")
 
   # A. Populate Data Sets and Data Points Tables 'DataType' and 'DataPoint'
-  new_data_type= DataType.create(name:"US Pop by Year", url:"url.com")
+  new_data_type= DataType.create(name:"US Pop by Year", url:"http://www.multpl.com/united-states-population/table")
   File.open(File.join(Rails.root, 'db', 'USPopByYear.txt')) do |f|
     f.each_line do |l| 
       line = l.split(' ')   
@@ -27,7 +27,7 @@ task :adddatapoints => :environment do
     end
   end
 
-  new_data_type= DataType.create(name:"US GDP by Year", url:"url.com")
+  new_data_type= DataType.create(name:"US GDP by Year", url:"http://www.multpl.com/us-gdp-inflation-adjusted/table")
   File.open(File.join(Rails.root, 'db', 'USGDPByYear.txt')) do |f|
     f.each_line do |l| 
       line = l.split(' ')   
@@ -126,8 +126,20 @@ task :adddatapoints => :environment do
         if (filename != ".") && (filename != "..")
           file= "#{Rails.root}/public/CSVDataSets/" + directory + "/" + filename
 
-          filename.slice!(".csv")
-          new_type= DataType.create(name: filename, url:"https://www.quandl.com")
+          @found= 0
+          new_line= File.open("#{Rails.root}/public/urls.txt", "r")
+            new_line.each_line do |line|
+              if @found== 1
+                @url= line
+                break
+              end
+              if line.eql?(filename+"\n")
+                @found= 1
+              end
+            end
+
+
+          new_type= DataType.create(name: filename, url: @url)
 
           variable_names= Array.new
           time_index= 0

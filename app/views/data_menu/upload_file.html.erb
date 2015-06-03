@@ -5,6 +5,9 @@
 <%= form_tag({:action => 'upload_file'}, :multipart => true) do %>
 <p><label for="upload_file">Select File</label>
 <%= file_field_tag :new_file %></p>
+<%= label_tag("Enter year range:") %>
+<br>
+<%= number_field_tag(:num, @num) %>
 <%= submit_tag "Upload" %>
 <% end %>
 

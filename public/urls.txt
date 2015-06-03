@@ -1,0 +1,67 @@
+CO2 emissions (kt).csv
+https://www.quandl.com/data/WORLDBANK/USA_EN_ATM_CO2E_KT-United-States-CO2-emissions-kt
+Total Production - Jet Fuel - USA.csv
+https://www.quandl.com/data/UN/JETFUELTOTALPRODUCTION_USA-Jet-Fuel-Total-Production-United-States-of-America
+Lending Interest Rate (%).csv
+https://www.quandl.com/data/WORLDBANK/USA_FR_INR_LEND-United-States-Lending-interest-rate
+General Government Net Debt - USA (USD Billions).csv
+https://www.quandl.com/data/ODA/USA_GGXWDN-United-States-General-Government-Net-Debt-USD-Billions
+General Government Revenue - USA (USD Billions).csv
+https://www.quandl.com/data/ODA/USA_GGR-United-States-General-Government-Revenue-USD-Billions
+General Government Total Expenditure - USA (USD Billions).csv
+https://www.quandl.com/data/OMB/152_ACT-Total-U-S-Government-Expenditures
+Gross National Savings - USA (% of GDP).csv
+https://www.quandl.com/data/ODA/USA_NGSD_NGDP-United-States-Gross-National-Savings-of-GDP
+Primary Surplus or Deficit by Country.csv
+https://www.quandl.com/data/ODA/USA_GGXONLB-United-States-General-Government-Primary-Net-Lending-Borrowing-USD-Billions
+Total Investment - USA (% of GDP).csv
+https://www.quandl.com/data/ODA/USA_NID_NGDP-United-States-Total-Investment-of-GDP
+Alcohol Imports - USA.csv
+https://www.quandl.com/data/UN/ALCOHOLIMPORTS_USA-Alcohol-Imports-United-States-of-America
+Electricity Imports - USA.csv
+https://www.quandl.com/data/UN/ELECTRICITYIMPORTS_USA-Electricity-Imports-United-States-of-America
+Jet Fuel Imports - USA.csv
+https://www.quandl.com/data/UN/JETFUELIMPORTS_USA-Jet-Fuel-Imports-United-States-of-America
+Lubricants Imports - USA.csv
+https://www.quandl.com/data/UN/LUBRICANTSIMPORTS_USA-Lubricants-Imports-United-States-of-America
+Armed Forces Personnel - USA.csv
+https://www.quandl.com/data/WORLDBANK/USA_MS_MIL_TOTL_P1-United-States-Armed-forces-personnel-total
+Armed Forces Personnel - USA (% of Total).csv
+https://www.quandl.com/data/WORLDBANK/USA_MS_MIL_TOTL_TF_ZS-United-States-Armed-forces-personnel-of-total-labor-force
+Arms Export - USA.csv
+https://www.quandl.com/data/WORLDBANK/USA_MS_MIL_XPRT_KD-United-States-Arms-exports-constant-1990-US
+Arms Import - USA.csv
+https://www.quandl.com/data/WORLDBANK/USA_MS_MIL_MPRT_KD-United-States-Arms-imports-constant-1990-US
+Military Expenditure - USA.csv
+https://www.quandl.com/data/WORLDBANK/USA_MS_MIL_XPND_GD_ZS-United-States-Military-expenditure-of-GDP
+Adolescent fertility Rate (Births per 1,000 Women Ages 15-19).csv 
+https://www.quandl.com/data/WORLDBANK/USA_SP_ADO_TFRT-United-States-Adolescent-fertility-rate-births-per-1-000-women-ages-15-19
+Age at First Marriage - Female - USA.csv
+https://www.quandl.com/data/WORLDBANK/USA_SP_DYN_SMAM_FE-United-States-Age-at-first-marriage-female
+Age at First Marriage - Male - USA.csv
+https://www.quandl.com/data/WORLDBANK/USA_SP_DYN_SMAM_MA-United-States-Age-at-first-marriage-male
+Age Dependency Ratio (% of Working-Age Population).csv
+https://www.quandl.com/data/WORLDBANK/USA_SP_POP_DPND-United-States-Age-dependency-ratio-of-working-age-population
+Enrolment Rate - Tertiary - USA.csv
+https://www.quandl.com/data/WORLDBANK/USA_SE_TER_ENRR-United-States-School-enrollment-tertiary-gross
+Health Expenditure per Capita, PPP - USA (Constant 2005 International USD).csv
+https://www.quandl.com/data/WHO/199_USA-Per-capita-total-expenditure-on-health-PPP-int-United-States-of-America
+Internet Users - USA (per 100 People).csv
+https://www.quandl.com/data/WORLDBANK/USA_IT_NET_USER_P2-United-States-Internet-users-per-100-people
+Life Expectancy at Birth - USA (Total Years).csv
+https://www.quandl.com/data/WHO/20800_121-Life-expectancy-at-birth-years-United-States-of-America
+Mobile Cellular Subscriptions - USA (per 100 People).csv
+https://www.quandl.com/data/WORLDBANK/USA_IT_CEL_SETS_P2-United-States-Mobile-cellular-subscriptions-per-100-people
+Ratio of Female to Male Secondary Enrollment - USA (%).csv
+https://www.quandl.com/data/WORLDBANK/USA_SE_ENR_SECO_FM_ZS-United-States-Ratio-of-female-to-male-secondary-enrollment
+Ratio of Female to Male Tertiary Enrollment - USA (%).csv
+https://www.quandl.com/data/WORLDBANK/USA_SE_ENR_TERT_FM_ZS-United-States-Ratio-of-female-to-male-tertiary-enrollment
+Rural Population - USA (% of Total Pop).csv
+https://www.quandl.com/collections/demography/rural-population-by-country
+Unemployment Rate - USA (% of Total Labor Force).csv
+https://www.quandl.com/data/ODA/USA_LUR-United-States-Unemployment-Rate-of-Total-Labor-Force
+Unemployment - USA (Youth Total % of Total Labor Force Ages 15-24).csv
+https://www.quandl.com/data/WORLDBANK/USA_SL_UEM_1524_ZS-United-States-Unemployment-youth-total-of-total-labor-force-ages-15-24
+Urban Population - USA (% of Total).csv
+https://www.quandl.com/data/WORLDBANK/USA_SP_URB_TOTL_IN_ZS-United-States-Urban-population-of-total
+
