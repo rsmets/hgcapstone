@@ -61,8 +61,8 @@ class DataTypesCorrelationsController < ActionController::Base
     end
 
     if @@gFlag == 1 # For "seeded" Demo
-      x_data_set_nums = [1, 20, 13, 27, 31, 10, 23, 5] # last one is 
-      y_data_set_nums = [2, 38, 15, 39, 8, 7, 25, 6]
+      x_data_set_nums = [1, 20, 13, 27, 32, 10, 23, 25] # last one is 
+      y_data_set_nums = [2, 38, 15, 39, 8, 7, 5, 6]
       @@gFlag = 0
     end
 

@@ -30,6 +30,7 @@ $( document ).ready(function() {
   var mouseover = function(d){
     //console.log("timelabel: " + timeLabels[0][d.Id]);
     d3.select(timeLabels[0][d.xPos-1]).style({'fill': 'none', 'stroke': 'blue', 'stroke-width': 0.5});
+    d3.select(coeffLabels[0][d.yPos]).style({'fill': 'none', 'stroke': 'blue', 'stroke-width': 0.5});
     //d3.select(coeffLabels[0][d.Id-1]).style("fill", "yellow");
     tip.show(d);
     d3.select(this).style({'stroke': '#636F57', 'stroke-width': 4.5}).style("cursor","pointer");
@@ -37,6 +38,7 @@ $( document ).ready(function() {
 
   var mouseouttie = function(d, i){
     d3.select(timeLabels[0][d.xPos-1]).style({'fill': 'black', 'stroke': 'none', 'stroke-width': 1.0});
+    d3.select(coeffLabels[0][d.yPos]).style({'fill': 'black', 'stroke': 'none', 'stroke-width': 1.0});
     tip.hide(d);
     d3.select(this).style({'stroke': '#7e7e7e', 'stroke-width': 1.0});
   }
@@ -83,7 +85,7 @@ $( document ).ready(function() {
     for(i = 0; i < 3; i++){
       var flag = 0;
       for(j = 0; j < dataToCompare.length; j++){
-        var set = { coeff: "", Id: "", value: "", xPos: "", origin: ""};
+        var set = { coeff: "", Id: "", value: "", xPos: "", yPos: ""};
         if(j+1 == selectedId) // This fixes the possibility of D3 rendering a blank box at selected Id's location
           flag = 1;
         if(flag == 0)
@@ -93,14 +95,17 @@ $( document ).ready(function() {
         if(i == 0){
           set.coeff = 1;
           set.value = pcoeffVal[j];
+          set.yPos = 0;
         }
         if(i == 1){
           set.coeff = 2;
           set.value = scoeffVal[j];
+          set.yPos = 1;
         }
         if(i == 2){
           set.coeff = 3;
           set.value = kcoeffVal[j];
+          set.yPos = 2;
         }
         set.xPos = j+1;
         newFormattedData.push(set);
@@ -136,7 +141,7 @@ $( document ).ready(function() {
        .text(function(d) { return d +" - "; })
        .style("text-anchor", "end")
        .attr("transform", function(d, i){
-          return "translate(" + (i*1.09 * gridSize + 5) +", +50)" + "rotate(35)"
+          return "translate(" + (i*1.09 * gridSize + 50) +", +50)" + "rotate(35)"
        })
        .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
 
@@ -147,7 +152,7 @@ $( document ).ready(function() {
            .attr("x", -10)
            .attr("y", function (d, i) { return i * gridSize * 1.09; })
            .style("text-anchor", "end")
-           .attr("transform", "translate(-25," + ((gridSize / 1.5) + 50) +")")
+           .attr("transform", "translate(20," + ((gridSize / 1.5) + 50) +")")
            .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "coeffLabel mono axis axis-workweek" : "coeffLabel mono axis"); });
 
     var heatMap = svg.selectAll(".Id")
@@ -155,7 +160,7 @@ $( document ).ready(function() {
        .enter()
        .append("a")
        .append("rect")
-       .attr("x", function(d, i) { return (d.xPos*1.09 - 1) * gridSize - 15; })
+       .attr("x", function(d, i) { return (d.xPos*1.09 - 1) * gridSize + 30; })
        .attr("y", function(d, i) { return (d.coeff*1.09 - 1) * gridSize + 50; })
        .attr("rx", 4)
        .attr("ry", 4)
